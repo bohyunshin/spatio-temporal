@@ -17,5 +17,7 @@ description: "This is a gitbook for spatio temporal analysis."
 This is a gitbook for documentation of spatio temporal statistics. It is aimed at enhancing theoritical and practical aspect. The software used in this book is **R**, which is widely used for statistical modeling. Followings are references to make this book.
 
 * Spatio-Temporal Statistics with R, Cressie
+* Hierarchical Modeling and Analysis for Spatial Data
+* Handbook of spatial statistics-CRC
 
 If you have any questions about the contents, please raise issue [here](https://github.com/bohyunshin/spatio-temporal).
