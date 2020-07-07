@@ -1,3 +1,17 @@
-This is a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). Please see the page "[Get Started](https://bookdown.org/yihui/bookdown/get-started.html)" at https://bookdown.org/yihui/bookdown/ for how to compile this example into HTML. You may generate a copy of the book in `bookdown::pdf_book` format by calling `bookdown::render_book('index.Rmd', 'bookdown::pdf_book')`. More detailed instructions are available here https://bookdown.org/yihui/bookdown/build-the-book.html.
+## Spatio-Temporal Statistics Gitbook
 
-You can find the preview of this example at https://bookdown.org/yihui/bookdown-demo/.
+This is spatio-temporal gitbook handling geostatistical data and lattice data using R. It will cover theories regarding spatio-temporal statistics and R code implementation using various packages. Please note the reference book and gihub page below.
+
+
+
+#### GitHub page
+
+* bohyunshin.github.io/spatio-temporal/
+
+
+
+#### Reference
+
+- Spatio-Temporal Statistics with R, Cressie
+- Hierarchical Modeling and Analysis for Spatial Data
+- Handbook of spatial statistics-CRC
