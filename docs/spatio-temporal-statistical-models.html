@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Spatio-Temporal Statistical Models | Spatio Temporal Statistics</title>
+  <meta name="description" content="This is a gitbook for spatio temporal analysis." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Spatio-Temporal Statistical Models | Spatio Temporal Statistics" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a gitbook for spatio temporal analysis." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Spatio-Temporal Statistical Models | Spatio Temporal Statistics" />
+  
+  <meta name="twitter:description" content="This is a gitbook for spatio temporal analysis." />
+  
+
+<meta name="author" content="BoHyun Shin" />
+
+
+<meta name="date" content="2020-07-09" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="mapping-spatio-temporal-data.html"/>
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Spatio Temporal Gitbook</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="part"><span><b>I Being Familiar with STD</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Exploring Spatio Temporal Data</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#representation-of-spatio-temporal-data-in-r"><i class="fa fa-check"></i><b>1.1</b> Representation of Spatio Temporal Data in R</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#visualization-of-std"><i class="fa fa-check"></i><b>1.2</b> Visualization of STD</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#exploratory-analysis-of-std"><i class="fa fa-check"></i><b>1.3</b> Exploratory Analysis of STD</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="intro.html"><a href="intro.html#empirical-spatial-means-and-covariances"><i class="fa fa-check"></i><b>1.3.1</b> Empirical Spatial Means and Covariances</a></li>
+<li class="chapter" data-level="1.3.2" data-path="intro.html"><a href="intro.html#elements-of-point-referenced-modeling"><i class="fa fa-check"></i><b>1.3.2</b> Elements of point-referenced modeling</a></li>
+<li class="chapter" data-level="1.3.3" data-path="intro.html"><a href="intro.html#empirical-orthogonal-functions-eofs"><i class="fa fa-check"></i><b>1.3.3</b> Empirical Orthogonal Functions (EOFs)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#wrap-up"><i class="fa fa-check"></i><b>1.4</b> Wrap up</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="mapping-spatio-temporal-data.html"><a href="mapping-spatio-temporal-data.html"><i class="fa fa-check"></i><b>2</b> Mapping Spatio Temporal Data</a></li>
+<li class="chapter" data-level="3" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html"><i class="fa fa-check"></i><b>3</b> Spatio-Temporal Statistical Models</a><ul>
+<li class="chapter" data-level="3.1" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#spatio-temporal-prediction"><i class="fa fa-check"></i><b>3.1</b> Spatio-Temporal Prediction</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#deterministic-prediction"><i class="fa fa-check"></i><b>3.1.1</b> Deterministic Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#regression-estimation"><i class="fa fa-check"></i><b>3.2</b> Regression Estimation</a></li>
+<li class="chapter" data-level="3.3" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#gaussian-or-non-gaussian-errors"><i class="fa fa-check"></i><b>3.3</b> Gaussian or Non Gaussian Errors</a></li>
+<li class="chapter" data-level="3.4" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#hierarchical-spatio-temporal-statistical-models"><i class="fa fa-check"></i><b>3.4</b> Hierarchical Spatio-Temporal Statistical Models</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Spatio Temporal Statistics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="spatio-temporal-statistical-models" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Spatio-Temporal Statistical Models</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="spatio-temporal-statistical-models.html#cb1-1"></a><span class="kw">library</span>(<span class="st">&quot;dplyr&quot;</span>)</span>
+<span id="cb1-2"><a href="spatio-temporal-statistical-models.html#cb1-2"></a><span class="kw">library</span>(<span class="st">&quot;fields&quot;</span>)</span>
+<span id="cb1-3"><a href="spatio-temporal-statistical-models.html#cb1-3"></a><span class="kw">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
+<span id="cb1-4"><a href="spatio-temporal-statistical-models.html#cb1-4"></a><span class="kw">library</span>(<span class="st">&quot;gstat&quot;</span>)</span>
+<span id="cb1-5"><a href="spatio-temporal-statistical-models.html#cb1-5"></a><span class="kw">library</span>(<span class="st">&quot;RColorBrewer&quot;</span>)</span>
+<span id="cb1-6"><a href="spatio-temporal-statistical-models.html#cb1-6"></a><span class="kw">library</span>(<span class="st">&quot;sp&quot;</span>)</span>
+<span id="cb1-7"><a href="spatio-temporal-statistical-models.html#cb1-7"></a><span class="kw">library</span>(<span class="st">&quot;spacetime&quot;</span>)</span>
+<span id="cb1-8"><a href="spatio-temporal-statistical-models.html#cb1-8"></a><span class="kw">library</span>(<span class="st">&quot;STRbook&quot;</span>)</span>
+<span id="cb1-9"><a href="spatio-temporal-statistical-models.html#cb1-9"></a><span class="kw">library</span>(<span class="st">&quot;FRK&quot;</span>)</span>
+<span id="cb1-10"><a href="spatio-temporal-statistical-models.html#cb1-10"></a><span class="kw">library</span>(<span class="st">&quot;ape&quot;</span>)</span>
+<span id="cb1-11"><a href="spatio-temporal-statistical-models.html#cb1-11"></a><span class="kw">library</span>(<span class="st">&quot;broom&quot;</span>)</span>
+<span id="cb1-12"><a href="spatio-temporal-statistical-models.html#cb1-12"></a><span class="kw">library</span>(<span class="st">&quot;leaps&quot;</span>)</span></code></pre></div>
+<p>Goals for spatio-temporal modeling can be summarised as below.</p>
+<ul>
+<li>predicting a plausible value of a response variable at some location in space within
+the time span of the observations and reporting the uncertainty of that prediction;</li>
+<li>performing scientific inference about the importance of covariates on the response variable in the presence of spatio-temporal dependence; and</li>
+<li>forecasting the future value of the response variable at some location, along with the uncertainty of that forecast.</li>
+</ul>
+<p>Bearing these golas in mind, before diving into the spatio temporal modeling methodology in chapter 4 and 5, in this chapter, we will focus on the goal of spatio-temporal modeling described above. Speficially, we will see some basic models that do not fully satisfy above three goals, which requres needs for some flexible, complex methodology for spatio-temporal statistics.</p>
+<div id="spatio-temporal-prediction" class="section level2">
+<h2><span class="header-section-number">3.1</span> Spatio-Temporal Prediction</h2>
+<div id="deterministic-prediction" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> Deterministic Prediction</h3>
+<p>The simples prediction is deterministic prediction, which simply averages the data by giving more weight to the near data, which is called inverse distance weighting (IDW).That is, for the data point with location index <span class="math inline">\(s_0\)</span> and time index <span class="math inline">\(t_0\)</span>, the prediction value would be</p>
+<p><span class="math display">\[\begin{equation}
+  \hat{Z}(s_0 ; t_0) = \sum \sum w_{ij}(s_0;t_0)Z(s_{ij}; t_j)
+\end{equation}\]</span></p>
+<p>where
+<span class="math display">\[\begin{equation}
+  w_{ij}(s_0;t_0) \equiv \dfrac{\tilde{w}_{ij}(s_0;t_0)}{\sum \sum \tilde{w}_{lk}(s_0;t_0)} \\
+  \tilde{w}_{ij}(s_0; t_0) \equiv \dfrac1{d((s_{ij};t_j),(s_0;t_0))^\alpha} \tag{1}
+\end{equation}\]</span>
+Here, <span class="math inline">\(\alpha\)</span> controls the smoothness of distance, where bigger <span class="math inline">\(\alpha\)</span> giving more weight to far data. Common way to decide <span class="math inline">\(\alpha\)</span> is throgh cross validation. That is, seeing the variability of criteria such as MSE, <span class="math inline">\(\alpha\)</span> is chosen which have the minimum value. IDW in (1) is a type of spatio-temporal kernel predictior, which can be generally written as</p>
+<p><span class="math display">\[\begin{equation}
+  \tilde{w}_{ij}(s_0; t_0) = k((s_{ij}; t_j), (s_0;t_0); \theta)
+\end{equation}\]</span></p>
+<p>So, we can use other kernel such as gaussian kernel.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="spatio-temporal-statistical-models.html#cb2-1"></a><span class="kw">data</span>(<span class="st">&quot;NOAA_df_1990&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;STRbook&quot;</span>)</span>
+<span id="cb2-2"><a href="spatio-temporal-statistical-models.html#cb2-2"></a>Tmax &lt;-<span class="st"> </span><span class="kw">filter</span>(NOAA_df_<span class="dv">1990</span>,       <span class="co"># subset the data</span></span>
+<span id="cb2-3"><a href="spatio-temporal-statistical-models.html#cb2-3"></a>              proc <span class="op">==</span><span class="st"> &quot;Tmax&quot;</span> <span class="op">&amp;</span><span class="st">     </span><span class="co"># only max temperature</span></span>
+<span id="cb2-4"><a href="spatio-temporal-statistical-models.html#cb2-4"></a><span class="st">              </span>month <span class="op">==</span><span class="st"> </span><span class="dv">7</span> <span class="op">&amp;</span><span class="st">         </span><span class="co"># July</span></span>
+<span id="cb2-5"><a href="spatio-temporal-statistical-models.html#cb2-5"></a><span class="st">              </span>year <span class="op">==</span><span class="st"> </span><span class="dv">1993</span>)        <span class="co"># year of 1993</span></span>
+<span id="cb2-6"><a href="spatio-temporal-statistical-models.html#cb2-6"></a></span>
+<span id="cb2-7"><a href="spatio-temporal-statistical-models.html#cb2-7"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb2-8"><a href="spatio-temporal-statistical-models.html#cb2-8"></a>pred_grid &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">lon =</span> <span class="kw">seq</span>(<span class="op">-</span><span class="dv">100</span>, <span class="dv">-80</span>, <span class="dt">length =</span> <span class="dv">20</span>),</span>
+<span id="cb2-9"><a href="spatio-temporal-statistical-models.html#cb2-9"></a>                         <span class="dt">lat =</span> <span class="kw">seq</span>(<span class="dv">32</span>, <span class="dv">46</span>, <span class="dt">length =</span> <span class="dv">20</span>),</span>
+<span id="cb2-10"><a href="spatio-temporal-statistical-models.html#cb2-10"></a>                         <span class="dt">day =</span> <span class="kw">seq</span>(<span class="dv">4</span>, <span class="dv">29</span>, <span class="dt">length =</span> <span class="dv">6</span>))</span>
+<span id="cb2-11"><a href="spatio-temporal-statistical-models.html#cb2-11"></a></span>
+<span id="cb2-12"><a href="spatio-temporal-statistical-models.html#cb2-12"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb2-13"><a href="spatio-temporal-statistical-models.html#cb2-13"></a>Tmax_no_<span class="dv">14</span> &lt;-<span class="st"> </span><span class="kw">filter</span>(Tmax, <span class="op">!</span>(day <span class="op">==</span><span class="st"> </span><span class="dv">14</span>))         <span class="co"># remove day 14</span></span>
+<span id="cb2-14"><a href="spatio-temporal-statistical-models.html#cb2-14"></a>Tmax_July_idw &lt;-<span class="st"> </span><span class="kw">idw</span>(<span class="dt">formula =</span> z <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,            <span class="co"># dep. variable</span></span>
+<span id="cb2-15"><a href="spatio-temporal-statistical-models.html#cb2-15"></a>                     <span class="dt">locations =</span> <span class="op">~</span><span class="st"> </span>lon <span class="op">+</span><span class="st"> </span>lat <span class="op">+</span><span class="st"> </span>day, <span class="co"># inputs</span></span>
+<span id="cb2-16"><a href="spatio-temporal-statistical-models.html#cb2-16"></a>                     <span class="dt">data =</span> Tmax_no_<span class="dv">14</span>,          <span class="co"># data set</span></span>
+<span id="cb2-17"><a href="spatio-temporal-statistical-models.html#cb2-17"></a>                     <span class="dt">newdata =</span> pred_grid,        <span class="co"># prediction grid</span></span>
+<span id="cb2-18"><a href="spatio-temporal-statistical-models.html#cb2-18"></a>                     <span class="dt">idp =</span> <span class="dv">5</span>)                    <span class="co"># inv. dist. pow.</span></span></code></pre></div>
+<pre><code>## [inverse distance weighted interpolation]</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="spatio-temporal-statistical-models.html#cb4-1"></a><span class="kw">head</span>(Tmax_no_<span class="dv">14</span>)</span></code></pre></div>
+<pre><code>##   julian year month day   id  z proc   lat       lon       date
+## 1 728111 1993     7   1 3804 82 Tmax 39.35 -81.43333 1993-07-01
+## 2 728112 1993     7   2 3804 84 Tmax 39.35 -81.43333 1993-07-02
+## 3 728113 1993     7   3 3804 88 Tmax 39.35 -81.43333 1993-07-03
+## 4 728114 1993     7   4 3804 90 Tmax 39.35 -81.43333 1993-07-04
+## 5 728115 1993     7   5 3804 92 Tmax 39.35 -81.43333 1993-07-05
+## 6 728116 1993     7   6 3804 91 Tmax 39.35 -81.43333 1993-07-06</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="spatio-temporal-statistical-models.html#cb6-1"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb6-2"><a href="spatio-temporal-statistical-models.html#cb6-2"></a><span class="kw">ggplot</span>(Tmax_July_idw) <span class="op">+</span></span>
+<span id="cb6-3"><a href="spatio-temporal-statistical-models.html#cb6-3"></a><span class="st">    </span><span class="kw">geom_tile</span>(<span class="kw">aes</span>(<span class="dt">x =</span> lon, <span class="dt">y =</span> lat,</span>
+<span id="cb6-4"><a href="spatio-temporal-statistical-models.html#cb6-4"></a>                  <span class="dt">fill =</span> var1.pred)) <span class="op">+</span></span>
+<span id="cb6-5"><a href="spatio-temporal-statistical-models.html#cb6-5"></a><span class="st">    </span><span class="kw">fill_scale</span>(<span class="dt">name =</span> <span class="st">&quot;degF&quot;</span>) <span class="op">+</span><span class="st">    </span><span class="co"># attach color scale</span></span>
+<span id="cb6-6"><a href="spatio-temporal-statistical-models.html#cb6-6"></a><span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Longitude (deg)&quot;</span>) <span class="op">+</span><span class="st">           </span><span class="co"># x-axis label</span></span>
+<span id="cb6-7"><a href="spatio-temporal-statistical-models.html#cb6-7"></a><span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Latitude (deg)&quot;</span>) <span class="op">+</span><span class="st">            </span><span class="co"># y-axis label</span></span>
+<span id="cb6-8"><a href="spatio-temporal-statistical-models.html#cb6-8"></a><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>day, <span class="dt">ncol =</span> <span class="dv">3</span>) <span class="op">+</span><span class="st">       </span><span class="co"># facet by day</span></span>
+<span id="cb6-9"><a href="spatio-temporal-statistical-models.html#cb6-9"></a><span class="st">    </span><span class="kw">coord_fixed</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">100</span>, <span class="dv">-80</span>),</span>
+<span id="cb6-10"><a href="spatio-temporal-statistical-models.html#cb6-10"></a>                <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">32</span>, <span class="dv">46</span>))  <span class="op">+</span><span class="st">    </span><span class="co"># zoom in</span></span>
+<span id="cb6-11"><a href="spatio-temporal-statistical-models.html#cb6-11"></a><span class="st">    </span><span class="kw">theme_bw</span>()                          <span class="co"># B&amp;W theme</span></span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Above are the figures with idw interpolation on new grid of latitude and longitude on different day. <span class="math inline">\(\alpha\)</span> is set as 5. Note some spatial dependence where bottom shows higher max temperature.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="spatio-temporal-statistical-models.html#cb7-1"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb7-2"><a href="spatio-temporal-statistical-models.html#cb7-2"></a>pred_obs_dist_mat &lt;-<span class="st"> </span><span class="kw">rdist</span>(<span class="kw">select</span>(pred_grid, lon, lat, day),</span>
+<span id="cb7-3"><a href="spatio-temporal-statistical-models.html#cb7-3"></a>                           <span class="kw">select</span>(Tmax_no_<span class="dv">14</span>, lon, lat, day))</span>
+<span id="cb7-4"><a href="spatio-temporal-statistical-models.html#cb7-4"></a>Wt_IDW &lt;-<span class="st"> </span><span class="cf">function</span>(theta, dist_mat) <span class="dv">1</span><span class="op">/</span>dist_mat<span class="op">^</span>theta</span>
+<span id="cb7-5"><a href="spatio-temporal-statistical-models.html#cb7-5"></a>Wtilde &lt;-<span class="st"> </span><span class="kw">Wt_IDW</span>(<span class="dt">theta =</span> <span class="dv">5</span>, <span class="dt">dist_mat =</span> pred_obs_dist_mat)</span>
+<span id="cb7-6"><a href="spatio-temporal-statistical-models.html#cb7-6"></a></span>
+<span id="cb7-7"><a href="spatio-temporal-statistical-models.html#cb7-7"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb7-8"><a href="spatio-temporal-statistical-models.html#cb7-8"></a>Wtilde_rsums &lt;-<span class="st"> </span><span class="kw">rowSums</span>(Wtilde)</span>
+<span id="cb7-9"><a href="spatio-temporal-statistical-models.html#cb7-9"></a>W &lt;-<span class="st"> </span>Wtilde<span class="op">/</span>Wtilde_rsums</span>
+<span id="cb7-10"><a href="spatio-temporal-statistical-models.html#cb7-10"></a></span>
+<span id="cb7-11"><a href="spatio-temporal-statistical-models.html#cb7-11"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb7-12"><a href="spatio-temporal-statistical-models.html#cb7-12"></a>z_pred_IDW &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(W <span class="op">%*%</span><span class="st"> </span>Tmax_no_<span class="dv">14</span><span class="op">$</span>z)</span>
+<span id="cb7-13"><a href="spatio-temporal-statistical-models.html#cb7-13"></a></span>
+<span id="cb7-14"><a href="spatio-temporal-statistical-models.html#cb7-14"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb7-15"><a href="spatio-temporal-statistical-models.html#cb7-15"></a><span class="kw">summary</span>(Tmax_July_idw<span class="op">$</span>var1.pred <span class="op">-</span><span class="st"> </span>z_pred_IDW)</span></code></pre></div>
+<pre><code>##       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+## -1.620e-12 -1.847e-13  0.000e+00 -4.441e-16  1.990e-13  1.165e-12</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="spatio-temporal-statistical-models.html#cb9-1"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb9-2"><a href="spatio-temporal-statistical-models.html#cb9-2"></a><span class="co">## Gaussian Kernel</span></span>
+<span id="cb9-3"><a href="spatio-temporal-statistical-models.html#cb9-3"></a>theta &lt;-<span class="st"> </span><span class="fl">0.5</span>                       <span class="co"># set bandwidth</span></span>
+<span id="cb9-4"><a href="spatio-temporal-statistical-models.html#cb9-4"></a>Wt_Gauss &lt;-<span class="st"> </span><span class="cf">function</span>(theta, dist_mat) <span class="kw">exp</span>(<span class="op">-</span>dist_mat<span class="op">^</span><span class="dv">2</span><span class="op">/</span>theta)</span>
+<span id="cb9-5"><a href="spatio-temporal-statistical-models.html#cb9-5"></a>Wtilde &lt;-<span class="st"> </span><span class="kw">Wt_Gauss</span>(<span class="dt">theta =</span> <span class="fl">0.5</span>, <span class="dt">dist_mat =</span> pred_obs_dist_mat)</span>
+<span id="cb9-6"><a href="spatio-temporal-statistical-models.html#cb9-6"></a>Wtilde_rsums &lt;-<span class="st"> </span><span class="kw">rowSums</span>(Wtilde)    <span class="co"># normalizing factors</span></span>
+<span id="cb9-7"><a href="spatio-temporal-statistical-models.html#cb9-7"></a>W &lt;-<span class="st"> </span>Wtilde<span class="op">/</span>Wtilde_rsums           <span class="co"># normalized kernel weights</span></span>
+<span id="cb9-8"><a href="spatio-temporal-statistical-models.html#cb9-8"></a>z_pred2 &lt;-<span class="st"> </span>W <span class="op">%*%</span><span class="st"> </span>Tmax_no_<span class="dv">14</span><span class="op">$</span>z      <span class="co"># predictions</span></span></code></pre></div>
+<p>For flexible coding, we implement IDW from defining euclidean distance to calculating weights. As can be seen from the last code, there is almost no difference between the our code and idw function.<br />
+To see which <span class="math inline">\(\alpha\)</span> produces the lowest LOOCV error,</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="spatio-temporal-statistical-models.html#cb10-1"></a>obs_obs_dist_mat &lt;-<span class="st"> </span><span class="kw">rdist</span>(<span class="kw">select</span>(Tmax, lon, lat, day),</span>
+<span id="cb10-2"><a href="spatio-temporal-statistical-models.html#cb10-2"></a>                          <span class="kw">select</span>(Tmax, lon, lat, day))</span>
+<span id="cb10-3"><a href="spatio-temporal-statistical-models.html#cb10-3"></a></span>
+<span id="cb10-4"><a href="spatio-temporal-statistical-models.html#cb10-4"></a></span>
+<span id="cb10-5"><a href="spatio-temporal-statistical-models.html#cb10-5"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb10-6"><a href="spatio-temporal-statistical-models.html#cb10-6"></a>LOOCV_score &lt;-<span class="st"> </span><span class="cf">function</span>(Wt_fun, theta, dist_mat, Z) {</span>
+<span id="cb10-7"><a href="spatio-temporal-statistical-models.html#cb10-7"></a>  Wtilde &lt;-<span class="st"> </span><span class="kw">Wt_fun</span>(theta, dist_mat)</span>
+<span id="cb10-8"><a href="spatio-temporal-statistical-models.html#cb10-8"></a>  CV &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb10-9"><a href="spatio-temporal-statistical-models.html#cb10-9"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(Z)) {</span>
+<span id="cb10-10"><a href="spatio-temporal-statistical-models.html#cb10-10"></a>    Wtilde2 &lt;-<span class="st"> </span>Wtilde[i,<span class="op">-</span>i]</span>
+<span id="cb10-11"><a href="spatio-temporal-statistical-models.html#cb10-11"></a>    W2 &lt;-<span class="st"> </span>Wtilde2 <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(Wtilde2)</span>
+<span id="cb10-12"><a href="spatio-temporal-statistical-models.html#cb10-12"></a>    z_pred &lt;-<span class="st"> </span>W2 <span class="op">%*%</span><span class="st"> </span>Z[<span class="op">-</span>i]</span>
+<span id="cb10-13"><a href="spatio-temporal-statistical-models.html#cb10-13"></a>    CV[i] &lt;-<span class="st"> </span>(z_pred <span class="op">-</span><span class="st"> </span>Z[i])<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb10-14"><a href="spatio-temporal-statistical-models.html#cb10-14"></a>  }</span>
+<span id="cb10-15"><a href="spatio-temporal-statistical-models.html#cb10-15"></a>  <span class="kw">mean</span>(CV)</span>
+<span id="cb10-16"><a href="spatio-temporal-statistical-models.html#cb10-16"></a>}</span>
+<span id="cb10-17"><a href="spatio-temporal-statistical-models.html#cb10-17"></a></span>
+<span id="cb10-18"><a href="spatio-temporal-statistical-models.html#cb10-18"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb10-19"><a href="spatio-temporal-statistical-models.html#cb10-19"></a><span class="kw">LOOCV_score</span>(<span class="dt">Wt_fun =</span> Wt_IDW,</span>
+<span id="cb10-20"><a href="spatio-temporal-statistical-models.html#cb10-20"></a>            <span class="dt">theta =</span> <span class="dv">5</span>,</span>
+<span id="cb10-21"><a href="spatio-temporal-statistical-models.html#cb10-21"></a>            <span class="dt">dist_mat =</span> obs_obs_dist_mat,</span>
+<span id="cb10-22"><a href="spatio-temporal-statistical-models.html#cb10-22"></a>            <span class="dt">Z =</span> Tmax<span class="op">$</span>z)</span></code></pre></div>
+<pre><code>## [1] 7.775333</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="spatio-temporal-statistical-models.html#cb12-1"></a><span class="kw">LOOCV_score</span>(<span class="dt">Wt_fun =</span> Wt_Gauss,</span>
+<span id="cb12-2"><a href="spatio-temporal-statistical-models.html#cb12-2"></a>            <span class="dt">theta =</span> <span class="fl">0.5</span>,</span>
+<span id="cb12-3"><a href="spatio-temporal-statistical-models.html#cb12-3"></a>            <span class="dt">dist_mat =</span> obs_obs_dist_mat,</span>
+<span id="cb12-4"><a href="spatio-temporal-statistical-models.html#cb12-4"></a>            <span class="dt">Z =</span> Tmax<span class="op">$</span>z)</span></code></pre></div>
+<pre><code>## [1] 7.526056</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="spatio-temporal-statistical-models.html#cb14-1"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb14-2"><a href="spatio-temporal-statistical-models.html#cb14-2"></a>theta_IDW &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">4</span>, <span class="dv">6</span>, <span class="dt">length =</span> <span class="dv">21</span>)</span>
+<span id="cb14-3"><a href="spatio-temporal-statistical-models.html#cb14-3"></a>theta_Gauss &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="fl">0.1</span>, <span class="fl">2.1</span>, <span class="dt">length =</span> <span class="dv">21</span>)</span>
+<span id="cb14-4"><a href="spatio-temporal-statistical-models.html#cb14-4"></a>CV_IDW &lt;-<span class="st"> </span>CV_Gauss &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb14-5"><a href="spatio-temporal-statistical-models.html#cb14-5"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">seq_along</span>(theta_IDW)) {</span>
+<span id="cb14-6"><a href="spatio-temporal-statistical-models.html#cb14-6"></a>  CV_IDW[i] &lt;-<span class="st"> </span><span class="kw">LOOCV_score</span>(<span class="dt">Wt_fun =</span> Wt_IDW,</span>
+<span id="cb14-7"><a href="spatio-temporal-statistical-models.html#cb14-7"></a>                           <span class="dt">theta =</span> theta_IDW[i],</span>
+<span id="cb14-8"><a href="spatio-temporal-statistical-models.html#cb14-8"></a>                           <span class="dt">dist_mat =</span> obs_obs_dist_mat,</span>
+<span id="cb14-9"><a href="spatio-temporal-statistical-models.html#cb14-9"></a>                           <span class="dt">Z =</span> Tmax<span class="op">$</span>z)</span>
+<span id="cb14-10"><a href="spatio-temporal-statistical-models.html#cb14-10"></a></span>
+<span id="cb14-11"><a href="spatio-temporal-statistical-models.html#cb14-11"></a>  CV_Gauss[i] &lt;-<span class="st"> </span><span class="kw">LOOCV_score</span>(<span class="dt">Wt_fun =</span> Wt_Gauss,</span>
+<span id="cb14-12"><a href="spatio-temporal-statistical-models.html#cb14-12"></a>                          <span class="dt">theta =</span> theta_Gauss[i],</span>
+<span id="cb14-13"><a href="spatio-temporal-statistical-models.html#cb14-13"></a>                          <span class="dt">dist_mat =</span> obs_obs_dist_mat,</span>
+<span id="cb14-14"><a href="spatio-temporal-statistical-models.html#cb14-14"></a>                          <span class="dt">Z =</span> Tmax<span class="op">$</span>z)</span>
+<span id="cb14-15"><a href="spatio-temporal-statistical-models.html#cb14-15"></a>}</span>
+<span id="cb14-16"><a href="spatio-temporal-statistical-models.html#cb14-16"></a></span>
+<span id="cb14-17"><a href="spatio-temporal-statistical-models.html#cb14-17"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb14-18"><a href="spatio-temporal-statistical-models.html#cb14-18"></a><span class="kw">data</span>(<span class="st">&quot;Lab3_1_LOOCV&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;STRbook&quot;</span>)</span>
+<span id="cb14-19"><a href="spatio-temporal-statistical-models.html#cb14-19"></a></span>
+<span id="cb14-20"><a href="spatio-temporal-statistical-models.html#cb14-20"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb14-21"><a href="spatio-temporal-statistical-models.html#cb14-21"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb14-22"><a href="spatio-temporal-statistical-models.html#cb14-22"></a><span class="kw">plot</span>(theta_IDW, CV_IDW,</span>
+<span id="cb14-23"><a href="spatio-temporal-statistical-models.html#cb14-23"></a>     <span class="dt">xlab =</span> <span class="kw">expression</span>(alpha),</span>
+<span id="cb14-24"><a href="spatio-temporal-statistical-models.html#cb14-24"></a>     <span class="dt">ylab =</span> <span class="kw">expression</span>(CV[(m)](alpha)),</span>
+<span id="cb14-25"><a href="spatio-temporal-statistical-models.html#cb14-25"></a>     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">7.4</span>, <span class="fl">8.5</span>), <span class="dt">type =</span> <span class="st">&#39;o&#39;</span>)</span>
+<span id="cb14-26"><a href="spatio-temporal-statistical-models.html#cb14-26"></a><span class="kw">plot</span>(theta_Gauss, CV_Gauss,</span>
+<span id="cb14-27"><a href="spatio-temporal-statistical-models.html#cb14-27"></a>     <span class="dt">xlab =</span> <span class="kw">expression</span>(theta),</span>
+<span id="cb14-28"><a href="spatio-temporal-statistical-models.html#cb14-28"></a>     <span class="dt">ylab =</span> <span class="kw">expression</span>(CV[(m)](theta)),</span>
+<span id="cb14-29"><a href="spatio-temporal-statistical-models.html#cb14-29"></a>     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">7.4</span>, <span class="fl">8.5</span>), <span class="dt">type =</span> <span class="st">&#39;o&#39;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Unfortunately, for deterministic prediction, there is no way to measure uncertainty of estimatee because we cannot calculate standard error. So, it does not satisfy the first goal of spatio-temporal modeling.</p>
+</div>
+</div>
+<div id="regression-estimation" class="section level2">
+<h2><span class="header-section-number">3.2</span> Regression Estimation</h2>
+<p>Before spatio-temporal modeling, it is important to see whether there is ample evidence for spatio-temporal dependency. One way to see this is that we look at the residual plots or variograms for any dependency. Or one could apply statistical test for <em>temporal</em> dependence wuch as Durbin-Watson test and for areal data, Moran’s I test.<br />
+Given that some spatial dependence is clear, one can easily think about fitting GLS to the data which assumes different covariance sturcutre other than OLS. However, we do not know the covariance structure in advance. If we ignore these issues for our comformatability, the standard error will be underestimated so that the resulting hypothesis test says significant about a covariate. So, it is important to include spatio-temporal dependence into the model. The parameter inference and variable selection procedure via OLS are omitted in this book because it is not our main focus.<br />
+</p>
+<p>Instead, we will see the residual plots which shows some spatio temporal dependence. To do this, first create basis function and fit linear model.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="spatio-temporal-statistical-models.html#cb15-1"></a><span class="kw">data</span>(<span class="st">&quot;NOAA_df_1990&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;STRbook&quot;</span>)</span>
+<span id="cb15-2"><a href="spatio-temporal-statistical-models.html#cb15-2"></a>Tmax &lt;-<span class="st"> </span><span class="kw">filter</span>(NOAA_df_<span class="dv">1990</span>,       <span class="co"># subset the data</span></span>
+<span id="cb15-3"><a href="spatio-temporal-statistical-models.html#cb15-3"></a>              proc <span class="op">==</span><span class="st"> &quot;Tmax&quot;</span> <span class="op">&amp;</span><span class="st">     </span><span class="co"># only max temperature</span></span>
+<span id="cb15-4"><a href="spatio-temporal-statistical-models.html#cb15-4"></a><span class="st">              </span>month <span class="op">==</span><span class="st"> </span><span class="dv">7</span> <span class="op">&amp;</span><span class="st">         </span><span class="co"># July</span></span>
+<span id="cb15-5"><a href="spatio-temporal-statistical-models.html#cb15-5"></a><span class="st">              </span>year <span class="op">==</span><span class="st"> </span><span class="dv">1993</span>)        <span class="co"># year of 1993</span></span>
+<span id="cb15-6"><a href="spatio-temporal-statistical-models.html#cb15-6"></a></span>
+<span id="cb15-7"><a href="spatio-temporal-statistical-models.html#cb15-7"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb15-8"><a href="spatio-temporal-statistical-models.html#cb15-8"></a>G &lt;-<span class="st"> </span><span class="kw">auto_basis</span>(<span class="dt">data =</span> Tmax[,<span class="kw">c</span>(<span class="st">&quot;lon&quot;</span>,<span class="st">&quot;lat&quot;</span>)] <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># Take Tmax</span></span>
+<span id="cb15-9"><a href="spatio-temporal-statistical-models.html#cb15-9"></a><span class="st">                       </span><span class="kw">SpatialPoints</span>(),           <span class="co"># To sp obj</span></span>
+<span id="cb15-10"><a href="spatio-temporal-statistical-models.html#cb15-10"></a>                <span class="dt">nres =</span> <span class="dv">1</span>,                         <span class="co"># One resolution</span></span>
+<span id="cb15-11"><a href="spatio-temporal-statistical-models.html#cb15-11"></a>                <span class="dt">type =</span> <span class="st">&quot;Gaussian&quot;</span>)                <span class="co"># Gaussian BFs</span></span>
+<span id="cb15-12"><a href="spatio-temporal-statistical-models.html#cb15-12"></a></span>
+<span id="cb15-13"><a href="spatio-temporal-statistical-models.html#cb15-13"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb15-14"><a href="spatio-temporal-statistical-models.html#cb15-14"></a>S &lt;-<span class="st"> </span><span class="kw">eval_basis</span>(<span class="dt">basis =</span> G,                     <span class="co"># basis functions</span></span>
+<span id="cb15-15"><a href="spatio-temporal-statistical-models.html#cb15-15"></a>                <span class="dt">s =</span> Tmax[,<span class="kw">c</span>(<span class="st">&quot;lon&quot;</span>,<span class="st">&quot;lat&quot;</span>)] <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># spat locations</span></span>
+<span id="cb15-16"><a href="spatio-temporal-statistical-models.html#cb15-16"></a><span class="st">                     </span><span class="kw">as.matrix</span>()) <span class="op">%&gt;%</span><span class="st">          </span><span class="co"># conv. to matrix</span></span>
+<span id="cb15-17"><a href="spatio-temporal-statistical-models.html#cb15-17"></a><span class="st">     </span><span class="kw">as.matrix</span>()                               <span class="co"># results as matrix</span></span>
+<span id="cb15-18"><a href="spatio-temporal-statistical-models.html#cb15-18"></a><span class="kw">colnames</span>(S) &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;B&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="kw">ncol</span>(S)) <span class="co"># assign column names</span></span>
+<span id="cb15-19"><a href="spatio-temporal-statistical-models.html#cb15-19"></a></span>
+<span id="cb15-20"><a href="spatio-temporal-statistical-models.html#cb15-20"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb15-21"><a href="spatio-temporal-statistical-models.html#cb15-21"></a>Tmax2 &lt;-<span class="st"> </span><span class="kw">cbind</span>(Tmax, S) <span class="op">%&gt;%</span><span class="st">             </span><span class="co"># append S to Tmax</span></span>
+<span id="cb15-22"><a href="spatio-temporal-statistical-models.html#cb15-22"></a><span class="st">         </span><span class="kw">select</span>(<span class="op">-</span>year, <span class="op">-</span>month, <span class="op">-</span>proc,   <span class="co"># and remove vars we</span></span>
+<span id="cb15-23"><a href="spatio-temporal-statistical-models.html#cb15-23"></a>                <span class="op">-</span>julian, <span class="op">-</span>date)         <span class="co"># will not be using in</span></span>
+<span id="cb15-24"><a href="spatio-temporal-statistical-models.html#cb15-24"></a>                                        <span class="co"># the model</span></span>
+<span id="cb15-25"><a href="spatio-temporal-statistical-models.html#cb15-25"></a></span>
+<span id="cb15-26"><a href="spatio-temporal-statistical-models.html#cb15-26"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb15-27"><a href="spatio-temporal-statistical-models.html#cb15-27"></a>Tmax_no_<span class="dv">14</span> &lt;-<span class="st"> </span><span class="kw">filter</span>(Tmax2, <span class="op">!</span>(day <span class="op">==</span><span class="st"> </span><span class="dv">14</span>))  <span class="co"># remove day 14</span></span>
+<span id="cb15-28"><a href="spatio-temporal-statistical-models.html#cb15-28"></a></span>
+<span id="cb15-29"><a href="spatio-temporal-statistical-models.html#cb15-29"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb15-30"><a href="spatio-temporal-statistical-models.html#cb15-30"></a>Tmax_July_lm &lt;-<span class="st"> </span><span class="kw">lm</span>(z <span class="op">~</span><span class="st"> </span>(lon <span class="op">+</span><span class="st"> </span>lat <span class="op">+</span><span class="st"> </span>day)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>.,     <span class="co"># model</span></span>
+<span id="cb15-31"><a href="spatio-temporal-statistical-models.html#cb15-31"></a>                   <span class="dt">data =</span> <span class="kw">select</span>(Tmax_no_<span class="dv">14</span>, <span class="op">-</span>id))  <span class="co"># omit id</span></span>
+<span id="cb15-32"><a href="spatio-temporal-statistical-models.html#cb15-32"></a></span>
+<span id="cb15-33"><a href="spatio-temporal-statistical-models.html#cb15-33"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb15-34"><a href="spatio-temporal-statistical-models.html#cb15-34"></a>Tmax_no_<span class="dv">14</span><span class="op">$</span>residuals &lt;-<span class="st"> </span><span class="kw">residuals</span>(Tmax_July_lm)</span>
+<span id="cb15-35"><a href="spatio-temporal-statistical-models.html#cb15-35"></a></span>
+<span id="cb15-36"><a href="spatio-temporal-statistical-models.html#cb15-36"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb15-37"><a href="spatio-temporal-statistical-models.html#cb15-37"></a>g &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">filter</span>(Tmax_no_<span class="dv">14</span>, day <span class="op">%in%</span><span class="st"> </span><span class="dv">24</span><span class="op">:</span><span class="dv">31</span>)) <span class="op">+</span></span>
+<span id="cb15-38"><a href="spatio-temporal-statistical-models.html#cb15-38"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(lon, lat, <span class="dt">colour =</span> residuals)) <span class="op">+</span></span>
+<span id="cb15-39"><a href="spatio-temporal-statistical-models.html#cb15-39"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>day, <span class="dt">ncol=</span><span class="dv">4</span>) <span class="op">+</span></span>
+<span id="cb15-40"><a href="spatio-temporal-statistical-models.html#cb15-40"></a><span class="st">  </span><span class="kw">col_scale</span>(<span class="dt">name =</span> <span class="st">&quot;degF&quot;</span>) <span class="op">+</span></span>
+<span id="cb15-41"><a href="spatio-temporal-statistical-models.html#cb15-41"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> <span class="kw">filter</span>(Tmax_no_<span class="dv">14</span>,day <span class="op">%in%</span><span class="st"> </span><span class="dv">24</span><span class="op">:</span><span class="dv">31</span> <span class="op">&amp;</span></span>
+<span id="cb15-42"><a href="spatio-temporal-statistical-models.html#cb15-42"></a><span class="st">                                        </span>id <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">3810</span>, <span class="dv">3889</span>)),</span>
+<span id="cb15-43"><a href="spatio-temporal-statistical-models.html#cb15-43"></a>               <span class="kw">aes</span>(lon, lat), <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>,</span>
+<span id="cb15-44"><a href="spatio-temporal-statistical-models.html#cb15-44"></a>               <span class="dt">pch =</span> <span class="dv">2</span>, <span class="dt">size =</span> <span class="fl">2.5</span>) <span class="op">+</span></span>
+<span id="cb15-45"><a href="spatio-temporal-statistical-models.html#cb15-45"></a><span class="st">  </span><span class="kw">theme_bw</span>()</span>
+<span id="cb15-46"><a href="spatio-temporal-statistical-models.html#cb15-46"></a></span>
+<span id="cb15-47"><a href="spatio-temporal-statistical-models.html#cb15-47"></a>g</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Note some clearn spatial dependence on the residual plot. This menas that linear model cannot include spatio temporal effect.<br />
+We can also use Moran’s I test, as below.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="spatio-temporal-statistical-models.html#cb16-1"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb16-2"><a href="spatio-temporal-statistical-models.html#cb16-2"></a>P &lt;-<span class="st"> </span><span class="kw">list</span>()                                 <span class="co"># init list</span></span>
+<span id="cb16-3"><a href="spatio-temporal-statistical-models.html#cb16-3"></a>days &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">13</span>, <span class="dv">15</span><span class="op">:</span><span class="dv">31</span>)                      <span class="co"># set of days</span></span>
+<span id="cb16-4"><a href="spatio-temporal-statistical-models.html#cb16-4"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">seq_along</span>(days)) {                 <span class="co"># for each day</span></span>
+<span id="cb16-5"><a href="spatio-temporal-statistical-models.html#cb16-5"></a>  Tmax_day &lt;-<span class="st"> </span><span class="kw">filter</span>(Tmax_no_<span class="dv">14</span>,</span>
+<span id="cb16-6"><a href="spatio-temporal-statistical-models.html#cb16-6"></a>                     day <span class="op">==</span><span class="st"> </span>days[i])        <span class="co"># filter by day</span></span>
+<span id="cb16-7"><a href="spatio-temporal-statistical-models.html#cb16-7"></a>  station.dists &lt;-<span class="st"> </span>Tmax_day <span class="op">%&gt;%</span><span class="st">             </span><span class="co"># take the data</span></span>
+<span id="cb16-8"><a href="spatio-temporal-statistical-models.html#cb16-8"></a><span class="st">    </span><span class="kw">select</span>(lon, lat) <span class="op">%&gt;%</span><span class="st">                    </span><span class="co"># extract coords.</span></span>
+<span id="cb16-9"><a href="spatio-temporal-statistical-models.html#cb16-9"></a><span class="st">    </span><span class="kw">dist</span>() <span class="op">%&gt;%</span><span class="st">                              </span><span class="co"># comp. dists.</span></span>
+<span id="cb16-10"><a href="spatio-temporal-statistical-models.html#cb16-10"></a><span class="st">    </span><span class="kw">as.matrix</span>()                             <span class="co"># conv. to matrix</span></span>
+<span id="cb16-11"><a href="spatio-temporal-statistical-models.html#cb16-11"></a>  station.dists.inv &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">/</span>station.dists      <span class="co"># weight matrix</span></span>
+<span id="cb16-12"><a href="spatio-temporal-statistical-models.html#cb16-12"></a>  <span class="kw">diag</span>(station.dists.inv) &lt;-<span class="st"> </span><span class="dv">0</span>              <span class="co"># 0 on diag</span></span>
+<span id="cb16-13"><a href="spatio-temporal-statistical-models.html#cb16-13"></a>  P[[i]] &lt;-<span class="st"> </span><span class="kw">Moran.I</span>(Tmax_day<span class="op">$</span>residuals,     <span class="co"># run Moran&#39;s I</span></span>
+<span id="cb16-14"><a href="spatio-temporal-statistical-models.html#cb16-14"></a>                    station.dists.inv) <span class="op">%&gt;%</span></span>
+<span id="cb16-15"><a href="spatio-temporal-statistical-models.html#cb16-15"></a><span class="st">            </span><span class="kw">do.call</span>(<span class="st">&quot;cbind&quot;</span>, .)             <span class="co"># conv. to df</span></span>
+<span id="cb16-16"><a href="spatio-temporal-statistical-models.html#cb16-16"></a>}</span>
+<span id="cb16-17"><a href="spatio-temporal-statistical-models.html#cb16-17"></a></span>
+<span id="cb16-18"><a href="spatio-temporal-statistical-models.html#cb16-18"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb16-19"><a href="spatio-temporal-statistical-models.html#cb16-19"></a><span class="kw">do.call</span>(<span class="st">&quot;rbind&quot;</span>, P) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</span></code></pre></div>
+<pre><code>##       observed     expected         sd p.value
+## [1,] 0.2716679 -0.007575758 0.01235583       0
+## [2,] 0.2264147 -0.007575758 0.01236886       0
+## [3,] 0.2113966 -0.007575758 0.01236374       0
+## [4,] 0.1626477 -0.007575758 0.01238872       0
+## [5,] 0.2580333 -0.007575758 0.01241006       0
+## [6,] 0.1216741 -0.007575758 0.01227211       0</code></pre>
+<p>All the Moran’s I test for each region shows small p-value which means there is some dependence in the data.<br />
+Note that we can also check the dependence through Durbin-Watson test or ACF plot.</p>
+</div>
+<div id="gaussian-or-non-gaussian-errors" class="section level2">
+<h2><span class="header-section-number">3.3</span> Gaussian or Non Gaussian Errors</h2>
+<p>To approach spatio-temporal data statistically, GLM or GAM is used. For GLM, as many of the readers know, the observations conditioned on their respective means and scaling parameters are independent and come from the exponential family of distributions. Say,</p>
+<p><span class="math display">\[\begin{equation}
+  Z(s_i;t_j) \mid Y(s_i; t_j), \gamma \overset{iid}{\sim} EF(Y(s_i ;t_j), \gamma)
+\end{equation}\]</span></p>
+<p>Also, the transformed mean is modeled with the linear combination of covariates.</p>
+<p><span class="math display">\[\begin{equation}
+  g(Y(s;t)) = \beta_0 + \beta_1 X_1(s;t) + \beta_2 X_2(x;t) + \cdots + \beta_p X_p(s;t)
+\end{equation}\]</span></p>
+<p>Another way for modeling is GAM, generalized additive models, which assumes</p>
+<p><span class="math display">\[\begin{equation}
+  g(Y(s;t)) = \beta_1 + f_1(X_1(s;t)) + f_2(X_2(s;t)) + \cdots + f_p(X_p(s;t))
+\end{equation}\]</span></p>
+</div>
+<div id="hierarchical-spatio-temporal-statistical-models" class="section level2">
+<h2><span class="header-section-number">3.4</span> Hierarchical Spatio-Temporal Statistical Models</h2>
+<p>Previous sections show some possible ways to model spatio-temporal data using the methodology we know before such as OLS, GLM, GAM. However, these methods have some limitations in that they do not include measurement uncertainty, have the ability to predict at specific location or time and allow parameter inference on the existence of dependent errors. In the rest of this book, we will take a close look at these issues.<br />
+More specifically, we will consider statistical models that consider the following two-stage hierarchical spatio-temporal model.<br />
+</p>
+<p><em>observations = true process + observation error</em><br />
+<em>true process = regression component + dependent random process </em><br />
+</p>
+<p>There are two approaches for the true process, which is descriptive and dynamic approach, described in next chapter 4 and 5. In chapter 4, we will focus on the specification of spatio-temporal covariance functions through descriptive model. In chapter 5, we will focus on the evolution of spatial process through time via dynamic model.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="mapping-spatio-temporal-data.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/03-Spatio-Temporal-Statistica-Models.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
