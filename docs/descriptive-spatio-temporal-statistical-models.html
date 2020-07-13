@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Descriptive Spatio-Temporal Statistical Models | Spatio Temporal Statistics</title>
+  <meta name="description" content="This is a gitbook for spatio temporal analysis." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Descriptive Spatio-Temporal Statistical Models | Spatio Temporal Statistics" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a gitbook for spatio temporal analysis." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Descriptive Spatio-Temporal Statistical Models | Spatio Temporal Statistics" />
+  
+  <meta name="twitter:description" content="This is a gitbook for spatio temporal analysis." />
+  
+
+<meta name="author" content="BoHyun Shin" />
+
+
+<meta name="date" content="2020-07-13" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="spatio-temporal-statistical-models.html"/>
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Spatio Temporal Gitbook</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="part"><span><b>I Being Familiar with STD</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Exploring Spatio Temporal Data</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#representation-of-spatio-temporal-data-in-r"><i class="fa fa-check"></i><b>1.1</b> Representation of Spatio Temporal Data in R</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#visualization-of-std"><i class="fa fa-check"></i><b>1.2</b> Visualization of STD</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#exploratory-analysis-of-std"><i class="fa fa-check"></i><b>1.3</b> Exploratory Analysis of STD</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="intro.html"><a href="intro.html#empirical-spatial-means-and-covariances"><i class="fa fa-check"></i><b>1.3.1</b> Empirical Spatial Means and Covariances</a></li>
+<li class="chapter" data-level="1.3.2" data-path="intro.html"><a href="intro.html#elements-of-point-referenced-modeling"><i class="fa fa-check"></i><b>1.3.2</b> Elements of point-referenced modeling</a></li>
+<li class="chapter" data-level="1.3.3" data-path="intro.html"><a href="intro.html#empirical-orthogonal-functions-eofs"><i class="fa fa-check"></i><b>1.3.3</b> Empirical Orthogonal Functions (EOFs)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#wrap-up"><i class="fa fa-check"></i><b>1.4</b> Wrap up</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="mapping-spatio-temporal-data.html"><a href="mapping-spatio-temporal-data.html"><i class="fa fa-check"></i><b>2</b> Mapping Spatio Temporal Data</a></li>
+<li class="chapter" data-level="3" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html"><i class="fa fa-check"></i><b>3</b> Spatio-Temporal Statistical Models</a><ul>
+<li class="chapter" data-level="3.1" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#spatio-temporal-prediction"><i class="fa fa-check"></i><b>3.1</b> Spatio-Temporal Prediction</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#deterministic-prediction"><i class="fa fa-check"></i><b>3.1.1</b> Deterministic Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#regression-estimation"><i class="fa fa-check"></i><b>3.2</b> Regression Estimation</a></li>
+<li class="chapter" data-level="3.3" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#gaussian-or-non-gaussian-errors"><i class="fa fa-check"></i><b>3.3</b> Gaussian or Non Gaussian Errors</a></li>
+<li class="chapter" data-level="3.4" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#hierarchical-spatio-temporal-statistical-models"><i class="fa fa-check"></i><b>3.4</b> Hierarchical Spatio-Temporal Statistical Models</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html"><i class="fa fa-check"></i><b>4</b> Descriptive Spatio-Temporal Statistical Models</a><ul>
+<li class="chapter" data-level="4.1" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#additive-measurement-error-and-process-models"><i class="fa fa-check"></i><b>4.1</b> Additive Measurement Error and Process models</a></li>
+<li class="chapter" data-level="4.2" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#prediction-for-gaussian-data-and-processes."><i class="fa fa-check"></i><b>4.2</b> prediction for Gaussian Data and Processes.</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#spatio-temporal-covariance-functions"><i class="fa fa-check"></i><b>4.2.1</b> Spatio-Temporal Covariance Functions</a></li>
+<li class="chapter" data-level="4.2.2" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#spatio-temporal-semivariograms"><i class="fa fa-check"></i><b>4.2.2</b> Spatio-Temporal Semivariograms</a></li>
+<li class="chapter" data-level="4.2.3" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#gaussian-spatio-temporal-model-estimation"><i class="fa fa-check"></i><b>4.2.3</b> Gaussian Spatio-Temporal Model Estimation</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#random-effects-parameterizations"><i class="fa fa-check"></i><b>4.3</b> Random-Effects Parameterizations</a></li>
+<li class="chapter" data-level="4.4" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#basis-function-representations"><i class="fa fa-check"></i><b>4.4</b> Basis-Function Representations</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#random-effects-with-spatio-temporal-basis-functionss"><i class="fa fa-check"></i><b>4.4.1</b> Random Effects with Spatio-Temporal Basis Functionss</a></li>
+<li class="chapter" data-level="4.4.2" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#random-effects-with-spatial-basis-functions."><i class="fa fa-check"></i><b>4.4.2</b> Random Effects with Spatial Basis Functions.</a></li>
+<li class="chapter" data-level="4.4.3" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#random-effects-with-temporal-basis-functions"><i class="fa fa-check"></i><b>4.4.3</b> Random Effects with Temporal Basis Functions</a></li>
+<li class="chapter" data-level="4.4.4" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#confounding-of-fixed-effects-and-random-effects"><i class="fa fa-check"></i><b>4.4.4</b> Confounding of Fixed Effects and Random Effects</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Spatio Temporal Statistics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="descriptive-spatio-temporal-statistical-models" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Descriptive Spatio-Temporal Statistical Models</h1>
+<p>We saw that there are two approaches for spatio-temporal statistics, which is <em>two D’s</em>. One is descriptive approach which will be covered in this chapter. The other is dynamic approach which will be introduced in the next chapter. Our main goals are 1) to predict unknown value at some location and time point, 2) to estimate spatio-temporal covariates. For both goals, we assume the our observations can be decomposed as</p>
+<p><em>observations = true process + observation error</em><br />
+<em>true process = regression component + dependent random process </em><br />
+</p>
+<p>For descriptive approach, our main concern is to specify the dependence structure in the (dependent) random process whereas dynamic approach is mainly interested in the evolution of the dependent random process through time.</p>
+<div id="additive-measurement-error-and-process-models" class="section level2">
+<h2><span class="header-section-number">4.1</span> Additive Measurement Error and Process models</h2>
+<p>In this section, we consider two stage model, which consists of data (observation) model and a process model that is again consists of fixed effect and random effect. This general decomposition is the basis for the models that we present in this and next chapter.<br />
+Recall that for eath time point <span class="math inline">\(t \in \{t_1, \cdots, t_T \}\)</span>, we assume <span class="math inline">\(m_{t_j}\)</span> observations. That is, our observation is</p>
+<p><span class="math display">\[\begin{equation}
+  \mathbb{Z} = Z(s_{11}; t_1), Z(s_{21}; t_1), \cdots Z(s_{m_1 1}; t_1), \cdots, Z(s_{1T}; t_T), \cdots, Z(s_{m_t T}; t_T)
+\end{equation}\]</span></p>
+<p>In the situation where we want to predict values at spatio-temporal location <span class="math inline">\((s_0; t_0)\)</span>, if <span class="math inline">\(t_0 &gt; t_T\)</span>, we are in a forecasting situation and if <span class="math inline">\(t_0 &lt; t_T\)</span>, we have all data avilable to us, so we are in a smoothing situation. We assume that there is an underlying latent random spatio-temporal process which is denoted by <span class="math inline">\(Y(s;t): s\in D_s, t\in D_t\)</span>. However, what we see from the data is the noisy version of this latent random process, which is denoted by</p>
+<p><span class="math display">\[\begin{equation}
+  Z(s_{ij}; t_j) = Y(s_{ij}; t_j) + \epsilon(s_{ij}; t_j) \tag{1}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(\epsilon(s_{ij}; t_j)\)</span> represent iid mean-zero measurement error that is independent of <span class="math inline">\(Y\)</span> and has variance <span class="math inline">\(\sigma^2_\epsilon\)</span>. Now we assume that the latent process model follows another model as</p>
+<p><span class="math display">\[\begin{equation}
+  Y(s;t) = \mu(s;t) + \eta(s;t) \tag{2}
+\end{equation}\]</span></p>
+<p>In (2), <span class="math inline">\(\mu(s;t)\)</span> represents the process mean which is not random and <span class="math inline">\(\eta(s;t)\)</span> represents a mean-zero random process with spatial and temporal statistical dependence. Depending on the problem, we may choose <span class="math inline">\(\mu(s;t)\)</span> as 1) known, 2) constant but unknown, 3) modeled in terms of <span class="math inline">\(p\)</span> covariates, i.e., <span class="math inline">\(\mu(s;t) = x(s;t)&#39;\beta\)</span>, which is called respectively as 1) simple, 2) ordinary, 3) universal kriging.</p>
+</div>
+<div id="prediction-for-gaussian-data-and-processes." class="section level2">
+<h2><span class="header-section-number">4.2</span> prediction for Gaussian Data and Processes.</h2>
+<p>In chapter 2, recall that we consider some deterministic weight, which is IDW, that smoothes surrounding datat points. In making the IDW, no statistical optimal methods are used, but cross validation for determining <span class="math inline">\(\alpha\)</span> is used. Now, we consider a optimization criterion, which is $E(Y(s_0; t_0) - (s_0; t_0))^2 $, the mean square prediction error (MPSE). The best linear unbiased predictor that minimizes the MSPE is referred as the <strong>kriging predictor</strong>. To determine optimal linear predictor, which we henceforth call <em>S-T kriging</em>, it is convenient to assume that the underlying latent process is a Gaussian process and the measurement error has a Gaussian distribution. In vector representation,</p>
+<p><span class="math display">\[\begin{equation}
+  \mathbf{Z} = \mathbf{Y} + \epsilon \\
+  \mathbf{Y} = \mathbb{\mu} + \mathbb{\eta} \tag{3}
+\end{equation}\]</span></p>
+<p>where we assume universal kriging, i.e., <span class="math inline">\(\mathbb{\mu} = \mathbf{X} \mathbb{\beta}\)</span>. Also, <span class="math inline">\(Cov(\mathbf{Y}) \equiv \mathbf{C}_y = \mathbf{C}_\eta\)</span>, <span class="math inline">\(Cov(\epsilon) \equiv \mathbf{C}_\epsilon\)</span>, <span class="math inline">\(Cov(\mathbf{Z}) \equiv \mathbf{C}_z = \mathbf{C}_y + \mathbf{C}_\epsilon\)</span>. For <span class="math inline">\((s_0, t_0)\)</span>, consider the joint Gaussian distribution,</p>
+<p><span class="math display">\[\begin{equation}
+  
+  \left[ {\begin{array}{cc}
+   Y(s_0; t_0) \\
+   \mathbf{Z} \\
+  \end{array} } \right]
+  
+  \sim
+  
+  Gau \left( 
+  
+  \left[ {\begin{array}{cc}
+   Y(s_0; t_0) \\
+   \mathbf{Z} \\
+  \end{array} } \right] \mathbf{\beta},
+  
+  \left[ {\begin{array}{cc}
+   c_{0,0} &amp; \mathbf{c}^{&#39;}_0 \\
+   \mathbf{c}_0 &amp; \mathbf{C}_z \\
+  \end{array} } \right]
+  
+  \right) \tag{4}
+
+\end{equation}\]</span></p>
+<p>By the property of Gaussian distribution, the conditional distribution can be derived easily,</p>
+<p><span class="math display">\[\begin{equation}
+  Y(s_0; t_0) \mid \mathbf{Z} \sim Gau( mean, var) \tag{5}
+\end{equation}\]</span></p>
+<p>where the conditional mean in (5) is S-T simple kriging predictor,</p>
+<p><span class="math display">\[\begin{equation}
+  \hat{Y}(s_0; t_0) = \mathbf{x}(s_0; t_0)&#39; \beta + \mathbf{c}&#39;_0 \mathbf{C}^{-1}_z (\mathbf{Z} - \mathbf{X\beta}) \tag{6}
+\end{equation}\]</span></p>
+<p>and the variance is the conditional variance in (5)</p>
+<p><span class="math display">\[\begin{equation}
+  \sigma^2_{Y, sk}(s_0; t_0) = c_{0,0} - \mathbf{c}&#39;_0 \mathbf{C}^{-1}_z \mathbf{c}_0 \tag{7}
+\end{equation}\]</span></p>
+<p>Note that for any location, we can get S-T simple kriging predictor. This means that we assume that the process is defined for an uncountable set of locations and the data correspond to a partial realization of this process. This is also a property of Gaussian process.<br />
+Another note is that from (6), the S-T simple kriging predictor is the combiation of original mean and the residual, where the weight is <span class="math inline">\(\mathbf{w} \equiv \mathbf{c}&#39;_0 \mathbf{C}^{-1}_z\)</span>. This can be views as the trend term <span class="math inline">\(\mathbf{x}(s_0; t_0)&#39;\beta\)</span> is the mean of <span class="math inline">\(Y(s_0; t_0)\)</span> prior to considering the observations.<br />
+</p>
+<p>Note that <span class="math inline">\(\beta\)</span> is unknown parameter, which is to be estimated. Replacing it with the gls estimator, we get the optimal linear unbiased predictor, or S-T universal kriging predictor of <span class="math inline">\(Y(s_0; t_0)\)</span> as</p>
+<p><span class="math display">\[\begin{equation}
+  \hat{Y}(s_0; t_0) = \mathbf{x}(s_0; t_0)&#39; \hat{\beta}_{gls} + \mathbf{c}&#39;_0 \mathbf{C}^{-1}_z (\mathbf{Z} - \mathbf{X\hat{\beta}_{gls}}) \tag{8}
+\end{equation}\]</span></p>
+<p>where</p>
+<p><span class="math display">\[\begin{equation}
+  \hat{\beta}_{gls} \equiv (\mathbf{X}&#39; \mathbf{C}^{-1}_z \mathbf{X})^{-1} \mathbf{X}&#39; \mathbf{C}^{-1}_z \mathbf{Z} \tag{9}
+\end{equation}\]</span></p>
+<p>with</p>
+<p><span class="math display">\[\begin{equation}
+  \sigma^2_{Y, sk}(s_0; t_0) = c_{0,0} - \mathbf{c}&#39;_0 \mathbf{C}^{-1}_z \mathbf{c}_0 + \kappa \tag{10}
+\end{equation}\]</span></p>
+<p>which is prediction standard error. For those of you who learn the spatial statistics before, the form of kriging estimator and variance is vary similar of that of spatio-temporal estimator.<br />
+In practice, we also do not know the covariance function, <span class="math inline">\(\mathbf{C}_z, \mathbf{c}_0\)</span>, so we need to assume the structure of covariance function or parameterize to estimate them. Similar with spatial statistics, the parameterization of these covariance function is one of the most difficult challenges in spatio-temporal statistics.</p>
+<div id="spatio-temporal-covariance-functions" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Spatio-Temporal Covariance Functions</h3>
+<p>As mentioned above, we need to know covariance function, i.e., <span class="math inline">\(\mathbf{C}_z, \mathbf{c}_0\)</span>, to get the S-T kriging predictors. However, not any matrix can be covariance function, which requires some conditions, i.e., non-negative-definite. The general spatio-temporal covariance function would be</p>
+<p><span class="math display">\[\begin{equation}
+  c_*(s,s&#39; ; t,t&#39;) \equiv Cov(Y(s;t), Y(s&#39;;t&#39;)) \tag{11}
+\end{equation}\]</span></p>
+<p>In practice, we commonly assume second-order stationary; the random process is said to be second-order (or weakly) stationary if it has a constant expection and the covariance function would be expressed in terms of only spatioal and temporal lags not others. That is,</p>
+<p><span class="math display">\[\begin{equation}
+  c_*(s,s&#39; ; t,t&#39;) = c(s&#39;-s; t&#39;-t) = c(h; \tau) \tag{12}
+\end{equation}\]</span></p>
+<p>The second-order stationary assumption gives us many advantages, which allows some easy expression of covariance function, thus easy interpretation. Then, how do we obtain valid stionary spatio-temporal covariance functions?</p>
+<p><strong>Separable (in Space and Time) Covariance Functions</strong><br />
+Separable covariance function have often been used because it is simple, easy to interpret but guarantee validity. It is given by</p>
+<p><span class="math display">\[\begin{equation}
+  c(h; \tau) \equiv c^{(s)}(h) \cdot c^{(t)}(\tau)
+\end{equation}\]</span></p>
+<p>There are lots of valid spatial covariance function and valid temporal covariance function. For example, the most widely used one is Matern covariance function, which is</p>
+<p><span class="math display">\[\begin{equation}
+  c^{(s)}(h) = \sigma^2_s exp \{ - \dfrac{||h||}{a_s} \}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(\sigma^2_s\)</span> is the variance parameter and <span class="math inline">\(a_s\)</span> is the spatial dependence parameter. More <span class="math inline">\(a_s\)</span> results in smaller value in exponential, meaning large value of <span class="math inline">\(\mathbf{c}(h)\)</span>. Moreover, separable covariance function reduce computation time, becuase the spatio-temporal covariance function can be decomposed into kronecker product. Because we have to compute inverse matrix of spatio-temporal covariance function, the computation could be enormously. However, by using the property of kronecker, we could reduce lots of computation.<br />
+However, separable covariance function assumes that the temporal evolution of the process at a given spatial location does not depend directly on the process’ temporal evolution at other locations, which is very seldom for real-word. So we should consider other covariance functions, which will be discussed next.</p>
+<p><strong>Sums-andProducts Formulation</strong><br />
+Using the property that sums of non-negative-definite function is also non-negative-definite, we present another form of covariance function,</p>
+<p><span class="math display">\[\begin{equation}
+  c(h;\tau) \equiv p c^{(s)}_1 (h) \cdot c^{(t)}_1(\tau) + q c^{(s)}_2(h) + r c^{(t)}_2(\tau) \tag{13}
+\end{equation}\]</span></p>
+<p>Note that covariance function in (13) assumes fully symmetric spatio-temporal covariance function which is not realistic in real world.</p>
+<p><strong>Construction via a Spectral Representation</strong><br />
+Developed by Cressie and Huang, they express the covariance function as</p>
+<p><span class="math display">\[\begin{equation}
+  c(h;\tau) = \sigma^2 exp\{ -b^2 ||h||^2 / (a^2 \tau^2 + 1)  \} / (a^2 \tau^2 + 1)^{d/2} \tag{14}
+\end{equation}\]</span></p>
+<p><strong>Stochastic Partial Differential Equation (SPDE) Approach</strong>
+Seldom directly appropriate for physical processes but may still provide good fits to data.</p>
+</div>
+<div id="spatio-temporal-semivariograms" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> Spatio-Temporal Semivariograms</h3>
+<p>In spatial statistics, it is common to consider dependence through the spatial variogram. Likewise, we can consider spatio-temporal variogram as</p>
+<p><span class="math display">\[\begin{equation}
+  Var(Y(s;t) - Y(s&#39;;t&#39;)) \equiv 2 \gamma(s,s&#39;; t,t&#39;) \tag{15}
+\end{equation}\]</span></p>
+<p>Similar with the definition of stationary spatial process, the stationary version of spatio-temporal variogram is denoted by <span class="math inline">\(2\gamma(h;\tau)\)</span>. Although variogram is widely used as exploratory analysis to check spatial dependence, this is not the common case in spatio-temporal statistical modeling. The main reason for this is that most of the real-world processes are best described as <em>local</em> second-order stationarity. If only local staionarity is expected and modeled, the extra generality given by the variogram is not needed. If this extra generality is included in the model without caution, some undesirable situations may occurr, which results in un-optimal variogram-based kriging predictor. However, when using covariance-based kriging predictor, we do not have to worry about such things.</p>
+</div>
+<div id="gaussian-spatio-temporal-model-estimation" class="section level3">
+<h3><span class="header-section-number">4.2.3</span> Gaussian Spatio-Temporal Model Estimation</h3>
+<p>In spatial statistics, it is common to fit covariance function (or semivariograms) directly to the empirical estimates, e.g., least squares or weighted least squares. However, in spatio-temporal statistics, we consider fully parameterized covariance structure and infer the parameters through likelikhood-based methods or bayesian methods.</p>
+<p><strong>Likelihood Estimation</strong><br />
+We consider following likelihood,</p>
+<p><span class="math display">\[\begin{equation}
+  L(\beta, \theta, Z) \propto |\mathbf{C}_z (\theta) |^{-1/2} exp \{ -\dfrac12(Z - X\beta)&#39; \mathbf{C}_z(\theta)^{-1}(Z-X\beta)  \} \tag{16}
+\end{equation}\]</span></p>
+<p>We maximize (16) w.r.t. <span class="math inline">\(\beta,\theta\)</span>. To reduce computation, we profile <span class="math inline">\(\beta\)</span> with GLS estimator and find the mle of <span class="math inline">\(\theta\)</span>. Finally, we get the mle of <span class="math inline">\(\beta\)</span>. Estimator using this method is called <em>empirical best linear unbiased predictor</em> (EBLUP).</p>
+<p><strong>Bayesian Inference</strong><br />
+Instead fixing <span class="math inline">\(\theta, \beta\)</span>, we set the prior on them in bayesian statistics. Because the closed form of posterior distribution is often not possible, we get the numerical evaluation of it.
+\end{equation}</p>
+</div>
+</div>
+<div id="random-effects-parameterizations" class="section level2">
+<h2><span class="header-section-number">4.3</span> Random-Effects Parameterizations</h2>
+<p>Models including random-effects can take conditional or marginal approach depending on the purpose of analysis. If one specifies intercepts and slopes as random effects, inference at the subjevt (individual) level can be considered. In contrast, if the ficed treatment effects <span class="math inline">\(\beta\)</span> is the main interest, one might consider the marginal distribution of the responses where individual random effects have been integrated out. In spatial or spatio-temporal modeling, same considerations apply except that the random effects account for spatial or spatio-temporal effect. This is important in that it allows us to build spatio-temporal depdence conditionally, which allows us to build spatio-temporal dependence conditionally and some computational advantages. [See the technical note 4.3 in textbook for more details.]</p>
+</div>
+<div id="basis-function-representations" class="section level2">
+<h2><span class="header-section-number">4.4</span> Basis-Function Representations</h2>
+<p>We talked about basis function at chapter 1, 3. Similar to random effects, coefficient of basis functions can be fixed effect or andom effect. If we consider random effect, it can be spatial, temporal or spatio-temporal basis functions. We will see those in the following subsections.</p>
+<div id="random-effects-with-spatio-temporal-basis-functionss" class="section level3">
+<h3><span class="header-section-number">4.4.1</span> Random Effects with Spatio-Temporal Basis Functionss</h3>
+<p>Suppose the observation and process model in (3). We resrite the process model in terms of fixed and random effects, i.e.,</p>
+<p><span class="math display">\[\begin{equation}
+  Y(s;t) = \mathbf{x}(s;t)&#39; \beta + \eta(s;t) = \mathbf{x}(s;t)&#39; \beta + \sum^{n_\alpha}_{i=1} \phi_i(s;t)\alpha_i + \nu(s;t) \tag{17}
+\end{equation}\]</span></p>
+<p>Note that basis functions in (17) are functions of <span class="math inline">\(s,t\)</span>; <span class="math inline">\(\phi(s;t)\)</span>. The corresponding coefficient <span class="math inline">\(\alpha_i\)</span> is random effects. <span class="math inline">\(\nu(s;t)\)</span> is sometimes needed to represent small-scale spatio-temporal random effects not captured by the basis functions. That is, <em>the spatio-temporal random process, <span class="math inline">\(\eta(s;t)\)</span> is decomposed into a linear combination of <span class="math inline">\(n_\alpha\)</span> random effects and a residual error term</em>.<br />
+Suppose <span class="math inline">\(\alpha \sim Gau(0, \mathbf{C}_\alpha)\)</span>, where <span class="math inline">\(\alpha \equiv (\alpha_1, \cdots, \alpha_{n_\alpha})\)</span>. In vector notation, the spatio-temporal process model can be represented as</p>
+<p><span class="math display">\[\begin{equation}
+  \mathbf{Y} = \mathbf{X\beta} + \mathbf{\Phi \alpha} + \mathbb{\nu} \tag{18}
+\end{equation}\]</span></p>
+<p>From technical note 4.3, the marginal distribution of <span class="math inline">\(\mathbf{Y}\)</span> is given by <span class="math inline">\(\mathbf{Y} \sim Gau(\mathbf{X}\beta, \mathbf{\Phi C_\alpha \Phi &#39;} + \mathbf{C_\nu})\)</span>. Benefit ot this approach is that we focus on fixed number of <span class="math inline">\(n_\alpha\)</span> random effects, which we set far less thatn <span class="math inline">\(n_y\)</span>, original dimension, for computational gain. Moreover, the covariance matrix of <span class="math inline">\(\mathbf{Z}\)</span>, the observation process, can be expressed as <span class="math inline">\(\mathbf{C_z} = \mathbf{\Phi C_\alpha \Phi &#39;} + \mathbf{C_\nu} + \mathbf{C}_\epsilon\)</span>, on which we can apply Sherman-Morrison-Woodbery matrix identities. Therefore, we can get great computation efficienccy.<br />
+</p>
+<p>Choices of basis functions can be tricky because there are many options for spatio-temporal basis functions; 1) fixed or parameterized basis functions, 2) local or global basis functions, 3) reduced-rank, complete, or over-complete bases, 4) basis functions with expansion coefficients possibly indexed by space, time or space-time. Moreover, the thoice is affected by the presence and type of residual structure and the distribution of the random effects, so it is not easy to use basis functions. One simple attempt could be tensor-product basis functions, where we define the spatio-temporal basis function as the product of a spatial basis function and a temporal basis function.<br />
+</p>
+<p><strong>Example: Fixed Rank Kriging</strong><br />
+</p>
+</div>
+<div id="random-effects-with-spatial-basis-functions." class="section level3">
+<h3><span class="header-section-number">4.4.2</span> Random Effects with Spatial Basis Functions.</h3>
+<p>We can also consider the basis functions of space only and random coefficients indexed by time.</p>
+<p><span class="math display">\[\begin{equation}
+  Y(s;t) = \mathbf{x}(s;t)&#39; \beta + \eta(s;t) = \mathbf{x}(s;t)&#39; \beta + \sum^{n_\alpha}_{i=1} \phi_i(s)\alpha_i(t_j) + \nu(s;t) \tag{19}
+\end{equation}\]</span></p>
+<p>For spatial only basis model specified in (19), there are two options for <span class="math inline">\(\alpha\)</span>. One is independent assumption, i.e. <span class="math inline">\(\alpha_{t_1}, \alpha_{t_2}, \cdots\)</span>, which results in separable spatio-temporal dependence structure. The other is dependent assumption to model complex spatio-temporal dependence structure which will be discuseed in Chapter 5.</p>
+</div>
+<div id="random-effects-with-temporal-basis-functions" class="section level3">
+<h3><span class="header-section-number">4.4.3</span> Random Effects with Temporal Basis Functions</h3>
+<p>Finally, we can also express spatio-temporal random process in terms of temporal basis functions and spatially indexed random effects.
+<span class="math display">\[\begin{equation}
+  Y(s;t) = \mathbf{x}(s;t)&#39; \beta + \eta(s;t) = \mathbf{x}(s;t)&#39; \beta + \sum^{n_\alpha}_{i=1} \phi_i(t)\alpha_i(s) + \nu(s;t) \tag{20}
+\end{equation}\]</span>
+Model (20) is not as common as the model (18). However, the temporal basis functions are increasinly being used to model non-stationary-in-time processes that vary across space.<br />
+</p>
+<p><strong>Example Using Temporal Basis Functions</strong><br />
+</p>
+</div>
+<div id="confounding-of-fixed-effects-and-random-effects" class="section level3">
+<h3><span class="header-section-number">4.4.4</span> Confounding of Fixed Effects and Random Effects</h3>
+<p>Consider general mixed-effects representation given in (18). The design matrix <span class="math inline">\(\mathbf{X}\)</span> is a function of space-time and matrix of basis function <span class="math inline">\(\mathbf{\Phi}\)</span> can also be a function of space-time. That is, there is a concern that there is a potential confounding associated with the random effects. For this reason, many people choose basis functions in <span class="math inline">\(\mathbf{\Phi}\)</span> orthogonal to the columns space of <span class="math inline">\(\mathbf{X}\)</span> to avoid this confounding. However, if one aims to predict the hidden process, this is not a problem at all.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="spatio-temporal-statistical-models.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/04-Descriptive-Modeling.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
