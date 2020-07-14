@@ -13,7 +13,7 @@
   
   
   <meta property="og:description" content="This is a gitbook for spatio temporal analysis." />
-  <meta name="github-repo" content="rstudio/bookdown-demo" />
+  <meta name="github-repo" content="bohyunshin/spatio-temporal" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 3 Spatio-Temporal Statistical Models | Spatio Temporal Statistics" />
@@ -24,7 +24,7 @@
 <meta name="author" content="BoHyun Shin" />
 
 
-<meta name="date" content="2020-07-09" />
+<meta name="date" content="2020-07-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="mapping-spatio-temporal-data.html"/>
-
+<link rel="next" href="descriptive-spatio-temporal-statistical-models.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -146,7 +146,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#wrap-up"><i class="fa fa-check"></i><b>1.4</b> Wrap up</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="mapping-spatio-temporal-data.html"><a href="mapping-spatio-temporal-data.html"><i class="fa fa-check"></i><b>2</b> Mapping Spatio Temporal Data</a></li>
+<li class="chapter" data-level="2" data-path="mapping-spatio-temporal-data.html"><a href="mapping-spatio-temporal-data.html"><i class="fa fa-check"></i><b>2</b> Mapping Spatio Temporal Data</a><ul>
+<li class="chapter" data-level="2.1" data-path="mapping-spatio-temporal-data.html"><a href="mapping-spatio-temporal-data.html#some-basic-class-regarding-spatio-temporal-data-in-r"><i class="fa fa-check"></i><b>2.1</b> Some basic class regarding spatio-temporal data in R</a></li>
+<li class="chapter" data-level="2.2" data-path="mapping-spatio-temporal-data.html"><a href="mapping-spatio-temporal-data.html#package"><i class="fa fa-check"></i><b>2.2</b> Package</a></li>
+</ul></li>
+<li class="part"><span><b>II Modeling Spatio-Temporal Data</b></span></li>
 <li class="chapter" data-level="3" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html"><i class="fa fa-check"></i><b>3</b> Spatio-Temporal Statistical Models</a><ul>
 <li class="chapter" data-level="3.1" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#spatio-temporal-prediction"><i class="fa fa-check"></i><b>3.1</b> Spatio-Temporal Prediction</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#deterministic-prediction"><i class="fa fa-check"></i><b>3.1.1</b> Deterministic Prediction</a></li>
@@ -154,6 +158,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#regression-estimation"><i class="fa fa-check"></i><b>3.2</b> Regression Estimation</a></li>
 <li class="chapter" data-level="3.3" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#gaussian-or-non-gaussian-errors"><i class="fa fa-check"></i><b>3.3</b> Gaussian or Non Gaussian Errors</a></li>
 <li class="chapter" data-level="3.4" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#hierarchical-spatio-temporal-statistical-models"><i class="fa fa-check"></i><b>3.4</b> Hierarchical Spatio-Temporal Statistical Models</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html"><i class="fa fa-check"></i><b>4</b> Descriptive Spatio-Temporal Statistical Models</a><ul>
+<li class="chapter" data-level="4.1" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#additive-measurement-error-and-process-models"><i class="fa fa-check"></i><b>4.1</b> Additive Measurement Error and Process models</a></li>
+<li class="chapter" data-level="4.2" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#prediction-for-gaussian-data-and-processes."><i class="fa fa-check"></i><b>4.2</b> prediction for Gaussian Data and Processes.</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#spatio-temporal-covariance-functions"><i class="fa fa-check"></i><b>4.2.1</b> Spatio-Temporal Covariance Functions</a></li>
+<li class="chapter" data-level="4.2.2" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#spatio-temporal-semivariograms"><i class="fa fa-check"></i><b>4.2.2</b> Spatio-Temporal Semivariograms</a></li>
+<li class="chapter" data-level="4.2.3" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#gaussian-spatio-temporal-model-estimation"><i class="fa fa-check"></i><b>4.2.3</b> Gaussian Spatio-Temporal Model Estimation</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#random-effects-parameterizations"><i class="fa fa-check"></i><b>4.3</b> Random-Effects Parameterizations</a></li>
+<li class="chapter" data-level="4.4" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#basis-function-representations"><i class="fa fa-check"></i><b>4.4</b> Basis-Function Representations</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#random-effects-with-spatio-temporal-basis-functionss"><i class="fa fa-check"></i><b>4.4.1</b> Random Effects with Spatio-Temporal Basis Functionss</a></li>
+<li class="chapter" data-level="4.4.2" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#random-effects-with-spatial-basis-functions."><i class="fa fa-check"></i><b>4.4.2</b> Random Effects with Spatial Basis Functions.</a></li>
+<li class="chapter" data-level="4.4.3" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#random-effects-with-temporal-basis-functions"><i class="fa fa-check"></i><b>4.4.3</b> Random Effects with Temporal Basis Functions</a></li>
+<li class="chapter" data-level="4.4.4" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#confounding-of-fixed-effects-and-random-effects"><i class="fa fa-check"></i><b>4.4.4</b> Confounding of Fixed Effects and Random Effects</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -460,8 +479,8 @@ More specifically, we will consider statistical models that consider the followi
           </div>
         </div>
       </div>
-<a href="mapping-spatio-temporal-data.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="mapping-spatio-temporal-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="descriptive-spatio-temporal-statistical-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

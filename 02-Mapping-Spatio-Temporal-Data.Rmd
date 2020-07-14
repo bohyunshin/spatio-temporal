@@ -1,8 +1,7 @@
 # Mapping Spatio Temporal Data
 
-In this part, we will have a look at some basics about STD before applying statistical models. This includes calculating basic statistics, visualizing map etc.
-This section is largely based on the Spatio-Temporal Statistics with R, Cressie. So, if you want to know the details, please refer to it.
+In this chapter, we talk about how to map spatio-temporal data in R
 
-## Representation of Spatio Temporal Data in R
-Although there are many ways to represent spatial data or time series data in R, there are relatively few ways to represent the STD in R. In this book, we will use the class defined in the R package **spacetime**. Classes defined in this package extend **sp** classs for spatial data and **xts** class for time series data. \
-Some simple tables can represent the STD as following three classes:
+## Some basic class regarding spatio-temporal data in R
+
+## Package
