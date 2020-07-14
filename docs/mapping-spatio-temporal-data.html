@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Mapping Spatio Temporal Data | Spatio Temporal Statistics</title>
+  <meta name="description" content="This is a gitbook for spatio temporal analysis." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Mapping Spatio Temporal Data | Spatio Temporal Statistics" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a gitbook for spatio temporal analysis." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Mapping Spatio Temporal Data | Spatio Temporal Statistics" />
+  
+  <meta name="twitter:description" content="This is a gitbook for spatio temporal analysis." />
+  
+
+<meta name="author" content="BoHyun Shin" />
+
+
+<meta name="date" content="2020-07-14" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="intro.html"/>
+<link rel="next" href="spatio-temporal-statistical-models.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Spatio Temporal Gitbook</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="part"><span><b>I Being Familiar with STD</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Exploring Spatio Temporal Data</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#representation-of-spatio-temporal-data-in-r"><i class="fa fa-check"></i><b>1.1</b> Representation of Spatio Temporal Data in R</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#visualization-of-std"><i class="fa fa-check"></i><b>1.2</b> Visualization of STD</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#exploratory-analysis-of-std"><i class="fa fa-check"></i><b>1.3</b> Exploratory Analysis of STD</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="intro.html"><a href="intro.html#empirical-spatial-means-and-covariances"><i class="fa fa-check"></i><b>1.3.1</b> Empirical Spatial Means and Covariances</a></li>
+<li class="chapter" data-level="1.3.2" data-path="intro.html"><a href="intro.html#elements-of-point-referenced-modeling"><i class="fa fa-check"></i><b>1.3.2</b> Elements of point-referenced modeling</a></li>
+<li class="chapter" data-level="1.3.3" data-path="intro.html"><a href="intro.html#empirical-orthogonal-functions-eofs"><i class="fa fa-check"></i><b>1.3.3</b> Empirical Orthogonal Functions (EOFs)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#wrap-up"><i class="fa fa-check"></i><b>1.4</b> Wrap up</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="mapping-spatio-temporal-data.html"><a href="mapping-spatio-temporal-data.html"><i class="fa fa-check"></i><b>2</b> Mapping Spatio Temporal Data</a><ul>
+<li class="chapter" data-level="2.1" data-path="intro.html"><a href="intro.html#representation-of-spatio-temporal-data-in-r"><i class="fa fa-check"></i><b>2.1</b> Representation of Spatio Temporal Data in R</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html"><i class="fa fa-check"></i><b>3</b> Spatio-Temporal Statistical Models</a><ul>
+<li class="chapter" data-level="3.1" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#spatio-temporal-prediction"><i class="fa fa-check"></i><b>3.1</b> Spatio-Temporal Prediction</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#deterministic-prediction"><i class="fa fa-check"></i><b>3.1.1</b> Deterministic Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#regression-estimation"><i class="fa fa-check"></i><b>3.2</b> Regression Estimation</a></li>
+<li class="chapter" data-level="3.3" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#gaussian-or-non-gaussian-errors"><i class="fa fa-check"></i><b>3.3</b> Gaussian or Non Gaussian Errors</a></li>
+<li class="chapter" data-level="3.4" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#hierarchical-spatio-temporal-statistical-models"><i class="fa fa-check"></i><b>3.4</b> Hierarchical Spatio-Temporal Statistical Models</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html"><i class="fa fa-check"></i><b>4</b> Descriptive Spatio-Temporal Statistical Models</a><ul>
+<li class="chapter" data-level="4.1" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#additive-measurement-error-and-process-models"><i class="fa fa-check"></i><b>4.1</b> Additive Measurement Error and Process models</a></li>
+<li class="chapter" data-level="4.2" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#prediction-for-gaussian-data-and-processes."><i class="fa fa-check"></i><b>4.2</b> prediction for Gaussian Data and Processes.</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#spatio-temporal-covariance-functions"><i class="fa fa-check"></i><b>4.2.1</b> Spatio-Temporal Covariance Functions</a></li>
+<li class="chapter" data-level="4.2.2" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#spatio-temporal-semivariograms"><i class="fa fa-check"></i><b>4.2.2</b> Spatio-Temporal Semivariograms</a></li>
+<li class="chapter" data-level="4.2.3" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#gaussian-spatio-temporal-model-estimation"><i class="fa fa-check"></i><b>4.2.3</b> Gaussian Spatio-Temporal Model Estimation</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#random-effects-parameterizations"><i class="fa fa-check"></i><b>4.3</b> Random-Effects Parameterizations</a></li>
+<li class="chapter" data-level="4.4" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#basis-function-representations"><i class="fa fa-check"></i><b>4.4</b> Basis-Function Representations</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#random-effects-with-spatio-temporal-basis-functionss"><i class="fa fa-check"></i><b>4.4.1</b> Random Effects with Spatio-Temporal Basis Functionss</a></li>
+<li class="chapter" data-level="4.4.2" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#random-effects-with-spatial-basis-functions."><i class="fa fa-check"></i><b>4.4.2</b> Random Effects with Spatial Basis Functions.</a></li>
+<li class="chapter" data-level="4.4.3" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#random-effects-with-temporal-basis-functions"><i class="fa fa-check"></i><b>4.4.3</b> Random Effects with Temporal Basis Functions</a></li>
+<li class="chapter" data-level="4.4.4" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#confounding-of-fixed-effects-and-random-effects"><i class="fa fa-check"></i><b>4.4.4</b> Confounding of Fixed Effects and Random Effects</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Spatio Temporal Statistics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="mapping-spatio-temporal-data" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Mapping Spatio Temporal Data</h1>
+<p>In this part, we will have a look at some basics about STD before applying statistical models. This includes calculating basic statistics, visualizing map etc.
+This section is largely based on the Spatio-Temporal Statistics with R, Cressie. So, if you want to know the details, please refer to it.</p>
+<div id="representation-of-spatio-temporal-data-in-r" class="section level2">
+<h2><span class="header-section-number">2.1</span> Representation of Spatio Temporal Data in R</h2>
+<p>Although there are many ways to represent spatial data or time series data in R, there are relatively few ways to represent the STD in R. In this book, we will use the class defined in the R package <strong>spacetime</strong>. Classes defined in this package extend <strong>sp</strong> classs for spatial data and <strong>xts</strong> class for time series data.<br />
+Some simple tables can represent the STD as following three classes:</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="spatio-temporal-statistical-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/02-Mapping-Spatio-Temporal-Data.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
