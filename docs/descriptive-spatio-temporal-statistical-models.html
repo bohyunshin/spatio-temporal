@@ -13,7 +13,7 @@
   
   
   <meta property="og:description" content="This is a gitbook for spatio temporal analysis." />
-  <meta name="github-repo" content="rstudio/bookdown-demo" />
+  <meta name="github-repo" content="bohyunshin/spatio-temporal" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 4 Descriptive Spatio-Temporal Statistical Models | Spatio Temporal Statistics" />
@@ -24,7 +24,7 @@
 <meta name="author" content="BoHyun Shin" />
 
 
-<meta name="date" content="2020-07-13" />
+<meta name="date" content="2020-07-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,70 @@
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -82,7 +146,11 @@
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#wrap-up"><i class="fa fa-check"></i><b>1.4</b> Wrap up</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="mapping-spatio-temporal-data.html"><a href="mapping-spatio-temporal-data.html"><i class="fa fa-check"></i><b>2</b> Mapping Spatio Temporal Data</a></li>
+<li class="chapter" data-level="2" data-path="mapping-spatio-temporal-data.html"><a href="mapping-spatio-temporal-data.html"><i class="fa fa-check"></i><b>2</b> Mapping Spatio Temporal Data</a><ul>
+<li class="chapter" data-level="2.1" data-path="mapping-spatio-temporal-data.html"><a href="mapping-spatio-temporal-data.html#some-basic-class-regarding-spatio-temporal-data-in-r"><i class="fa fa-check"></i><b>2.1</b> Some basic class regarding spatio-temporal data in R</a></li>
+<li class="chapter" data-level="2.2" data-path="mapping-spatio-temporal-data.html"><a href="mapping-spatio-temporal-data.html#package"><i class="fa fa-check"></i><b>2.2</b> Package</a></li>
+</ul></li>
+<li class="part"><span><b>II Modeling Spatio-Temporal Data</b></span></li>
 <li class="chapter" data-level="3" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html"><i class="fa fa-check"></i><b>3</b> Spatio-Temporal Statistical Models</a><ul>
 <li class="chapter" data-level="3.1" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#spatio-temporal-prediction"><i class="fa fa-check"></i><b>3.1</b> Spatio-Temporal Prediction</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#deterministic-prediction"><i class="fa fa-check"></i><b>3.1.1</b> Deterministic Prediction</a></li>
@@ -128,6 +196,17 @@
             <section class="normal" id="section-">
 <div id="descriptive-spatio-temporal-statistical-models" class="section level1">
 <h1><span class="header-section-number">Chapter 4</span> Descriptive Spatio-Temporal Statistical Models</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb1-1"></a><span class="kw">library</span>(<span class="st">&quot;sp&quot;</span>)</span>
+<span id="cb1-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb1-2"></a><span class="kw">library</span>(<span class="st">&quot;spacetime&quot;</span>)</span>
+<span id="cb1-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb1-3"></a><span class="kw">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
+<span id="cb1-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb1-4"></a><span class="kw">library</span>(<span class="st">&quot;dplyr&quot;</span>)</span>
+<span id="cb1-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb1-5"></a><span class="kw">library</span>(<span class="st">&quot;gstat&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: package &#39;gstat&#39; was built under R version 4.0.1</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-1"></a><span class="kw">library</span>(<span class="st">&quot;RColorBrewer&quot;</span>)</span>
+<span id="cb3-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-2"></a><span class="kw">library</span>(<span class="st">&quot;STRbook&quot;</span>)</span>
+<span id="cb3-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-3"></a><span class="kw">library</span>(<span class="st">&quot;tidyr&quot;</span>)</span>
+<span id="cb3-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-4"></a><span class="kw">library</span>(<span class="st">&quot;grid&quot;</span>)</span>
+<span id="cb3-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-5"></a><span class="kw">library</span>(<span class="st">&quot;gridExtra&quot;</span>)</span></code></pre></div>
 <p>We saw that there are two approaches for spatio-temporal statistics, which is <em>two D’s</em>. One is descriptive approach which will be covered in this chapter. The other is dynamic approach which will be introduced in the next chapter. Our main goals are 1) to predict unknown value at some location and time point, 2) to estimate spatio-temporal covariates. For both goals, we assume the our observations can be decomposed as</p>
 <p><em>observations = true process + observation error</em><br />
 <em>true process = regression component + dependent random process </em><br />
@@ -152,7 +231,7 @@ Recall that for eath time point <span class="math inline">\(t \in \{t_1, \cdots,
 </div>
 <div id="prediction-for-gaussian-data-and-processes." class="section level2">
 <h2><span class="header-section-number">4.2</span> prediction for Gaussian Data and Processes.</h2>
-<p>In chapter 2, recall that we consider some deterministic weight, which is IDW, that smoothes surrounding datat points. In making the IDW, no statistical optimal methods are used, but cross validation for determining <span class="math inline">\(\alpha\)</span> is used. Now, we consider a optimization criterion, which is $E(Y(s_0; t_0) - (s_0; t_0))^2 $, the mean square prediction error (MPSE). The best linear unbiased predictor that minimizes the MSPE is referred as the <strong>kriging predictor</strong>. To determine optimal linear predictor, which we henceforth call <em>S-T kriging</em>, it is convenient to assume that the underlying latent process is a Gaussian process and the measurement error has a Gaussian distribution. In vector representation,</p>
+<p>In chapter 2, recall that we consider some deterministic weight, which is IDW, that smoothes surrounding data points. In making the IDW, no statistical optimal methods are used, but cross validation for determining <span class="math inline">\(\alpha\)</span> is used. Now, we consider a optimization criterion, which is <span class="math inline">\(E(Y(s_0; t_0) - \hat{Y}(s_0; t_0))^2\)</span>, the mean square prediction error (MPSE). The best linear unbiased predictor that minimizes the MSPE is referred as the <strong>kriging predictor</strong>. To determine optimal linear predictor, which we henceforth call <em>S-T kriging</em>, it is convenient to assume that the underlying latent process is a Gaussian process and the measurement error has a Gaussian distribution. In vector representation,</p>
 <p><span class="math display">\[\begin{equation}
   \mathbf{Z} = \mathbf{Y} + \epsilon \\
   \mathbf{Y} = \mathbb{\mu} + \mathbb{\eta} \tag{3}
@@ -221,8 +300,18 @@ In practice, we also do not know the covariance function, <span class="math inli
 <p><span class="math display">\[\begin{equation}
   c_*(s,s&#39; ; t,t&#39;) = c(s&#39;-s; t&#39;-t) = c(h; \tau) \tag{12}
 \end{equation}\]</span></p>
-<p>The second-order stationary assumption gives us many advantages, which allows some easy expression of covariance function, thus easy interpretation. Then, how do we obtain valid stionary spatio-temporal covariance functions?</p>
-<p><strong>Separable (in Space and Time) Covariance Functions</strong><br />
+<p>The second-order stationary assumption gives us many advantages, which allows some easy expression of covariance function, thus easy interpretation. Then, how do we obtain valid stationary spatio-temporal covariance functions? Depending on the way we define spatio-temporal covariance, the resulting sample variogram will be different. So, it is important step before modeling spatio-temporal data. Previously, we plot the spatio-temporal sample semivariogram as below.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb4-1"></a><span class="kw">data</span>(<span class="st">&quot;STObj3&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;STRbook&quot;</span>)</span>
+<span id="cb4-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb4-2"></a>STObj4 &lt;-<span class="st"> </span>STObj3[, <span class="st">&quot;1993-07-01::1993-07-31&quot;</span>]</span>
+<span id="cb4-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb4-3"></a>vv &lt;-<span class="st"> </span><span class="kw">variogram</span>(<span class="dt">object =</span> z <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>lat, <span class="co"># fixed effect component</span></span>
+<span id="cb4-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb4-4"></a>                <span class="dt">data =</span> STObj4,      <span class="co"># July data</span></span>
+<span id="cb4-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb4-5"></a>                <span class="dt">width =</span> <span class="dv">80</span>,         <span class="co"># spatial bin (80 km)</span></span>
+<span id="cb4-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb4-6"></a>                <span class="dt">cutoff =</span> <span class="dv">1000</span>,      <span class="co"># consider pts &lt; 1000 km apart</span></span>
+<span id="cb4-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb4-7"></a>                <span class="dt">tlags =</span> <span class="fl">0.01</span><span class="op">:</span><span class="fl">6.01</span>)  <span class="co"># 0 days to 6 days</span></span>
+<span id="cb4-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb4-8"></a><span class="kw">plot</span>(vv)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Note some clear patterns in the plot, which is a good evidence for spatio-temporal modeling. In this section, we assume spatio-temporal covariance and calculate corresponding empirical variograms.
+<strong>Separable (in Space and Time) Covariance Functions</strong><br />
 Separable covariance function have often been used because it is simple, easy to interpret but guarantee validity. It is given by</p>
 <p><span class="math display">\[\begin{equation}
   c(h; \tau) \equiv c^{(s)}(h) \cdot c^{(t)}(\tau)
@@ -244,8 +333,33 @@ Developed by Cressie and Huang, they express the covariance function as</p>
 <p><span class="math display">\[\begin{equation}
   c(h;\tau) = \sigma^2 exp\{ -b^2 ||h||^2 / (a^2 \tau^2 + 1)  \} / (a^2 \tau^2 + 1)^{d/2} \tag{14}
 \end{equation}\]</span></p>
-<p><strong>Stochastic Partial Differential Equation (SPDE) Approach</strong>
-Seldom directly appropriate for physical processes but may still provide good fits to data.</p>
+<p><strong>Stochastic Partial Differential Equation (SPDE) Approach</strong><br />
+Seldom, directly appropriate for physical processes but may still provide good fits to data.<br />
+</p>
+<p>For comparison, there are various spatio-temporal covariances in <span class="math inline">\(\texttt{gstat}\)</span> package. We will take a look at few of them now. First, we fit the sample spatio-temporal variogram using separable and metric spatio-temporal covariance function.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-1"></a>sepVgm &lt;-<span class="st"> </span><span class="kw">vgmST</span>(<span class="dt">stModel =</span> <span class="st">&quot;separable&quot;</span>,</span>
+<span id="cb5-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-2"></a>                <span class="dt">space =</span> <span class="kw">vgm</span>(<span class="dv">10</span>, <span class="st">&quot;Exp&quot;</span>, <span class="dv">400</span>, <span class="dt">nugget =</span> <span class="fl">0.1</span>),</span>
+<span id="cb5-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-3"></a>                <span class="dt">time =</span> <span class="kw">vgm</span>(<span class="dv">10</span>, <span class="st">&quot;Exp&quot;</span>, <span class="dv">1</span>, <span class="dt">nugget =</span> <span class="fl">0.1</span>),</span>
+<span id="cb5-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-4"></a>                <span class="dt">sill =</span> <span class="dv">20</span>)</span>
+<span id="cb5-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-5"></a>sepVgm &lt;-<span class="st"> </span><span class="kw">fit.StVariogram</span>(vv, sepVgm)</span>
+<span id="cb5-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-6"></a></span>
+<span id="cb5-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-7"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb5-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-8"></a>metricVgm &lt;-<span class="st"> </span><span class="kw">vgmST</span>(<span class="dt">stModel =</span> <span class="st">&quot;metric&quot;</span>,</span>
+<span id="cb5-9"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-9"></a>                   <span class="dt">joint =</span> <span class="kw">vgm</span>(<span class="dv">100</span>, <span class="st">&quot;Exp&quot;</span>, <span class="dv">400</span>, <span class="dt">nugget =</span> <span class="fl">0.1</span>),</span>
+<span id="cb5-10"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-10"></a>                   <span class="dt">sill =</span> <span class="dv">10</span>,</span>
+<span id="cb5-11"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-11"></a>                   <span class="dt">stAni =</span> <span class="dv">100</span>)</span>
+<span id="cb5-12"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-12"></a>metricVgm &lt;-<span class="st"> </span><span class="kw">fit.StVariogram</span>(vv, metricVgm)</span></code></pre></div>
+<p>Note that for <span class="math inline">\(\texttt{vgm, vgmST}\)</span>, it returns variograms for population version and <span class="math inline">\(\texttt{fit.stVariogram}\)</span> calculates sample variogram using them. We check which variogram fits better by comparing MSE.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb6-1"></a>metricMSE &lt;-<span class="st"> </span><span class="kw">attr</span>(metricVgm, <span class="st">&quot;optim&quot;</span>)<span class="op">$</span>value</span>
+<span id="cb6-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb6-2"></a>sepMSE &lt;-<span class="st"> </span><span class="kw">attr</span>(sepVgm, <span class="st">&quot;optim&quot;</span>)<span class="op">$</span>value</span>
+<span id="cb6-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb6-3"></a>metricMSE</span></code></pre></div>
+<pre><code>## [1] 2.098101</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb8-1"></a>sepMSE</span></code></pre></div>
+<pre><code>## [1] 1.419258</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb10-1"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb10-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb10-2"></a><span class="kw">plot</span>(vv, <span class="kw">list</span>(sepVgm, metricVgm), <span class="dt">main =</span> <span class="st">&quot;Semi-variance&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Above plot is fitted semivariograms. After fitting semivariograms, we can get the stationary S-T covariance function by using</p>
 </div>
 <div id="spatio-temporal-semivariograms" class="section level3">
 <h3><span class="header-section-number">4.2.2</span> Spatio-Temporal Semivariograms</h3>
@@ -265,13 +379,12 @@ We consider following likelihood,</p>
 \end{equation}\]</span></p>
 <p>We maximize (16) w.r.t. <span class="math inline">\(\beta,\theta\)</span>. To reduce computation, we profile <span class="math inline">\(\beta\)</span> with GLS estimator and find the mle of <span class="math inline">\(\theta\)</span>. Finally, we get the mle of <span class="math inline">\(\beta\)</span>. Estimator using this method is called <em>empirical best linear unbiased predictor</em> (EBLUP).</p>
 <p><strong>Bayesian Inference</strong><br />
-Instead fixing <span class="math inline">\(\theta, \beta\)</span>, we set the prior on them in bayesian statistics. Because the closed form of posterior distribution is often not possible, we get the numerical evaluation of it.
-\end{equation}</p>
+Instead fixing <span class="math inline">\(\theta, \beta\)</span>, we set the prior on them in bayesian statistics. Because the closed form of posterior distribution is often not possible, we get the numerical evaluation of it.</p>
 </div>
 </div>
 <div id="random-effects-parameterizations" class="section level2">
 <h2><span class="header-section-number">4.3</span> Random-Effects Parameterizations</h2>
-<p>Models including random-effects can take conditional or marginal approach depending on the purpose of analysis. If one specifies intercepts and slopes as random effects, inference at the subjevt (individual) level can be considered. In contrast, if the ficed treatment effects <span class="math inline">\(\beta\)</span> is the main interest, one might consider the marginal distribution of the responses where individual random effects have been integrated out. In spatial or spatio-temporal modeling, same considerations apply except that the random effects account for spatial or spatio-temporal effect. This is important in that it allows us to build spatio-temporal depdence conditionally, which allows us to build spatio-temporal dependence conditionally and some computational advantages. [See the technical note 4.3 in textbook for more details.]</p>
+<p>Models including random-effects can take conditional or marginal approach depending on the purpose of analysis. If one specifies intercepts and slopes as random effects, inference at the subject (individual) level can be considered. In contrast, if the ficed treatment effects <span class="math inline">\(\beta\)</span> is the main interest, one might consider the marginal distribution of the responses where individual random effects have been integrated out. In spatial or spatio-temporal modeling, same considerations apply except that the random effects account for spatial or spatio-temporal effect. This is important in that it allows us to build spatio-temporal depdence conditionally, which allows us to build spatio-temporal dependence conditionally and some computational advantages. [See the technical note 4.3 in textbook for more details.]</p>
 </div>
 <div id="basis-function-representations" class="section level2">
 <h2><span class="header-section-number">4.4</span> Basis-Function Representations</h2>
