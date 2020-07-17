@@ -338,3 +338,103 @@ Model (20) is not as common as the model (18). However, the temporal basis funct
 
 ### Confounding of Fixed Effects and Random Effects
 Consider general mixed-effects representation given in (18). The design matrix $\mathbf{X}$ is a function of space-time and matrix of basis function $\mathbf{\Phi}$ can also be a function of space-time. That is, there is a concern that there is a potential confounding associated with the random effects. For this reason, many people choose basis functions in $\mathbf{\Phi}$ orthogonal to the columns space of $\mathbf{X}$ to avoid this confounding. However, if one aims to predict the hidden process, this is not a problem at all.
+
+## Lab: Package FRK
+We fit the maximum temperature from NOAA data using spatio-temporal basis functions. Amony many packages, we use the FRK package this lab. In fitting FRK model, there are some steps to follow.
+
+* Create *basic areal units* (BAUs) whose primary utility is to account for problems of change of support. In paper, BAUs is explained as
+
+*The BAU can be viewed as the smallest
+spatial area or spatio-temporal volume that can be resolved by the process and, to reflect this,
+the process itself is assumed to be piecewise constant over the set of BAUs. BAUs do not need to be square or all equal in size, but they do need to be ‘small,’
+in the sense that they should be able to reconstruct the (undiscretised) process with minimal
+error.*
+
+* After creating BAUs, we need to create basis function, which is essential part of the FRK.
+
+* Finally, we fit the model.
+
+First of all, let's create BAUs and plot them to grasp what they are.
+```{r message=FALSE}
+library("dplyr")
+library("FRK")
+library("ggplot2")
+library("gstat")
+library("RColorBrewer")
+library("sp")
+library("spacetime")
+library("STRbook")
+library("tidyr")
+
+data("STObj3", package = "STRbook") # load STObj3
+STObj4 <- STObj3[, "1993-07-01::1993-07-31"] # subset time
+STObj5 <- as(STObj4[, -14], "STIDF") # omit t = 14
+STObj5 <- subset(STObj5, !is.na(STObj5$z)) # remove NAs
+
+BAUs <- auto_BAUs(manifold = STplane(), # ST field on the plane
+type = "grid", # gridded (not "hex")
+data = STObj5, # data
+cellsize = c(1, 0.75, 1), # BAU cell size
+convex = -0.12, # hull extension
+tunit = "days") # time unit is "days"
+```
+
+Note the cellsize argument of auto_BAUs determines the size of BAUs. 
+
+We can also use hexagone BAUs using
+
+```{r}
+BAUs_hex <- auto_BAUs(manifold = STplane(), # model on the plane
+type = "hex", # hex (not "grid")
+data = STObj5, # data
+cellsize = c(1, 0.75, 1), # BAU cell size
+nonconvex_hull = FALSE, # convex hull
+tunit = "days") # time unit is "days"
+
+plot(as(BAUs[, 1], "SpatialPixels")) # plot pixel BAUs
+plot(SpatialPoints(STObj5),
+add = TRUE, col = "red") # plot data points
+plot(as(BAUs_hex[, 1], "SpatialPolygons"))
+```
+
+Some grids are made above to include data points. \
+
+Next, we create spatio-temporal basis functions. In $\texttt{FRK}$, basis functions are created by taking the tesnor product of spatial basis functions and temporal basis functions. That is, $\phi_p(s)\psi_q(t); \; p=1,\cdots,r_s, q=1,\cdots,r_t$. Basis function can be either regularly placed, or irregularly placed and they are often multi-resolutional. After $\texttt{auto_basis}$, we automatically get number of basis function, in this case, $r_s = 94$, and bisquare apertures. \
+Next, we create 20 temporal basis functions so that tensor producting them results in total number of spatio-temporal basis functions is $r_s r_t = 1880$.
+
+```{r}
+G_temporal <- local_basis(manifold = real_line(), # fns on R1
+type = "bisquare", # bisquare
+loc = t_grid, # centroids
+scale = rep(2, 20)) # aperture par.
+
+G <- TensorP(G_spatial, G_temporal) # take the tensor product
+```
+
+Note that alghouth spatio-temporal basis functions are generated from tensor product, resulting S-T covariance function is not separable. \
+In this lab, we assume the measurement error variance is the nugget estimated when fitting the separable covariance function. (?) Finally, we fit the FRK model.
+
+```{r}
+STObj5$std = sqrt(0.049)
+f = z ~ lat + 1
+
+S <- FRK(f = f, # formula
+data = list(STObj5), # (list of) data
+basis = G, # basis functions
+BAUs = BAUs, # BAUs
+n_EM = 3, # max. no. of EM iterations
+tol = 0.01) # tol. on change in log-likelihood
+
+grid_BAUs = predict(S)
+stplot(grid_BAUs)
+```
+
+## Lab: Temporal Basis Functions with SpatioTemporal package
+
+In this lab, we fit the maximum temperature dataset using temporal basis functions. We will use the $\texttt{SpatioTemporal}$ package. We assume following model
+
+\begin{equation}
+  Y(s;t) = x(s;t)' \beta + \sum^{n_\alpha}_{i=1} \phi_i(t) \alpha_i(s) + \nu(s;t) \tag{21}
+\end{equation}
+
+First, we create 
