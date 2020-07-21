@@ -24,7 +24,7 @@
 <meta name="author" content="BoHyun Shin" />
 
 
-<meta name="date" content="2020-07-14" />
+<meta name="date" content="2020-07-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="spatio-temporal-statistical-models.html"/>
-
+<link rel="next" href="dynamic-spatio-temporal-models.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -173,6 +173,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.4.3" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#random-effects-with-temporal-basis-functions"><i class="fa fa-check"></i><b>4.4.3</b> Random Effects with Temporal Basis Functions</a></li>
 <li class="chapter" data-level="4.4.4" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#confounding-of-fixed-effects-and-random-effects"><i class="fa fa-check"></i><b>4.4.4</b> Confounding of Fixed Effects and Random Effects</a></li>
 </ul></li>
+<li class="chapter" data-level="4.5" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#lab-package-frk"><i class="fa fa-check"></i><b>4.5</b> Lab: Package FRK</a></li>
+<li class="chapter" data-level="4.6" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#lab-temporal-basis-functions-with-spatiotemporal-package"><i class="fa fa-check"></i><b>4.6</b> Lab: Temporal Basis Functions with SpatioTemporal package</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dynamic-spatio-temporal-models.html"><a href="dynamic-spatio-temporal-models.html"><i class="fa fa-check"></i><b>5</b> Dynamic Spatio-Temporal Models</a><ul>
+<li class="chapter" data-level="5.1" data-path="dynamic-spatio-temporal-models.html"><a href="dynamic-spatio-temporal-models.html#general-dynamic-spatio-temporal-models"><i class="fa fa-check"></i><b>5.1</b> General Dynamic Spatio-Temporal Models</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="dynamic-spatio-temporal-models.html"><a href="dynamic-spatio-temporal-models.html#process-model"><i class="fa fa-check"></i><b>5.1.1</b> Process Model</a></li>
+<li class="chapter" data-level="5.1.2" data-path="dynamic-spatio-temporal-models.html"><a href="dynamic-spatio-temporal-models.html#parameters"><i class="fa fa-check"></i><b>5.1.2</b> Parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="dynamic-spatio-temporal-models.html"><a href="dynamic-spatio-temporal-models.html#latent-linear-gaussian-dstms"><i class="fa fa-check"></i><b>5.2</b> Latent Linear Gaussian DSTMs</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="dynamic-spatio-temporal-models.html"><a href="dynamic-spatio-temporal-models.html#linear-data-model-with-additive-gaussian-error"><i class="fa fa-check"></i><b>5.2.1</b> Linear Data Model with Additive Gaussian Error</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="dynamic-spatio-temporal-models.html"><a href="dynamic-spatio-temporal-models.html#process-and-parameter-dimension-reduction"><i class="fa fa-check"></i><b>5.3</b> Process and Parameter Dimension Reduction</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -200,13 +212,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb1-2"></a><span class="kw">library</span>(<span class="st">&quot;spacetime&quot;</span>)</span>
 <span id="cb1-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb1-3"></a><span class="kw">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
 <span id="cb1-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb1-4"></a><span class="kw">library</span>(<span class="st">&quot;dplyr&quot;</span>)</span>
-<span id="cb1-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb1-5"></a><span class="kw">library</span>(<span class="st">&quot;gstat&quot;</span>)</span></code></pre></div>
-<pre><code>## Warning: package &#39;gstat&#39; was built under R version 4.0.1</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-1"></a><span class="kw">library</span>(<span class="st">&quot;RColorBrewer&quot;</span>)</span>
-<span id="cb3-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-2"></a><span class="kw">library</span>(<span class="st">&quot;STRbook&quot;</span>)</span>
-<span id="cb3-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-3"></a><span class="kw">library</span>(<span class="st">&quot;tidyr&quot;</span>)</span>
-<span id="cb3-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-4"></a><span class="kw">library</span>(<span class="st">&quot;grid&quot;</span>)</span>
-<span id="cb3-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-5"></a><span class="kw">library</span>(<span class="st">&quot;gridExtra&quot;</span>)</span></code></pre></div>
+<span id="cb1-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb1-5"></a><span class="kw">library</span>(<span class="st">&quot;gstat&quot;</span>)</span>
+<span id="cb1-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb1-6"></a><span class="kw">library</span>(<span class="st">&quot;RColorBrewer&quot;</span>)</span>
+<span id="cb1-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb1-7"></a><span class="kw">library</span>(<span class="st">&quot;STRbook&quot;</span>)</span>
+<span id="cb1-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb1-8"></a><span class="kw">library</span>(<span class="st">&quot;tidyr&quot;</span>)</span>
+<span id="cb1-9"><a href="descriptive-spatio-temporal-statistical-models.html#cb1-9"></a><span class="kw">library</span>(<span class="st">&quot;grid&quot;</span>)</span>
+<span id="cb1-10"><a href="descriptive-spatio-temporal-statistical-models.html#cb1-10"></a><span class="kw">library</span>(<span class="st">&quot;gridExtra&quot;</span>)</span></code></pre></div>
 <p>We saw that there are two approaches for spatio-temporal statistics, which is <em>two D’s</em>. One is descriptive approach which will be covered in this chapter. The other is dynamic approach which will be introduced in the next chapter. Our main goals are 1) to predict unknown value at some location and time point, 2) to estimate spatio-temporal covariates. For both goals, we assume the our observations can be decomposed as</p>
 <p><em>observations = true process + observation error</em><br />
 <em>true process = regression component + dependent random process </em><br />
@@ -301,18 +312,18 @@ In practice, we also do not know the covariance function, <span class="math inli
   c_*(s,s&#39; ; t,t&#39;) = c(s&#39;-s; t&#39;-t) = c(h; \tau) \tag{12}
 \end{equation}\]</span></p>
 <p>The second-order stationary assumption gives us many advantages, which allows some easy expression of covariance function, thus easy interpretation. Then, how do we obtain valid stationary spatio-temporal covariance functions? Depending on the way we define spatio-temporal covariance, the resulting sample variogram will be different. So, it is important step before modeling spatio-temporal data. Previously, we plot the spatio-temporal sample semivariogram as below.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb4-1"></a><span class="kw">data</span>(<span class="st">&quot;STObj3&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;STRbook&quot;</span>)</span>
-<span id="cb4-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb4-2"></a>STObj4 &lt;-<span class="st"> </span>STObj3[, <span class="st">&quot;1993-07-01::1993-07-31&quot;</span>]</span>
-<span id="cb4-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb4-3"></a>vv &lt;-<span class="st"> </span><span class="kw">variogram</span>(<span class="dt">object =</span> z <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>lat, <span class="co"># fixed effect component</span></span>
-<span id="cb4-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb4-4"></a>                <span class="dt">data =</span> STObj4,      <span class="co"># July data</span></span>
-<span id="cb4-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb4-5"></a>                <span class="dt">width =</span> <span class="dv">80</span>,         <span class="co"># spatial bin (80 km)</span></span>
-<span id="cb4-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb4-6"></a>                <span class="dt">cutoff =</span> <span class="dv">1000</span>,      <span class="co"># consider pts &lt; 1000 km apart</span></span>
-<span id="cb4-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb4-7"></a>                <span class="dt">tlags =</span> <span class="fl">0.01</span><span class="op">:</span><span class="fl">6.01</span>)  <span class="co"># 0 days to 6 days</span></span>
-<span id="cb4-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb4-8"></a><span class="kw">plot</span>(vv)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb2-1"></a><span class="kw">data</span>(<span class="st">&quot;STObj3&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;STRbook&quot;</span>)</span>
+<span id="cb2-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb2-2"></a>STObj4 &lt;-<span class="st"> </span>STObj3[, <span class="st">&quot;1993-07-01::1993-07-31&quot;</span>]</span>
+<span id="cb2-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb2-3"></a>vv &lt;-<span class="st"> </span><span class="kw">variogram</span>(<span class="dt">object =</span> z <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>lat, <span class="co"># fixed effect component</span></span>
+<span id="cb2-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb2-4"></a>                <span class="dt">data =</span> STObj4,      <span class="co"># July data</span></span>
+<span id="cb2-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb2-5"></a>                <span class="dt">width =</span> <span class="dv">80</span>,         <span class="co"># spatial bin (80 km)</span></span>
+<span id="cb2-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb2-6"></a>                <span class="dt">cutoff =</span> <span class="dv">1000</span>,      <span class="co"># consider pts &lt; 1000 km apart</span></span>
+<span id="cb2-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb2-7"></a>                <span class="dt">tlags =</span> <span class="fl">0.01</span><span class="op">:</span><span class="fl">6.01</span>)  <span class="co"># 0 days to 6 days</span></span>
+<span id="cb2-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb2-8"></a><span class="kw">plot</span>(vv)</span></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>Note some clear patterns in the plot, which is a good evidence for spatio-temporal modeling. In this section, we assume spatio-temporal covariance and calculate corresponding empirical variograms.
-<strong>Separable (in Space and Time) Covariance Functions</strong><br />
-Separable covariance function have often been used because it is simple, easy to interpret but guarantee validity. It is given by</p>
+<p>Note some clear patterns in the plot, which is a good evidence for spatio-temporal modeling. In this section, we assume spatio-temporal covariance and calculate corresponding empirical variograms.</p>
+<p><strong>Separable (in Space and Time) Covariance Functions</strong><br />
+Separable covariance function have often been used because it is simple, easy to interpret but guarantee validity. It is given by the identity</p>
 <p><span class="math display">\[\begin{equation}
   c(h; \tau) \equiv c^{(s)}(h) \cdot c^{(t)}(\tau)
 \end{equation}\]</span></p>
@@ -337,29 +348,74 @@ Developed by Cressie and Huang, they express the covariance function as</p>
 Seldom, directly appropriate for physical processes but may still provide good fits to data.<br />
 </p>
 <p>For comparison, there are various spatio-temporal covariances in <span class="math inline">\(\texttt{gstat}\)</span> package. We will take a look at few of them now. First, we fit the sample spatio-temporal variogram using separable and metric spatio-temporal covariance function.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-1"></a>sepVgm &lt;-<span class="st"> </span><span class="kw">vgmST</span>(<span class="dt">stModel =</span> <span class="st">&quot;separable&quot;</span>,</span>
-<span id="cb5-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-2"></a>                <span class="dt">space =</span> <span class="kw">vgm</span>(<span class="dv">10</span>, <span class="st">&quot;Exp&quot;</span>, <span class="dv">400</span>, <span class="dt">nugget =</span> <span class="fl">0.1</span>),</span>
-<span id="cb5-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-3"></a>                <span class="dt">time =</span> <span class="kw">vgm</span>(<span class="dv">10</span>, <span class="st">&quot;Exp&quot;</span>, <span class="dv">1</span>, <span class="dt">nugget =</span> <span class="fl">0.1</span>),</span>
-<span id="cb5-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-4"></a>                <span class="dt">sill =</span> <span class="dv">20</span>)</span>
-<span id="cb5-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-5"></a>sepVgm &lt;-<span class="st"> </span><span class="kw">fit.StVariogram</span>(vv, sepVgm)</span>
-<span id="cb5-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-6"></a></span>
-<span id="cb5-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-7"></a><span class="co">## ------------------------------------------------------------------------</span></span>
-<span id="cb5-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-8"></a>metricVgm &lt;-<span class="st"> </span><span class="kw">vgmST</span>(<span class="dt">stModel =</span> <span class="st">&quot;metric&quot;</span>,</span>
-<span id="cb5-9"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-9"></a>                   <span class="dt">joint =</span> <span class="kw">vgm</span>(<span class="dv">100</span>, <span class="st">&quot;Exp&quot;</span>, <span class="dv">400</span>, <span class="dt">nugget =</span> <span class="fl">0.1</span>),</span>
-<span id="cb5-10"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-10"></a>                   <span class="dt">sill =</span> <span class="dv">10</span>,</span>
-<span id="cb5-11"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-11"></a>                   <span class="dt">stAni =</span> <span class="dv">100</span>)</span>
-<span id="cb5-12"><a href="descriptive-spatio-temporal-statistical-models.html#cb5-12"></a>metricVgm &lt;-<span class="st"> </span><span class="kw">fit.StVariogram</span>(vv, metricVgm)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-1"></a>sepVgm &lt;-<span class="st"> </span><span class="kw">vgmST</span>(<span class="dt">stModel =</span> <span class="st">&quot;separable&quot;</span>,</span>
+<span id="cb3-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-2"></a>                <span class="dt">space =</span> <span class="kw">vgm</span>(<span class="dv">10</span>, <span class="st">&quot;Exp&quot;</span>, <span class="dv">400</span>, <span class="dt">nugget =</span> <span class="fl">0.1</span>),</span>
+<span id="cb3-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-3"></a>                <span class="dt">time =</span> <span class="kw">vgm</span>(<span class="dv">10</span>, <span class="st">&quot;Exp&quot;</span>, <span class="dv">1</span>, <span class="dt">nugget =</span> <span class="fl">0.1</span>),</span>
+<span id="cb3-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-4"></a>                <span class="dt">sill =</span> <span class="dv">20</span>)</span>
+<span id="cb3-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-5"></a>sepVgm &lt;-<span class="st"> </span><span class="kw">fit.StVariogram</span>(vv, sepVgm)</span>
+<span id="cb3-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-6"></a></span>
+<span id="cb3-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-7"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb3-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-8"></a>metricVgm &lt;-<span class="st"> </span><span class="kw">vgmST</span>(<span class="dt">stModel =</span> <span class="st">&quot;metric&quot;</span>,</span>
+<span id="cb3-9"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-9"></a>                   <span class="dt">joint =</span> <span class="kw">vgm</span>(<span class="dv">100</span>, <span class="st">&quot;Exp&quot;</span>, <span class="dv">400</span>, <span class="dt">nugget =</span> <span class="fl">0.1</span>),</span>
+<span id="cb3-10"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-10"></a>                   <span class="dt">sill =</span> <span class="dv">10</span>,</span>
+<span id="cb3-11"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-11"></a>                   <span class="dt">stAni =</span> <span class="dv">100</span>)</span>
+<span id="cb3-12"><a href="descriptive-spatio-temporal-statistical-models.html#cb3-12"></a>metricVgm &lt;-<span class="st"> </span><span class="kw">fit.StVariogram</span>(vv, metricVgm)</span></code></pre></div>
 <p>Note that for <span class="math inline">\(\texttt{vgm, vgmST}\)</span>, it returns variograms for population version and <span class="math inline">\(\texttt{fit.stVariogram}\)</span> calculates sample variogram using them. We check which variogram fits better by comparing MSE.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb6-1"></a>metricMSE &lt;-<span class="st"> </span><span class="kw">attr</span>(metricVgm, <span class="st">&quot;optim&quot;</span>)<span class="op">$</span>value</span>
-<span id="cb6-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb6-2"></a>sepMSE &lt;-<span class="st"> </span><span class="kw">attr</span>(sepVgm, <span class="st">&quot;optim&quot;</span>)<span class="op">$</span>value</span>
-<span id="cb6-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb6-3"></a>metricMSE</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb4-1"></a>metricMSE &lt;-<span class="st"> </span><span class="kw">attr</span>(metricVgm, <span class="st">&quot;optim&quot;</span>)<span class="op">$</span>value</span>
+<span id="cb4-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb4-2"></a>sepMSE &lt;-<span class="st"> </span><span class="kw">attr</span>(sepVgm, <span class="st">&quot;optim&quot;</span>)<span class="op">$</span>value</span>
+<span id="cb4-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb4-3"></a>metricMSE</span></code></pre></div>
 <pre><code>## [1] 2.098101</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb8-1"></a>sepMSE</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb6-1"></a>sepMSE</span></code></pre></div>
 <pre><code>## [1] 1.419258</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb10-1"></a><span class="co">## ------------------------------------------------------------------------</span></span>
-<span id="cb10-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb10-2"></a><span class="kw">plot</span>(vv, <span class="kw">list</span>(sepVgm, metricVgm), <span class="dt">main =</span> <span class="st">&quot;Semi-variance&quot;</span>)</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>Above plot is fitted semivariograms. After fitting semivariograms, we can get the stationary S-T covariance function by using</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb8-1"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb8-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb8-2"></a><span class="kw">plot</span>(vv, <span class="kw">list</span>(sepVgm, metricVgm), <span class="dt">main =</span> <span class="st">&quot;Semi-variance&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Above plot is fitted semivariograms. After fitting semivariograms, we can get the stationary S-T covariance function by using.</p>
+<p><span class="math display">\[\begin{equation}
+  \gamma(h;\tau) = c(0;0) - c(h;\tau)
+\end{equation}\]</span></p>
+<p>Therefore, after estimating spatio-temporal covariance function, we can do universal S-T kriging. Recall that universal S-T kriging assumes the fixed effect in random process as a function of covariates, i.e., <span class="math inline">\(x\beta\)</span>. In this dataset, we found in chapter 2 that the latitude is an important covariate w.r.t response variable. For this reason, we include the latitude as a covariate and as a result of this, we do the universal S-T kriging. First of all, we need to create a space-time prediction grid. Note that any spatial grid is fine because of the infinite assumption of gaussian process. But we will consider some fixed areas and covert in toe the <span class="math inline">\(\texttt{SpatialPoints}\)</span> object. We ensure that the coordinate reference system of the prediction grid is the same as that of observations.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-1"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb9-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-2"></a>spat_pred_grid &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(</span>
+<span id="cb9-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-3"></a>                      <span class="dt">lon =</span> <span class="kw">seq</span>(<span class="op">-</span><span class="dv">100</span>, <span class="dv">-80</span>, <span class="dt">length =</span> <span class="dv">20</span>),</span>
+<span id="cb9-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-4"></a>                      <span class="dt">lat =</span> <span class="kw">seq</span>(<span class="dv">32</span>, <span class="dv">46</span>, <span class="dt">length =</span> <span class="dv">20</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb9-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-5"></a><span class="st">            </span><span class="kw">SpatialPoints</span>(<span class="dt">proj4string =</span> <span class="kw">CRS</span>(<span class="kw">proj4string</span>(STObj3)))</span>
+<span id="cb9-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-6"></a><span class="kw">gridded</span>(spat_pred_grid) &lt;-<span class="st"> </span><span class="ot">TRUE</span></span>
+<span id="cb9-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-7"></a></span>
+<span id="cb9-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-8"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb9-9"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-9"></a>temp_pred_grid &lt;-<span class="st"> </span><span class="kw">as.Date</span>(<span class="st">&quot;1993-07-01&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">seq</span>(<span class="dv">3</span>, <span class="dv">28</span>, <span class="dt">length =</span> <span class="dv">6</span>)</span>
+<span id="cb9-10"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-10"></a></span>
+<span id="cb9-11"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-11"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb9-12"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-12"></a>DE_pred &lt;-<span class="st"> </span><span class="kw">STF</span>(<span class="dt">sp =</span> spat_pred_grid,    <span class="co"># spatial part</span></span>
+<span id="cb9-13"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-13"></a>               <span class="dt">time =</span> temp_pred_grid)  <span class="co"># temporal part</span></span>
+<span id="cb9-14"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-14"></a></span>
+<span id="cb9-15"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-15"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb9-16"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-16"></a>STObj5 &lt;-<span class="st"> </span><span class="kw">as</span>(STObj4[, <span class="dv">-14</span>], <span class="st">&quot;STIDF&quot;</span>)         <span class="co"># convert to STIDF</span></span>
+<span id="cb9-17"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-17"></a>STObj5 &lt;-<span class="st"> </span><span class="kw">subset</span>(STObj5, <span class="op">!</span><span class="kw">is.na</span>(STObj5<span class="op">$</span>z))   <span class="co"># remove missing data</span></span>
+<span id="cb9-18"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-18"></a></span>
+<span id="cb9-19"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-19"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb9-20"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-20"></a>pred_kriged &lt;-<span class="st"> </span><span class="kw">krigeST</span>(z <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>lat,         <span class="co"># latitude trend</span></span>
+<span id="cb9-21"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-21"></a>                       <span class="dt">data =</span> STObj5,       <span class="co"># data set w/o 14 July</span></span>
+<span id="cb9-22"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-22"></a>                       <span class="dt">newdata =</span> DE_pred,   <span class="co"># prediction grid</span></span>
+<span id="cb9-23"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-23"></a>                       <span class="dt">modelList =</span> sepVgm,  <span class="co"># semivariogram</span></span>
+<span id="cb9-24"><a href="descriptive-spatio-temporal-statistical-models.html#cb9-24"></a>                       <span class="dt">computeVar =</span> <span class="ot">TRUE</span>)   <span class="co"># compute variances</span></span></code></pre></div>
+<p>We exclude the data on the day 14 for test data. In calculating kriging estimates, a little time is needed. But when the dataset becomes larger, we should consider other methods such as dimension reduction or basis functions.<br />
+The estimates and prediction methods are as below.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb10-1"></a>color_pal &lt;-<span class="st"> </span><span class="kw">rev</span>(<span class="kw">colorRampPalette</span>(<span class="kw">brewer.pal</span>(<span class="dv">11</span>, <span class="st">&quot;Spectral&quot;</span>))(<span class="dv">16</span>))</span>
+<span id="cb10-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb10-2"></a></span>
+<span id="cb10-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb10-3"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb10-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb10-4"></a><span class="kw">stplot</span>(pred_kriged,</span>
+<span id="cb10-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb10-5"></a>      <span class="dt">main =</span> <span class="st">&quot;Predictions (degrees Fahrenheit)&quot;</span>,</span>
+<span id="cb10-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb10-6"></a>      <span class="dt">layout =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>),</span>
+<span id="cb10-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb10-7"></a>      <span class="dt">col.regions =</span> color_pal)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-6-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb11-1"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb11-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb11-2"></a>pred_kriged<span class="op">$</span>se &lt;-<span class="st"> </span><span class="kw">sqrt</span>(pred_kriged<span class="op">$</span>var1.var)</span>
+<span id="cb11-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb11-3"></a><span class="kw">stplot</span>(pred_kriged[, , <span class="st">&quot;se&quot;</span>],</span>
+<span id="cb11-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb11-4"></a>      <span class="dt">main =</span> <span class="st">&quot;Prediction std. errors (degrees Fahrenheit)&quot;</span>,</span>
+<span id="cb11-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb11-5"></a>      <span class="dt">layout =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>),</span>
+<span id="cb11-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb11-6"></a>      <span class="dt">col.regions =</span> color_pal)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-6-2.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="spatio-temporal-semivariograms" class="section level3">
 <h3><span class="header-section-number">4.2.2</span> Spatio-Temporal Semivariograms</h3>
@@ -429,8 +485,149 @@ Model (20) is not as common as the model (18). However, the temporal basis funct
 <div id="confounding-of-fixed-effects-and-random-effects" class="section level3">
 <h3><span class="header-section-number">4.4.4</span> Confounding of Fixed Effects and Random Effects</h3>
 <p>Consider general mixed-effects representation given in (18). The design matrix <span class="math inline">\(\mathbf{X}\)</span> is a function of space-time and matrix of basis function <span class="math inline">\(\mathbf{\Phi}\)</span> can also be a function of space-time. That is, there is a concern that there is a potential confounding associated with the random effects. For this reason, many people choose basis functions in <span class="math inline">\(\mathbf{\Phi}\)</span> orthogonal to the columns space of <span class="math inline">\(\mathbf{X}\)</span> to avoid this confounding. However, if one aims to predict the hidden process, this is not a problem at all.</p>
-
 </div>
+</div>
+<div id="lab-package-frk" class="section level2">
+<h2><span class="header-section-number">4.5</span> Lab: Package FRK</h2>
+<p>We fit the maximum temperature from NOAA data using spatio-temporal basis functions. Amony many packages, we use the FRK package this lab. In fitting FRK model, there are some steps to follow.</p>
+<ul>
+<li>Create <em>basic areal units</em> (BAUs) whose primary utility is to account for problems of change of support. In paper, BAUs is explained as</li>
+</ul>
+<p><em>The BAU can be viewed as the smallest
+spatial area or spatio-temporal volume that can be resolved by the process and, to reflect this,
+the process itself is assumed to be piecewise constant over the set of BAUs. BAUs do not need to be square or all equal in size, but they do need to be ‘small,’
+in the sense that they should be able to reconstruct the (undiscretised) process with minimal
+error.</em></p>
+<ul>
+<li><p>After creating BAUs, we need to create basis function, which is essential part of the FRK.</p></li>
+<li><p>Finally, we fit the model.</p></li>
+</ul>
+<p>First of all, let’s create BAUs and plot them to grasp what they are.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-1"></a><span class="kw">library</span>(<span class="st">&quot;dplyr&quot;</span>)</span>
+<span id="cb12-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-2"></a><span class="kw">library</span>(<span class="st">&quot;FRK&quot;</span>)</span>
+<span id="cb12-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-3"></a><span class="kw">library</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
+<span id="cb12-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-4"></a><span class="kw">library</span>(<span class="st">&quot;gstat&quot;</span>)</span>
+<span id="cb12-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-5"></a><span class="kw">library</span>(<span class="st">&quot;RColorBrewer&quot;</span>)</span>
+<span id="cb12-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-6"></a><span class="kw">library</span>(<span class="st">&quot;sp&quot;</span>)</span>
+<span id="cb12-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-7"></a><span class="kw">library</span>(<span class="st">&quot;spacetime&quot;</span>)</span>
+<span id="cb12-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-8"></a><span class="kw">library</span>(<span class="st">&quot;STRbook&quot;</span>)</span>
+<span id="cb12-9"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-9"></a><span class="kw">library</span>(<span class="st">&quot;tidyr&quot;</span>)</span>
+<span id="cb12-10"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-10"></a></span>
+<span id="cb12-11"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-11"></a><span class="kw">data</span>(<span class="st">&quot;STObj3&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;STRbook&quot;</span>) <span class="co"># load STObj3</span></span>
+<span id="cb12-12"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-12"></a>STObj4 &lt;-<span class="st"> </span>STObj3[, <span class="st">&quot;1993-07-01::1993-07-31&quot;</span>] <span class="co"># subset time</span></span>
+<span id="cb12-13"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-13"></a>STObj5 &lt;-<span class="st"> </span><span class="kw">as</span>(STObj4[, <span class="dv">-14</span>], <span class="st">&quot;STIDF&quot;</span>) <span class="co"># omit t = 14</span></span>
+<span id="cb12-14"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-14"></a>STObj5 &lt;-<span class="st"> </span><span class="kw">subset</span>(STObj5, <span class="op">!</span><span class="kw">is.na</span>(STObj5<span class="op">$</span>z)) <span class="co"># remove NAs</span></span>
+<span id="cb12-15"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-15"></a></span>
+<span id="cb12-16"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-16"></a>BAUs &lt;-<span class="st"> </span><span class="kw">auto_BAUs</span>(<span class="dt">manifold =</span> <span class="kw">STplane</span>(), <span class="co"># ST field on the plane</span></span>
+<span id="cb12-17"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-17"></a><span class="dt">type =</span> <span class="st">&quot;grid&quot;</span>, <span class="co"># gridded (not &quot;hex&quot;)</span></span>
+<span id="cb12-18"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-18"></a><span class="dt">data =</span> STObj5, <span class="co"># data</span></span>
+<span id="cb12-19"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-19"></a><span class="dt">cellsize =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="fl">0.75</span>, <span class="dv">1</span>), <span class="co"># BAU cell size</span></span>
+<span id="cb12-20"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-20"></a><span class="dt">convex =</span> <span class="fl">-0.12</span>, <span class="co"># hull extension</span></span>
+<span id="cb12-21"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-21"></a><span class="dt">tunit =</span> <span class="st">&quot;days&quot;</span>) <span class="co"># time unit is &quot;days&quot;</span></span></code></pre></div>
+<p>Note the cellsize argument of auto_BAUs determines the size of BAUs.</p>
+<p>We can also use hexagone BAUs using</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb13-1"></a>BAUs_hex &lt;-<span class="st"> </span><span class="kw">auto_BAUs</span>(<span class="dt">manifold =</span> <span class="kw">STplane</span>(), <span class="co"># model on the plane</span></span>
+<span id="cb13-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb13-2"></a><span class="dt">type =</span> <span class="st">&quot;hex&quot;</span>, <span class="co"># hex (not &quot;grid&quot;)</span></span>
+<span id="cb13-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb13-3"></a><span class="dt">data =</span> STObj5, <span class="co"># data</span></span>
+<span id="cb13-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb13-4"></a><span class="dt">cellsize =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="fl">0.75</span>, <span class="dv">1</span>), <span class="co"># BAU cell size</span></span>
+<span id="cb13-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb13-5"></a><span class="dt">nonconvex_hull =</span> <span class="ot">FALSE</span>, <span class="co"># convex hull</span></span>
+<span id="cb13-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb13-6"></a><span class="dt">tunit =</span> <span class="st">&quot;days&quot;</span>) <span class="co"># time unit is &quot;days&quot;</span></span>
+<span id="cb13-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb13-7"></a></span>
+<span id="cb13-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb13-8"></a><span class="kw">plot</span>(<span class="kw">as</span>(BAUs[, <span class="dv">1</span>], <span class="st">&quot;SpatialPixels&quot;</span>)) <span class="co"># plot pixel BAUs</span></span>
+<span id="cb13-9"><a href="descriptive-spatio-temporal-statistical-models.html#cb13-9"></a><span class="kw">plot</span>(<span class="kw">SpatialPoints</span>(STObj5),</span>
+<span id="cb13-10"><a href="descriptive-spatio-temporal-statistical-models.html#cb13-10"></a><span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># plot data points</span></span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb14-1"></a><span class="kw">plot</span>(<span class="kw">as</span>(BAUs_hex[, <span class="dv">1</span>], <span class="st">&quot;SpatialPolygons&quot;</span>))</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
+<p>Some grids are made above to include data points.<br />
+</p>
+<p>Next, we create spatio-temporal basis functions. In <span class="math inline">\(\texttt{FRK}\)</span>, basis functions are created by taking the tesnor product of spatial basis functions and temporal basis functions. That is, <span class="math inline">\(\phi_p(s)\psi_q(t); \; p=1,\cdots,r_s, q=1,\cdots,r_t\)</span>. Basis function can be either regularly placed, or irregularly placed and they are often multi-resolutional. After <span class="math inline">\(\texttt{auto_basis}\)</span>, we automatically get number of basis function, in this case, <span class="math inline">\(r_s = 94\)</span>, and bisquare apertures.<br />
+Next, we create 20 temporal basis functions so that tensor producting them results in total number of spatio-temporal basis functions is <span class="math inline">\(r_s r_t = 1880\)</span>.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb15-1"></a>G_spatial &lt;-<span class="st"> </span><span class="kw">auto_basis</span>(<span class="dt">manifold =</span> <span class="kw">plane</span>(),      <span class="co"># fns on plane</span></span>
+<span id="cb15-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb15-2"></a>                        <span class="dt">data =</span> <span class="kw">as</span>(STObj5, <span class="st">&quot;Spatial&quot;</span>), <span class="co"># project</span></span>
+<span id="cb15-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb15-3"></a>                        <span class="dt">nres =</span> <span class="dv">2</span>,                     <span class="co"># 2 res.</span></span>
+<span id="cb15-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb15-4"></a>                        <span class="dt">type =</span> <span class="st">&quot;bisquare&quot;</span>,            <span class="co"># bisquare.</span></span>
+<span id="cb15-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb15-5"></a>                        <span class="dt">regular =</span> <span class="dv">0</span>)                  <span class="co"># irregular</span></span>
+<span id="cb15-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb15-6"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb15-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb15-7"></a>t_grid &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">31</span>, <span class="dt">length =</span> <span class="dv">20</span>))</span>
+<span id="cb15-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb15-8"></a></span>
+<span id="cb15-9"><a href="descriptive-spatio-temporal-statistical-models.html#cb15-9"></a>G_temporal &lt;-<span class="st"> </span><span class="kw">local_basis</span>(<span class="dt">manifold =</span> <span class="kw">real_line</span>(), <span class="co"># fns on R1</span></span>
+<span id="cb15-10"><a href="descriptive-spatio-temporal-statistical-models.html#cb15-10"></a><span class="dt">type =</span> <span class="st">&quot;bisquare&quot;</span>, <span class="co"># bisquare</span></span>
+<span id="cb15-11"><a href="descriptive-spatio-temporal-statistical-models.html#cb15-11"></a><span class="dt">loc =</span> t_grid, <span class="co"># centroids</span></span>
+<span id="cb15-12"><a href="descriptive-spatio-temporal-statistical-models.html#cb15-12"></a><span class="dt">scale =</span> <span class="kw">rep</span>(<span class="dv">2</span>, <span class="dv">20</span>)) <span class="co"># aperture par.</span></span>
+<span id="cb15-13"><a href="descriptive-spatio-temporal-statistical-models.html#cb15-13"></a></span>
+<span id="cb15-14"><a href="descriptive-spatio-temporal-statistical-models.html#cb15-14"></a>G &lt;-<span class="st"> </span><span class="kw">TensorP</span>(G_spatial, G_temporal) <span class="co"># take the tensor product</span></span></code></pre></div>
+<p>Note that alghouth spatio-temporal basis functions are generated from tensor product, resulting S-T covariance function is not separable.<br />
+In this lab, we assume the measurement error variance is the nugget estimated when fitting the separable covariance function. (?) Finally, we fit the FRK model.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb16-1"></a>STObj5<span class="op">$</span>std =<span class="st"> </span><span class="kw">sqrt</span>(<span class="fl">0.049</span>)</span>
+<span id="cb16-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb16-2"></a>f =<span class="st"> </span>z <span class="op">~</span><span class="st"> </span>lat <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb16-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb16-3"></a></span>
+<span id="cb16-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb16-4"></a>S &lt;-<span class="st"> </span><span class="kw">FRK</span>(<span class="dt">f =</span> f, <span class="co"># formula</span></span>
+<span id="cb16-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb16-5"></a><span class="dt">data =</span> <span class="kw">list</span>(STObj5), <span class="co"># (list of) data</span></span>
+<span id="cb16-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb16-6"></a><span class="dt">basis =</span> G, <span class="co"># basis functions</span></span>
+<span id="cb16-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb16-7"></a><span class="dt">BAUs =</span> BAUs, <span class="co"># BAUs</span></span>
+<span id="cb16-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb16-8"></a><span class="dt">n_EM =</span> <span class="dv">3</span>, <span class="co"># max. no. of EM iterations</span></span>
+<span id="cb16-9"><a href="descriptive-spatio-temporal-statistical-models.html#cb16-9"></a><span class="dt">tol =</span> <span class="fl">0.01</span>) <span class="co"># tol. on change in log-likelihood</span></span></code></pre></div>
+<pre><code>## std already supplied with data -- not estimating the measurement error.
+##               If you wish to estimate measurement error then set the std field to NULL
+## Assuming fine-scale variation is homoscedastic
+## Modelling using 1880 basis functions
+## Constructing SRE model...
+## Normalising basis function evaluations at BAU level ...
+## Binning data ...
+## Binned data in 0.124 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.034 seconds
+## Binned data in 0.034 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.034 seconds
+## Binned data in 0.034 seconds
+## Binned data in 0.035 seconds
+## Binned data in 0.034 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.034 seconds
+## Binned data in 0.034 seconds
+## Binned data in 0.034 seconds
+## Binned data in 0.034 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.033 seconds
+## Fitting SRE model...
+## 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |=======================                                               |  33%
+  |                                                                            
+  |===============================================                       |  67%
+  |                                                                            
+  |======================================================================| 100%
+## Maximum EM iterations reached</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb18-1"></a>grid_BAUs =<span class="st"> </span><span class="kw">predict</span>(S)</span>
+<span id="cb18-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb18-2"></a><span class="kw">stplot</span>(grid_BAUs)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="lab-temporal-basis-functions-with-spatiotemporal-package" class="section level2">
+<h2><span class="header-section-number">4.6</span> Lab: Temporal Basis Functions with SpatioTemporal package</h2>
+<p>In this lab, we fit the maximum temperature dataset using temporal basis functions. We will use the <span class="math inline">\(\texttt{SpatioTemporal}\)</span> package. We assume following model</p>
+<p><span class="math display">\[\begin{equation}
+  Y(s;t) = x(s;t)&#39; \beta + \sum^{n_\alpha}_{i=1} \phi_i(t) \alpha_i(s) + \nu(s;t) \tag{21}
+\end{equation}\]</span></p>
+<p>First, we create</p>
+
 </div>
 </div>
             </section>
@@ -438,8 +635,8 @@ Model (20) is not as common as the model (18). However, the temporal basis funct
           </div>
         </div>
       </div>
-<a href="spatio-temporal-statistical-models.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="spatio-temporal-statistical-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="dynamic-spatio-temporal-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -470,7 +667,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/04-Descriptive-Modeling.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/04-Descriptive-Spatio-Temporal-Statistical-Models.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Dynamic Spatio-Temporal Models | Spatio Temporal Statistics</title>
+  <meta name="description" content="This is a gitbook for spatio temporal analysis." />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Dynamic Spatio-Temporal Models | Spatio Temporal Statistics" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a gitbook for spatio temporal analysis." />
+  <meta name="github-repo" content="bohyunshin/spatio-temporal" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Dynamic Spatio-Temporal Models | Spatio Temporal Statistics" />
+  
+  <meta name="twitter:description" content="This is a gitbook for spatio temporal analysis." />
+  
+
+<meta name="author" content="BoHyun Shin" />
+
+
+<meta name="date" content="2020-07-21" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="descriptive-spatio-temporal-statistical-models.html"/>
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Spatio Temporal Gitbook</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="part"><span><b>I Being Familiar with STD</b></span></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Exploring Spatio Temporal Data</a><ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#representation-of-spatio-temporal-data-in-r"><i class="fa fa-check"></i><b>1.1</b> Representation of Spatio Temporal Data in R</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#visualization-of-std"><i class="fa fa-check"></i><b>1.2</b> Visualization of STD</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#exploratory-analysis-of-std"><i class="fa fa-check"></i><b>1.3</b> Exploratory Analysis of STD</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="intro.html"><a href="intro.html#empirical-spatial-means-and-covariances"><i class="fa fa-check"></i><b>1.3.1</b> Empirical Spatial Means and Covariances</a></li>
+<li class="chapter" data-level="1.3.2" data-path="intro.html"><a href="intro.html#elements-of-point-referenced-modeling"><i class="fa fa-check"></i><b>1.3.2</b> Elements of point-referenced modeling</a></li>
+<li class="chapter" data-level="1.3.3" data-path="intro.html"><a href="intro.html#empirical-orthogonal-functions-eofs"><i class="fa fa-check"></i><b>1.3.3</b> Empirical Orthogonal Functions (EOFs)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#wrap-up"><i class="fa fa-check"></i><b>1.4</b> Wrap up</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="mapping-spatio-temporal-data.html"><a href="mapping-spatio-temporal-data.html"><i class="fa fa-check"></i><b>2</b> Mapping Spatio Temporal Data</a><ul>
+<li class="chapter" data-level="2.1" data-path="mapping-spatio-temporal-data.html"><a href="mapping-spatio-temporal-data.html#some-basic-class-regarding-spatio-temporal-data-in-r"><i class="fa fa-check"></i><b>2.1</b> Some basic class regarding spatio-temporal data in R</a></li>
+<li class="chapter" data-level="2.2" data-path="mapping-spatio-temporal-data.html"><a href="mapping-spatio-temporal-data.html#package"><i class="fa fa-check"></i><b>2.2</b> Package</a></li>
+</ul></li>
+<li class="part"><span><b>II Modeling Spatio-Temporal Data</b></span></li>
+<li class="chapter" data-level="3" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html"><i class="fa fa-check"></i><b>3</b> Spatio-Temporal Statistical Models</a><ul>
+<li class="chapter" data-level="3.1" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#spatio-temporal-prediction"><i class="fa fa-check"></i><b>3.1</b> Spatio-Temporal Prediction</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#deterministic-prediction"><i class="fa fa-check"></i><b>3.1.1</b> Deterministic Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#regression-estimation"><i class="fa fa-check"></i><b>3.2</b> Regression Estimation</a></li>
+<li class="chapter" data-level="3.3" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#gaussian-or-non-gaussian-errors"><i class="fa fa-check"></i><b>3.3</b> Gaussian or Non Gaussian Errors</a></li>
+<li class="chapter" data-level="3.4" data-path="spatio-temporal-statistical-models.html"><a href="spatio-temporal-statistical-models.html#hierarchical-spatio-temporal-statistical-models"><i class="fa fa-check"></i><b>3.4</b> Hierarchical Spatio-Temporal Statistical Models</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html"><i class="fa fa-check"></i><b>4</b> Descriptive Spatio-Temporal Statistical Models</a><ul>
+<li class="chapter" data-level="4.1" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#additive-measurement-error-and-process-models"><i class="fa fa-check"></i><b>4.1</b> Additive Measurement Error and Process models</a></li>
+<li class="chapter" data-level="4.2" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#prediction-for-gaussian-data-and-processes."><i class="fa fa-check"></i><b>4.2</b> prediction for Gaussian Data and Processes.</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#spatio-temporal-covariance-functions"><i class="fa fa-check"></i><b>4.2.1</b> Spatio-Temporal Covariance Functions</a></li>
+<li class="chapter" data-level="4.2.2" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#spatio-temporal-semivariograms"><i class="fa fa-check"></i><b>4.2.2</b> Spatio-Temporal Semivariograms</a></li>
+<li class="chapter" data-level="4.2.3" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#gaussian-spatio-temporal-model-estimation"><i class="fa fa-check"></i><b>4.2.3</b> Gaussian Spatio-Temporal Model Estimation</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#random-effects-parameterizations"><i class="fa fa-check"></i><b>4.3</b> Random-Effects Parameterizations</a></li>
+<li class="chapter" data-level="4.4" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#basis-function-representations"><i class="fa fa-check"></i><b>4.4</b> Basis-Function Representations</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#random-effects-with-spatio-temporal-basis-functionss"><i class="fa fa-check"></i><b>4.4.1</b> Random Effects with Spatio-Temporal Basis Functionss</a></li>
+<li class="chapter" data-level="4.4.2" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#random-effects-with-spatial-basis-functions."><i class="fa fa-check"></i><b>4.4.2</b> Random Effects with Spatial Basis Functions.</a></li>
+<li class="chapter" data-level="4.4.3" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#random-effects-with-temporal-basis-functions"><i class="fa fa-check"></i><b>4.4.3</b> Random Effects with Temporal Basis Functions</a></li>
+<li class="chapter" data-level="4.4.4" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#confounding-of-fixed-effects-and-random-effects"><i class="fa fa-check"></i><b>4.4.4</b> Confounding of Fixed Effects and Random Effects</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#lab-package-frk"><i class="fa fa-check"></i><b>4.5</b> Lab: Package FRK</a></li>
+<li class="chapter" data-level="4.6" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#lab-temporal-basis-functions-with-spatiotemporal-package"><i class="fa fa-check"></i><b>4.6</b> Lab: Temporal Basis Functions with SpatioTemporal package</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dynamic-spatio-temporal-models.html"><a href="dynamic-spatio-temporal-models.html"><i class="fa fa-check"></i><b>5</b> Dynamic Spatio-Temporal Models</a><ul>
+<li class="chapter" data-level="5.1" data-path="dynamic-spatio-temporal-models.html"><a href="dynamic-spatio-temporal-models.html#general-dynamic-spatio-temporal-models"><i class="fa fa-check"></i><b>5.1</b> General Dynamic Spatio-Temporal Models</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="dynamic-spatio-temporal-models.html"><a href="dynamic-spatio-temporal-models.html#process-model"><i class="fa fa-check"></i><b>5.1.1</b> Process Model</a></li>
+<li class="chapter" data-level="5.1.2" data-path="dynamic-spatio-temporal-models.html"><a href="dynamic-spatio-temporal-models.html#parameters"><i class="fa fa-check"></i><b>5.1.2</b> Parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="dynamic-spatio-temporal-models.html"><a href="dynamic-spatio-temporal-models.html#latent-linear-gaussian-dstms"><i class="fa fa-check"></i><b>5.2</b> Latent Linear Gaussian DSTMs</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="dynamic-spatio-temporal-models.html"><a href="dynamic-spatio-temporal-models.html#linear-data-model-with-additive-gaussian-error"><i class="fa fa-check"></i><b>5.2.1</b> Linear Data Model with Additive Gaussian Error</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="dynamic-spatio-temporal-models.html"><a href="dynamic-spatio-temporal-models.html#process-and-parameter-dimension-reduction"><i class="fa fa-check"></i><b>5.3</b> Process and Parameter Dimension Reduction</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Spatio Temporal Statistics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="dynamic-spatio-temporal-models" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Dynamic Spatio-Temporal Models</h1>
+<p>This chapter talks about dynamic approach to spatio-temporal data, whereas we talked about descriptive approach in the last chapter. In descriptive approach, we fit mean and covariance function for the true process. This makes it more difficult to analyze spatio-temporal data because specifying the covariance function is not a easy thing to do. This chapter focuses on more realistic approach. Acually, we can witness some spatio-temporal dynamics, e.g., dynamically varying weather or people’s log data which accumulates everyday, everytime whenever you use smart phones or surfing internet.<br />
+This chapter mainly focuses on the <strong>linear dynamic spatio-temporal models (DSTMs)</strong> in the univariate context. Although it is reasonable and realistic to consider precesses to be continuous in time, we focus on the more practical case where time has been discretized. Continuous time models such as stochastic differential equations are beyond our scope, so please refer to the papers if you’re interested in tem.</p>
+<div id="general-dynamic-spatio-temporal-models" class="section level2">
+<h2><span class="header-section-number">5.1</span> General Dynamic Spatio-Temporal Models</h2>
+<p>We consider the hierarchical modeling perspective for DSTM, which means we should specify <em>data model</em> and <em>process model</em> inside the data model. Also, process model specifies the dynamic evolution of the spatio-temporal process, similar to what we did before. This section gives a general overview of hierarchical modeling in the context of a DSTM.<br />
+Let temporal domain be <span class="math inline">\(D_t = \{0,1,2 ... \}\)</span>, where the time increment is <span class="math inline">\(\Delta_t = 1\)</span>. The potential data is denoted by <span class="math inline">\(\{ Z_t (s): \; s \in D_s; t=0,1,\cdots \}\)</span> and the latent process as <span class="math inline">\(\{ Y_t (s): \; s \in D_s; t=0,1,\cdots \}\)</span>. We want to make inference on <span class="math inline">\(Y_{t_0}(s_0)\)</span> under the situation that there is no <span class="math inline">\(Z_{t_0}(s_0)\)</span>. The relationship between these process is expressed as below in DSTM</p>
+<p><span class="math display">\[\begin{equation}
+  Z_t(\cdot) = \mathcal{H}_h (Y_t(\cdot), \theta_{d,t}, \epsilon_t(\cdot)) \tag{1}
+\end{equation}\]</span></p>
+<p><span class="math inline">\(\theta_{d,t}\)</span> is data-model parameters which could vary on time and spatial domains. One important assumption to note is that the data process is independent conditioned on the true process and data parameters, i.e.,</p>
+<p><span class="math display">\[\begin{equation}
+   \{ Z_t(\cdot) \}^T_{t=1} \mid \{ Y_t(\cdot) \}^T{t=1}, \{ \theta_{d,t} \}^T_{t=1} = \prod^T_{t=1}[Z_t(\cdot) \mid Y_t(\cdot), \theta_{d,t}] \tag{2}
+\end{equation}\]</span></p>
+<div id="process-model" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Process Model</h3>
+<p>The most important part of a DSTM is the decomposition of the joint distribution of the process in terms of conditional distributions that respect the time evolution of the spatial process. We can always decompose joint distribution as products of conditional distributions as</p>
+<p><span class="math display">\[\begin{equation}
+  [Y_0, Y_1, \cdots, Y_T] = [Y_T \mid Y_{T-1}, \cdots, Y_0] \\
+     \times [Y_{T-1} \mid Y_{T-2}, \cdots, Y_0] \times \cdots \\
+     \times [Y_1 \mid Y_0] \times [Y_0] \tag{3}
+\end{equation}\]</span></p>
+<p>If we assume Markov assumption on (2), the joint distribution would be simplified as</p>
+<p><span class="math display">\[\begin{equation}
+  [Y_0, Y_1, \cdots, Y_T \mid \theta_{p,t}] = \prod^T_{t=1}[Y_t \mid Y_{t-1}, \theta_{p,t}] [Y_0 \mid \theta_{p,0}] \tag{4}
+\end{equation}\]</span></p>
+<ol start="4" style="list-style-type: decimal">
+<li>is the second key assumption, with first key assumption in specified in (2). The <em>first-order-Markov</em> assumption that is usually made for DSTMs holds when <span class="math inline">\(Y_t(\cdot)\)</span> follows a dynamic model of the form,</li>
+</ol>
+<p><span class="math display">\[\begin{equation}
+  Y_t(\cdot) = \mathcal{M}(Y_{t-1}, \theta_{p,t}, \eta_t), \; t=1,2,\cdots \tag{5}
+\end{equation}\]</span></p>
+<p>where</p>
+<ul>
+<li><span class="math inline">\(\theta_{p,t}\)</span> denotes parameters related with the process model (spatial or temporal dependence would be possible).</li>
+<li><span class="math inline">\(\mathcal{M}\)</span> is the evolution operator.</li>
+<li><span class="math inline">\(\eta_t\)</span> is a spatial noise process independent in time</li>
+<li>Model (5) can be linear or non linear, Gaussian or non-Gaussian</li>
+<li>Dependending on the situation, we can assume higher orders of markov, but first order is usually sufficient.</li>
+</ul>
+</div>
+<div id="parameters" class="section level3">
+<h3><span class="header-section-number">5.1.2</span> Parameters</h3>
+<p>Note that the parameters in Bayesian Hierarchical Models (BHM) we specify just before. In descriptive spatio-temporal modeling, the parameters consist of the <span class="math inline">\(\beta\)</span> in fixed effect and the parameters in the covariance function for the spatio-temporal random effect. However, in dynamic models, we do not specify covariance function any more, which is cumbersome to do so in descriptive modeling. Instead, we have parameters as <span class="math inline">\(\theta_{d,t}, \theta_{p,t}\)</span>, where subscript <span class="math inline">\(d, p\)</span> denote data and process model respectively. With this parameterization, we reduce the parameter space efficiently which will be discussed later. However, for many cases, it would be sufficient to model with Empirical Hierarchical Model (EHM), so be cautious to select the proper models.</p>
+</div>
+</div>
+<div id="latent-linear-gaussian-dstms" class="section level2">
+<h2><span class="header-section-number">5.2</span> Latent Linear Gaussian DSTMs</h2>
+<p>We consider the simplest DSTM where the assumed first makrov process model in (2) have additive **Gaussian error distributions* and the evolution operator <span class="math inline">\(\mathcal{M}\)</span> is assumed to be linear. Suppose we are interested in the latent process <span class="math inline">\(Y_t(s_i), \; i=1, \cdots, n\)</span> and we have data at locations <span class="math inline">\(r_{jt}\; j=1, \cdots, m_t\)</span>. That is, based on the <span class="math inline">\(r_{jt}\)</span> data at space, time index with <span class="math inline">\(j,t\)</span> we want to predict values on <span class="math inline">\(n\)</span> locations.</p>
+<div id="linear-data-model-with-additive-gaussian-error" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Linear Data Model with Additive Gaussian Error</h3>
+<p>At time point <span class="math inline">\(t\)</span>, suppose we have <span class="math inline">\(m_t\)</span> dimensional data vector, <span class="math inline">\(Z_t = (Z_t(r_{1t}), \cdots, Z_t(r_{m_tt}))&#39;\)</span> and we want to infer on <span class="math inline">\(n\)</span> dimensional latent process vector, <span class="math inline">\(Y_t \equiv ( Y_t(s_1), \cdots, Y_t(s_n) )&#39;\)</span>. For the <span class="math inline">\(j\)</span>th observation at time <span class="math inline">\(t\)</span>, the linear data model with additive Gaussian error is written as</p>
+<p><span class="math display">\[\begin{equation}
+  Z_t(r_{jt}) = b_t(r_{jt}) + \sum^n_{i=1} h_{t,ji}Y_t(s_i) + \epsilon_t(r_{jt}) \tag{6}
+\end{equation}\]</span></p>
+<p>for <span class="math inline">\(t=1,\cdots,T\)</span>. Note model (6) is when time <span class="math inline">\(t\)</span> at the location <span class="math inline">\(j\)</span>. That is, model (6) tries to explain the observed data point at time <span class="math inline">\(t\)</span> and location <span class="math inline">\(r_{jt}\)</span> by linearly combining <span class="math inline">\(n\)</span> latent process. In matrix notation, we can write</p>
+<p><span class="math display">\[\begin{equation}
+  Z_t = b_t + H_t Y_t + \epsilon_t, \; \epsilon \sim Gau(0, C_{\epsilon, t}) \tag{7}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(H_t\)</span> is <span class="math inline">\(m_t \times n\)</span> mapping matrix and <span class="math inline">\(C_{\epsilon,t}\)</span> is <span class="math inline">\(m_t \times m_t\)</span> covariance matrix. We will briefly look at each of them</p>
+<p><strong>Latent Spatio-Temporal Dynamic Process</strong><br />
+<span class="math inline">\(Y_t\)</span> represents the latent dynamic spatio-temporal process. We assume this model as first-order Markovian for simplicity yet powerful.</p>
+<p><strong>Additive Offset Term</strong><br />
+It is used when we want to assume zero-mean for the latent process or to adjust potential bias between data model and process model. We may assume additive offset term as constant, in terms of covariates and another spatial or temporal random processes with hierarchy.</p>
+<p><strong>Observation Mapping Function (or Matrix)</strong><br />
+<span class="math inline">\(h_{t,ji}\)</span> serve weights for data point at <span class="math inline">\(j\)</span>. That is, setting these weights properly, we can associate each data point with one or more of the process locations. This is especially useful when the location of process is close with the that of observed data. For example, if we set <span class="math inline">\(h_{t,j} = (0.2, 0.8, 0)\)</span>, we set the highest weight on the second location and no weight on the third location, because the third location is far away from the location <span class="math inline">\(j\)</span>. However, it is hard to pre-specify the locations at which one is interested in modeling the process.</p>
+<p><strong>Error Covariance Matrix</strong><br />
+In the linear Gaussian DSTM, the Gaussian additive error process <span class="math inline">\(\epsilon_t\)</span> is assumed to have mean zero and can have dependence in space or time, i.e., <span class="math inline">\(C_{\epsilon,t}\)</span>. In practice, we assume that most of the dependence structure is expressed by the DSTM and assume independence in error process. However, depending on the situation, one could specify other forms of covariance matrix.</p>
+<p><strong>Process Model</strong><br />
+For given present time and location, linear markovian spatio-temporal process models generally assume that the value is made up of a weighted combination throughout spatial domain of previous time. It is <em>continuous spatial</em> context where we consider <em>integro-difference equation</em> (IDE). Specifically, a first order spatio-temporal IDE process model is given by</p>
+<p><span class="math display">\[\begin{equation}
+  Y_t(s) = \int_{D_s} m(s,x; \theta_p)Y_{t-1}(x)dx + \eta_t(s) \tag{8}
+\end{equation}\]</span></p>
+<div class="figure">
+<img src="/Users/shinbo/Library/Application%20Support/typora-user-images/image-20200721163318665.png" alt="" />
+<p class="caption">Illustration of a linear DSTM</p>
+</div>
+<p>Note that the process in current time, i.e, <span class="math inline">\(Y_t(s)\)</span> is influenced by other spatial points in previous time, i.e., <span class="math inline">\(Y_{t-1}(\cdot)\)</span>. In reality, we do not know every spatial point so we cannot do the integral. Therefore, the first-order IDE evolution process model in (8) is expressed as the stochastic difference equation,</p>
+<p><span class="math display">\[\begin{equation}
+  Y_t(s_i) = \sum^n_{j=1} m_{ij}(\theta_p) Y_{t-1}(s_j) + \eta_t(s_i) \tag{9}
+\end{equation}\]</span></p>
+<p>Finally, in matrix notation, we can rewrite (9) as</p>
+<p><span class="math display">\[\begin{equation}
+  Y_t = MY_{t-1} + \eta_t \tag{10}
+\end{equation}\]</span></p>
+<p>with additive spatial error process, <span class="math inline">\(\eta_t\)</span> which is independent of <span class="math inline">\(Y_{t-1}\)</span> and with spatial covariance matrix <span class="math inline">\(C_\eta\)</span>.<br />
+</p>
+<p>Usually, <span class="math inline">\(M, C_\eta\)</span> are parameterized as <span class="math inline">\(\theta_p, \theta_\eta\)</span> that has to be estimated, which is one of the most difficult tasks. We can do this through EHM when <span class="math inline">\(n\)</span> is small and <span class="math inline">\(T &gt;&gt; n\)</span>.</p>
+</div>
+</div>
+<div id="process-and-parameter-dimension-reduction" class="section level2">
+<h2><span class="header-section-number">5.3</span> Process and Parameter Dimension Reduction</h2>
+<p>As stated above, parameters in <span class="math inline">\(M, C_\eta\)</span> can be estimated when <span class="math inline">\(n\)</span> is small enough. However, this rarely happens in real data. So, we need to reduce the number of free parameters or reduce the dimension of the spatio-temporal dynamic process. That is, there are two ways to reduce computation in simple linear DSTM.<br />
+</p>
+<p>To reduce free parameters, we assume simple covariance structure such that <span class="math inline">\(C_\eta = \sigma^2_\eta I, M = diag(\theta_p)\)</span>, which are much simpler than before. Moreover, we can consider some of the neighbors at the loction <span class="math inline">\(s_0\)</span> of interest, not considering all of the data. That is,</p>
+<p><span class="math display">\[\begin{equation}
+  Y_t(s_i) = \sum_{s_j \in \mathcal{N}_i} m_{ij} Y_{t-1}(s_j) + \eta_t(s_i) \tag{10}
+\end{equation}\]</span></p>
+<p>To reduce dimension in the process model, we usually consider basis functions to represent the dynamic process. That is,</p>
+<p><span class="math display">\[\begin{equation}
+  Y_t(s) = x_t(s)&#39;\beta + \sum^{n_\alpha}_{i=1} \phi_i (s) \alpha_{i,t} + \sum^{n_\xi}_{j=1} \psi_j(s) \xi_{j,t} + \nu_t(s) \tag{11}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(\xi_{j,t}\)</span> are typically non-dynamic or at least contain simple temporal behavior and <span class="math inline">\(\alpha_{i,t}\)</span> are dynamically evolving random effects.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="descriptive-spatio-temporal-statistical-models.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/05-Dynamic-Spatio-Temporal-Models.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

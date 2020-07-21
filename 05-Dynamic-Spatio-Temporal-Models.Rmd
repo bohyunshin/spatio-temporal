@@ -1,0 +1,122 @@
+# Dynamic Spatio-Temporal Models
+This chapter talks about dynamic approach to spatio-temporal data, whereas we talked about descriptive approach in the last chapter. In descriptive approach, we fit mean and covariance function for the true process. This makes it more difficult to analyze spatio-temporal data because specifying the covariance function is not a easy thing to do. This chapter focuses on more realistic approach. Acually, we can witness some spatio-temporal dynamics, e.g., dynamically varying weather or people's log data which accumulates everyday, everytime whenever you use smart phones or surfing internet. \
+This chapter mainly focuses on the **linear dynamic spatio-temporal models (DSTMs)** in the univariate context. Although it is reasonable and realistic to consider precesses to be continuous in time, we focus on the more practical case where time has been discretized. Continuous time models such as stochastic differential equations are beyond our scope, so please refer to the papers if you're interested in tem.
+
+## General Dynamic Spatio-Temporal Models
+We consider the hierarchical modeling perspective for DSTM, which means we should specify *data model* and *process model* inside the data model. Also, process model specifies the dynamic evolution of the spatio-temporal process, similar to what we did before. This section gives a general overview of hierarchical modeling in the context of a DSTM. \
+Let temporal domain be $D_t = \{0,1,2 ... \}$, where the time increment is $\Delta_t = 1$. The potential data is denoted by $\{ Z_t (s): \; s \in D_s; t=0,1,\cdots \}$ and the latent process as $\{ Y_t (s): \; s \in D_s; t=0,1,\cdots \}$. We want to make inference on $Y_{t_0}(s_0)$ under the situation that there is no $Z_{t_0}(s_0)$. The relationship between these process is expressed as below in DSTM
+
+\begin{equation}
+  Z_t(\cdot) = \mathcal{H}_h (Y_t(\cdot), \theta_{d,t}, \epsilon_t(\cdot)) \tag{1}
+\end{equation}
+
+$\theta_{d,t}$ is data-model parameters which could vary on time and spatial domains. One important assumption to note is that the data process is independent conditioned on the true process and data parameters, i.e., 
+
+\begin{equation}
+   \{ Z_t(\cdot) \}^T_{t=1} \mid \{ Y_t(\cdot) \}^T{t=1}, \{ \theta_{d,t} \}^T_{t=1} = \prod^T_{t=1}[Z_t(\cdot) \mid Y_t(\cdot), \theta_{d,t}] \tag{2}
+\end{equation}
+
+### Process Model
+The most important part of a DSTM is the decomposition of the joint distribution of the process in terms of conditional distributions that respect the time evolution of the spatial process. We can always decompose joint distribution as products of conditional distributions as
+
+\begin{equation}
+  [Y_0, Y_1, \cdots, Y_T] = [Y_T \mid Y_{T-1}, \cdots, Y_0] \\
+     \times [Y_{T-1} \mid Y_{T-2}, \cdots, Y_0] \times \cdots \\
+     \times [Y_1 \mid Y_0] \times [Y_0] \tag{3}
+\end{equation}
+
+If we assume Markov assumption on (2), the joint distribution would be simplified as
+
+\begin{equation}
+  [Y_0, Y_1, \cdots, Y_T \mid \theta_{p,t}] = \prod^T_{t=1}[Y_t \mid Y_{t-1}, \theta_{p,t}] [Y_0 \mid \theta_{p,0}] \tag{4}
+\end{equation}
+
+(4) is the second key assumption, with first key assumption in specified in (2). The *first-order-Markov* assumption that is usually made for DSTMs holds when $Y_t(\cdot)$ follows a dynamic model of the form,
+
+\begin{equation}
+  Y_t(\cdot) = \mathcal{M}(Y_{t-1}, \theta_{p,t}, \eta_t), \; t=1,2,\cdots \tag{5}
+\end{equation}
+
+where
+
+
+* $\theta_{p,t}$ denotes parameters related with the process model (spatial or temporal dependence would be possible).
+* $\mathcal{M}$ is the evolution operator.
+* $\eta_t$ is a spatial noise process independent in time
+* Model (5) can be linear or non linear, Gaussian or non-Gaussian
+* Dependending on the situation, we can assume higher orders of markov, but first order is usually sufficient.
+
+### Parameters
+Note that the parameters in Bayesian Hierarchical Models (BHM) we specify just before. In descriptive spatio-temporal modeling, the parameters consist of the $\beta$ in fixed effect and the parameters in the covariance function for the spatio-temporal random effect. However, in dynamic models, we do not specify covariance function any more, which is cumbersome to do so in descriptive modeling. Instead, we have parameters as $\theta_{d,t}, \theta_{p,t}$, where subscript $d, p$ denote data and process model respectively. With this parameterization, we reduce the parameter space efficiently which will be discussed later. However, for many cases, it would be sufficient to model with Empirical Hierarchical Model (EHM), so be cautious to select the proper models.
+
+## Latent Linear Gaussian DSTMs
+We consider the simplest DSTM where the assumed first makrov process model in (2) have additive **Gaussian error distributions* and the evolution operator $\mathcal{M}$ is assumed to be linear. Suppose we are interested in the latent process $Y_t(s_i), \; i=1, \cdots, n$ and we have data at locations $r_{jt}\; j=1, \cdots, m_t$. That is, based on the $r_{jt}$ data at space, time index with $j,t$ we want to predict values on $n$ locations. 
+
+### Linear Data Model with Additive Gaussian Error
+At time point $t$, suppose we have $m_t$ dimensional data vector, $Z_t = (Z_t(r_{1t}), \cdots, Z_t(r_{m_tt}))'$ and we want to infer on $n$ dimensional latent process vector, $Y_t \equiv ( Y_t(s_1), \cdots, Y_t(s_n)  )'$. For the $j$th observation at time $t$, the linear data model with additive Gaussian error is written as
+
+\begin{equation}
+  Z_t(r_{jt}) = b_t(r_{jt}) + \sum^n_{i=1} h_{t,ji}Y_t(s_i) + \epsilon_t(r_{jt}) \tag{6}
+\end{equation}
+
+for $t=1,\cdots,T$. Note model (6) is when time $t$ at the location $j$. That is, model (6) tries to explain the observed data point at time $t$ and location $r_{jt}$ by linearly combining $n$ latent process. In matrix notation, we can write
+
+\begin{equation}
+  Z_t = b_t + H_t Y_t + \epsilon_t, \; \epsilon \sim Gau(0, C_{\epsilon, t}) \tag{7}
+\end{equation}
+
+where $H_t$ is $m_t \times n$ mapping matrix and $C_{\epsilon,t}$ is $m_t \times m_t$ covariance matrix. We will briefly look at each of them
+
+**Latent Spatio-Temporal Dynamic Process** \
+$Y_t$ represents the latent dynamic spatio-temporal process. We assume this model as first-order Markovian for simplicity yet powerful.
+
+**Additive Offset Term** \
+It is used when we want to assume zero-mean for the latent process or to adjust potential bias between data model and process model. We may assume additive offset term as constant, in terms of covariates and another spatial or temporal random processes with hierarchy.
+
+**Observation Mapping Function (or Matrix)** \
+$h_{t,ji}$ serve weights for data point at $j$. That is, setting these weights properly, we can associate each data point with one or more of the process locations. This is especially useful when the location of process is close with the that of observed data. For example, if we set $h_{t,j} = (0.2, 0.8, 0)$, we set the highest weight on the second location and no weight on the third location, because the third location is far away from the location $j$. However, it is hard to pre-specify the locations at which one is interested in modeling the process.
+
+**Error Covariance Matrix** \
+In the linear Gaussian DSTM, the Gaussian additive error process $\epsilon_t$ is assumed to have mean zero and can have dependence in space or time, i.e., $C_{\epsilon,t}$. In practice, we assume that most of the dependence structure is expressed by the DSTM and assume independence in error process. However, depending on the situation, one could specify other forms of covariance matrix.
+
+**Process Model** \
+For given present time and location, linear markovian spatio-temporal process models generally assume that the value is made up of a weighted combination throughout spatial domain of previous time. It is *continuous spatial* context where we consider *integro-difference equation* (IDE). Specifically, a first order spatio-temporal IDE process model is given by
+
+\begin{equation}
+  Y_t(s) = \int_{D_s} m(s,x; \theta_p)Y_{t-1}(x)dx + \eta_t(s) \tag{8}
+\end{equation}
+
+![Illustration of a linear DSTM](/Users/shinbo/Library/Application Support/typora-user-images/image-20200721163318665.png)
+
+Note that the process in current time, i.e, $Y_t(s)$ is influenced by other spatial points in previous time, i.e., $Y_{t-1}(\cdot)$. In reality, we do not know every spatial point so we cannot do the integral. Therefore, the first-order IDE evolution process model in (8) is expressed as the stochastic difference equation,
+
+\begin{equation}
+  Y_t(s_i) = \sum^n_{j=1} m_{ij}(\theta_p) Y_{t-1}(s_j) + \eta_t(s_i) \tag{9}
+\end{equation}
+
+Finally, in matrix notation, we can rewrite (9) as
+
+\begin{equation}
+  Y_t = MY_{t-1} + \eta_t \tag{10}
+\end{equation}
+
+with additive spatial error process, $\eta_t$ which is independent of $Y_{t-1}$ and with spatial covariance matrix $C_\eta$. \
+
+Usually, $M, C_\eta$ are parameterized as $\theta_p, \theta_\eta$ that has to be estimated, which is one of the most difficult tasks. We can do this through EHM when $n$ is small and $T >> n$.
+
+## Process and Parameter Dimension Reduction
+As stated above, parameters in $M, C_\eta$ can be estimated when $n$ is small enough. However, this rarely happens in real data. So, we need to reduce the number of free parameters or reduce the dimension of the spatio-temporal dynamic process. That is, there are two ways to reduce computation in simple linear DSTM. \
+
+To reduce free parameters, we assume simple covariance structure such that $C_\eta = \sigma^2_\eta I, M = diag(\theta_p)$, which are much simpler than before. Moreover, we can consider some of the neighbors at the loction $s_0$ of interest, not considering all of the data. That is,
+
+\begin{equation}
+  Y_t(s_i) = \sum_{s_j \in \mathcal{N}_i} m_{ij} Y_{t-1}(s_j) + \eta_t(s_i) \tag{10}
+\end{equation}
+
+To reduce dimension in the process model, we usually consider basis functions to represent the dynamic process. That is,
+
+\begin{equation}
+  Y_t(s) = x_t(s)'\beta + \sum^{n_\alpha}_{i=1} \phi_i (s) \alpha_{i,t} + \sum^{n_\xi}_{j=1} \psi_j(s) \xi_{j,t} + \nu_t(s) \tag{11}
+\end{equation}
+
+where $\xi_{j,t}$ are typically non-dynamic or at least contain simple temporal behavior and $\alpha_{i,t}$ are dynamically evolving random effects.
