@@ -381,7 +381,7 @@ tunit = "days") # time unit is "days"
 
 Note the cellsize argument of auto_BAUs determines the size of BAUs. 
 
-We can also use hexagone BAUs using
+We can also use hexagone BAUs using following code.
 
 ```{r}
 BAUs_hex <- auto_BAUs(manifold = STplane(), # model on the plane
@@ -394,12 +394,15 @@ tunit = "days") # time unit is "days"
 plot(as(BAUs[, 1], "SpatialPixels")) # plot pixel BAUs
 plot(SpatialPoints(STObj5),
 add = TRUE, col = "red") # plot data points
+
 plot(as(BAUs_hex[, 1], "SpatialPolygons"))
+plot(SpatialPoints(STObj5),
+add = TRUE, col = "red") # plot data points
 ```
 
 Some grids are made above to include data points. \
 
-Next, we create spatio-temporal basis functions. In $\texttt{FRK}$, basis functions are created by taking the tesnor product of spatial basis functions and temporal basis functions. That is, $\phi_p(s)\psi_q(t); \; p=1,\cdots,r_s, q=1,\cdots,r_t$. Basis function can be either regularly placed, or irregularly placed and they are often multi-resolutional. After $\texttt{auto_basis}$, we automatically get number of basis function, in this case, $r_s = 94$, and bisquare apertures. \
+Next, we create spatio-temporal basis functions. In $\texttt{FRK}$, basis functions are created by taking the tesnor product of spatial basis functions and temporal basis functions. That is, $\phi_p(s)\psi_q(t); \; p=1,\cdots,r_s, $  $q=1,\cdots,r_t$. Basis function can be either regularly placed, or irregularly placed and they are often multi-resolutional. After $\texttt{auto_basis}$, we automatically get number of basis function, in this case, $r_s = 94$, and bisquare apertures. \
 Next, we create 20 temporal basis functions so that tensor producting them results in total number of spatio-temporal basis functions is $r_s r_t = 1880$.
 
 ```{r}
@@ -419,7 +422,7 @@ scale = rep(2, 20)) # aperture par.
 G <- TensorP(G_spatial, G_temporal) # take the tensor product
 ```
 
-Note that alghouth spatio-temporal basis functions are generated from tensor product, resulting S-T covariance function is not separable. \
+Note that although spatio-temporal basis functions are generated from tensor product, resulting S-T covariance function is not separable. \
 In this lab, we assume the measurement error variance is the nugget estimated when fitting the separable covariance function. (?) Finally, we fit the FRK model.
 
 ```{r}
@@ -437,12 +440,301 @@ grid_BAUs = predict(S)
 stplot(grid_BAUs)
 ```
 
-## Lab: Temporal Basis Functions with SpatioTemporal package
+## Lab: Non-Gaussian Spatio-Temporal GAMs with mgvv
 
-In this lab, we fit the maximum temperature dataset using temporal basis functions. We will use the $\texttt{SpatioTemporal}$ package. We assume following model
+In this lab, we aim to predict the expected bird counts at arbitrary spatio-temporal locations. The Carolina wren counts data will be used using GAMs and GAMMs.
+
+```{r message=FALSE}
+library("mgcv")
+data("MOcarolinawren_long", package = "STRbook")
+```
+
+To do GAMs, GAMMs, we assume following models
 
 \begin{equation}
-  Y(s;t) = x(s;t)' \beta + \sum^{n_\alpha}_{i=1} \phi_i(t) \alpha_i(s) + \nu(s;t) \tag{21}
+  g(Y(s;t)) = \beta + f(s;t) + \nu(s;t) \tag{21}
 \end{equation}
 
-First, we create 
+where
+* $g$ is link function because we assume generalized models, 
+* $\beta$ is an intercept
+* $f(s;t)$ is a random smooth function of space and time,
+* $\nu(s;t)$ is a spatio-temporal white-noise error process
+
+In **mgcv**, it should be noted that the random smooth function $f$ is decomposed into spline basis, ie., $\sum^{r_1}_{i=1}$ \phi_{1i}(s;t)\alpha_{1i} and $\alpha_{1i}$ are unknown random effects that need to be predicted. As done before, the spline basis are known function. The *thin-plate regression splines* are usually used, as they are easily amenable to multiple covariates. However, using this basis function over *both space and time* is not recommended. Therefore, similar to $\texttt{FRK}$ package, we use tensor product for basis function of space and time. That is,
+
+\begin{equation}
+  f(s;t) = \sum^{r_1}_{i=1} \sum^{r_2}_{j=1} \phi_{1i}(s) \phi_{2j}(t) \alpha_{ij} \equiv \boldsymbol{\phi^{'}\alpha} \tag{22}
+\end{equation}
+
+The function $\texttt{te}$ forms the product from the marginals. We employ thin-plate spline basis over space(longitude, latitude) and a cubic regression spline over time through $\texttt{tp, cr}$. We negative binomial model to adjust the overdispersion.
+
+```{r}
+## ------------------------------------------------------------------------
+f <- cnt ~ te(lon, lat, t,         # inputs over which to smooth
+              bs = c("tp", "cr"),  # types of bases
+              k = c(50, 10),       # knot count in each dimension
+              d = c(2, 1))         # (s,t) basis dimension
+
+## ------------------------------------------------------------------------
+cnts <- gam(f, family = nb(link = "log"),
+             data = MOcarolinawren_long)
+
+## ------------------------------------------------------------------------
+cnts$family$getTheta(trans = 1)
+```
+
+Note relatively small parameter $r$ estimated from the model, which means that negative binomial model is appropriate. \
+Next, to predict the field at unobserved locations using the hierarchical model, we create space-time grid as
+
+```{r}
+## ------------------------------------------------------------------------
+MOlon <- MOcarolinawren_long$lon
+MOlat <- MOcarolinawren_long$lat
+
+## Construct space-time grid
+grid_locs <- expand.grid(lon = seq(min(MOlon) - 0.2,
+                                   max(MOlon) + 0.2,
+                                   length.out = 80),
+                         lat = seq(min(MOlat) - 0.2,
+                                   max(MOlat) + 0.2,
+                                   length.out = 80),
+                         t = 1:max(MOcarolinawren_long$t))
+
+## ------------------------------------------------------------------------
+X <- predict(cnts, grid_locs, se.fit = TRUE)
+```
+
+Now we predict the bird count at prediction space-time grid. The results are shown with the standard error plot.
+
+## Non-Gaussian Spatio-Temporal Models with INLA
+Integrated Nested Laplace Approximation (INLA) is an approximation method to get samples from marginals of posteriors instead of joint of posteriors. Its main idea is that because deriving joint posterior distribution through MCMC consumes lots of time, instead it suggests to get samples from marginal posterior distribution. More details will be found on their paper. We focus on the implementation of INLA in R on the Carolina wren counts data
+
+```{r}
+library("INLA")
+```
+
+We consider the same negative binomial model similar to previous lab. This time, we write data model as matrix notation,
+\begin{equation}
+  Z_t \mid Y_t \sim indep \; NB(Y_t, r) \tag{23}
+\end{equation}
+and the process model as,
+\begin{equation}
+  log Y_t = X_t \beta + \Phi_t \alpha_t \tag{24}
+\end{equation}
+
+* $Z_t$ is an $m_t$ dimensional data vector of counts at $m_t$ spatial locations
+* $E(Z_t \mid Y_t) = Y_t$, which means $Y_t$ represents the latent spatio-temporal mean process.
+* $\Phi_t$ is an $m_t \times n_\alpha$ dimensional spatial basis functions
+* $\alpha_t$ is random coefficient which follow $Gau(0, C_\alpha)$
+
+In $\texttt{FRK}$ package, we use BAUs as basis function. In $\texttt{INLA}$, we use **mesh**, triangulation of the domain, as basis functions. To establish this, we invoke following code.
+```{r}
+## ------------------------------------------------------------------------
+coords <- unique(MOcarolinawren_long[c("loc.ID", "lon", "lat")])
+boundary <- inla.nonconvex.hull(as.matrix(coords[, 2:3]))
+
+## ------------------------------------------------------------------------
+MOmesh <- inla.mesh.2d(boundary = boundary,
+                       max.edge = c(0.8, 1.2), # max. edge length
+                       cutoff = 0.1)           # min. edge length
+
+plot(MOmesh,asp=1,main="");
+lines(coords[c("lon","lat")],col="red",type="p")
+```
+
+When using INLA, the covariance matrix of $\alpha$ is chosen toe be separable across space and time.
+
+\begin{equation}
+  \Sigma_t(\rho) \otimes \Sigma_s (\tau, \kappa, \nu) \tag{25}
+\end{equation}
+
+where $\rho$ is AR parameter, $\tau, \kappa, \nu$ are estimated as a solution to the stochastic partial differential equation (SPDE)
+
+```{r}
+spde <- inla.spde2.pcmatern(mesh = MOmesh,
+                            alpha = 2,
+                            prior.range = c(1, 0.01),
+                            prior.sigma = c(4, 0.01))
+```
+
+We make the space-time index needed for block-matrix structure in INLA. After that, we make matrix $\Phi$.
+
+```{r}
+## ------------------------------------------------------------------------
+n_years <- length(unique(MOcarolinawren_long$t))
+n_spatial <- MOmesh$n
+s_index <- inla.spde.make.index(name = "spatial.field",
+                                n.spde = n_spatial,
+                                n.group = n_years)
+
+
+## ------------------------------------------------------------------------
+coords.allyear <- MOcarolinawren_long[c("lon", "lat")] %>%
+                  as.matrix()
+PHI <- inla.spde.make.A(mesh = MOmesh,
+                        loc = coords.allyear,
+                        group = MOcarolinawren_long$t,
+                        n.group = n_years)
+
+## ------------------------------------------------------------------------
+dim(PHI)
+
+## ------------------------------------------------------------------------
+nrow(MOcarolinawren_long)
+length(s_index$spatial.field)
+```
+
+We construct the latent Gaussian model in INLA using *stack*.
+
+```{r}
+## First stack: Estimation
+n_data <- nrow(MOcarolinawren_long)
+stack_est <- inla.stack(
+                 data = list(cnt = MOcarolinawren_long$cnt),
+                 A = list(PHI, 1),
+                 effects = list(s_index,
+                                list(Intercept = rep(1, n_data))),
+                 tag = "est")
+
+## ------------------------------------------------------------------------
+df_pred <- data.frame(lon = rep(MOmesh$loc[,1], n_years),
+                      lat = rep(MOmesh$loc[,2], n_years),
+                      t = rep(1:n_years, each = MOmesh$n))
+n_pred <- nrow(df_pred)
+PHI_pred <- Diagonal(n = n_pred)
+
+## ------------------------------------------------------------------------
+## Second stack: Prediction
+stack_pred <- inla.stack(
+                 data = list(cnt = NA),
+                 A = list(PHI_pred, 1),
+                 effects = list(s_index,
+                                list(Intercept = rep(1, n_pred))),
+                 tag = "pred")
+
+## ------------------------------------------------------------------------
+stack <- inla.stack(stack_est, stack_pred)
+
+## ------------------------------------------------------------------------
+dim(stack_est$A)
+```
+
+Now, we are left with specifying the formula of model.
+
+```{r}
+## PC prior on rho
+rho_hyper <- list(theta=list(prior = 'pccor1',
+                             param = c(0, 0.9)))
+
+## Formula
+formula <- cnt ~ -1 + Intercept +
+                 f(spatial.field,
+                   model = spde,
+                   group = spatial.field.group,
+                   control.group = list(model = "ar1",
+                                        hyper = rho_hyper))
+```
+
+Finally let's fit INLA model!!
+
+```{r}
+## ------------------------------------------------------------------------
+## output <- inla(formula,
+##                data = inla.stack.data(stack, spde = spde),
+##                family = "nbinomial",
+##                control.predictor = list(A = inla.stack.A(stack),
+##                                         compute = TRUE))
+##
+## output2 <- list(summary.fixed = output$summary.fixed,
+##                 summary.hyperpar = output$summary.hyperpar,
+##                 summary.fitted.values = output$summary.fitted.values,
+##                 marginals.fixed = output$marginals.fixed,
+##                 marginals.hyperpar = output$marginals.hyperpar,
+##                 internal.marginals.hyperpar = output$internal.marginals.hyperpar,
+##                 marginals.spde2.blc = output$marginals.spde2.blc,
+##                 marginals.spde3.blc = output$marginals.spde3.blc,
+##                 internal.marginals.hyperpar = output$internal.marginals.hyperpar)
+## class(output2) <- "inla"
+## output <- output2
+
+## ------------------------------------------------------------------------
+data("INLA_output", package = "STRbook")
+```
+
+This book provides the trained model, so let's use it. As mentioned before, INLA provides marginal posterior distribution for each parameters not joint posterior distribution.
+
+```{r}
+## ------------------------------------------------------------------------
+par(mgp=c(2.2,0.45,0), tcl=-0.4, mar=c(3.3,4,2,2))
+par(mfrow=c(2,2))
+output.field <- inla.spde2.result(inla = output,
+                                  name = "spatial.field",
+                                  spde = spde,
+                                  do.transf = TRUE)
+plot(output$marginals.fix[[1]],type ='l',xlab=expression(beta[0]),ylab=expression(p(beta[0]*"|"*Z)))
+plot(output$marginals.hyperpar[[4]],type = 'l',xlab = expression(rho),ylab = expression(p(rho*"|"*Z)))
+plot(output.field$marginals.variance.nominal[[1]],type = 'l',xlab = expression(sigma^2),ylab = expression(p(sigma^2*"|"*Z)))
+plot(output.field$marginals.range.nominal[[1]],type = 'l',xlab = expression(l),ylab = expression(p(l*"|"*Z)))
+
+```
+
+Note the marginal posterior distribution of $\sigma^2$. The mode is between 2 and 4 which is quite large. In other words, the spatio-temporal model we build is quite reasonable for this data. Also, the marginal distribution of $\rho$ is quite skewed to 1, which means AR(1) assumption is also reasonable to this data. Finally, we plot the spatial map filled with prediction values and standard error.
+
+```{r}
+## ------------------------------------------------------------------------
+index_pred <- inla.stack.index(stack, "pred")$data
+lp_mean <- output$summary.fitted.values$mean[index_pred]
+lp_sd <- output$summary.fitted.values$sd[index_pred]
+
+## ------------------------------------------------------------------------
+grid_locs <- expand.grid(
+                 lon = seq(min(MOcarolinawren_long$lon) - 0.2,
+                           max(MOcarolinawren_long$lon) + 0.2,
+                           length.out = 80),
+                 lat = seq(min(MOcarolinawren_long$lat) - 0.2,
+                           max(MOcarolinawren_long$lat) + 0.2,
+                           length.out = 80))
+
+## ------------------------------------------------------------------------
+proj.grid <- inla.mesh.projector(MOmesh,
+                    xlim = c(min(MOcarolinawren_long$lon) - 0.2,
+                             max(MOcarolinawren_long$lon) + 0.2),
+                    ylim = c(min(MOcarolinawren_long$lat) - 0.2,
+                             max(MOcarolinawren_long$lat) + 0.2),
+                    dims = c(80, 80))
+
+## ------------------------------------------------------------------------
+pred <- sd <-  NULL
+for(i in 1:n_years) {
+    ii <- (i-1)*MOmesh$n + 1
+    jj <- i*MOmesh$n
+    pred[[i]] <- cbind(grid_locs,
+                       z = c(inla.mesh.project(proj.grid,
+                                             lp_mean[ii:jj])),
+                       t = i)
+    sd[[i]] <- cbind(grid_locs,
+                     z = c(inla.mesh.project(proj.grid,
+                                             lp_sd[ii:jj])),
+                     t = i)
+}
+
+## ------------------------------------------------------------------------
+pred <- do.call("rbind", pred) %>% filter(!is.na(z))
+sd <- do.call("rbind", sd) %>% filter(!is.na(z))
+
+## ------------------------------------------------------------------------
+df_tot <- group_by(MOcarolinawren_long,lon,lat) %>%
+          dplyr::summarise(tot_cnt = sum(cnt,na.rm=T))
+
+g1 <- ggplot() + geom_raster(data=pred,aes(lon,lat,fill=pmin(z,5))) + facet_wrap(~t,nrow=3,ncol=7) +
+    geom_point(data=filter(MOcarolinawren_long,!is.na(cnt)),aes(lon,lat),colour="black",size=3) +
+    geom_point(data=filter(MOcarolinawren_long,!is.na(cnt)),aes(lon,lat,colour=log(cnt)),size=2) +
+    scale_colour_distiller(palette="Spectral",limits=c(-1,5)) +
+    scale_fill_distiller(palette="Spectral",limits=c(-1,5),name=expression(log(Y[t]))) + theme_bw()
+
+g2 <- ggplot() + geom_raster(data=sd,aes(lon,lat,fill=z)) + facet_wrap(~t,nrow=3,ncol=7) +
+    scale_fill_distiller(palette="BrBG",limits=c(0,2.5),name=expression(s.e.)) + theme_bw()
+grid.arrange(g1,g2)
+```
+

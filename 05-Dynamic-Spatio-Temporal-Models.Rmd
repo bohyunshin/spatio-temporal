@@ -86,7 +86,7 @@ For given present time and location, linear markovian spatio-temporal process mo
   Y_t(s) = \int_{D_s} m(s,x; \theta_p)Y_{t-1}(x)dx + \eta_t(s) \tag{8}
 \end{equation}
 
-![Illustration of a linear DSTM](/Users/shinbo/Library/Application Support/typora-user-images/image-20200721163318665.png)
+![Illustration of a linear DSTM](https://user-images.githubusercontent.com/36855000/88033712-a4d39600-cb7a-11ea-8c48-fdda619ebd90.png)
 
 Note that the process in current time, i.e, $Y_t(s)$ is influenced by other spatial points in previous time, i.e., $Y_{t-1}(\cdot)$. In reality, we do not know every spatial point so we cannot do the integral. Therefore, the first-order IDE evolution process model in (8) is expressed as the stochastic difference equation,
 

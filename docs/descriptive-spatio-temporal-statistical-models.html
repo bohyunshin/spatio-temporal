@@ -174,7 +174,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.4.4" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#confounding-of-fixed-effects-and-random-effects"><i class="fa fa-check"></i><b>4.4.4</b> Confounding of Fixed Effects and Random Effects</a></li>
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#lab-package-frk"><i class="fa fa-check"></i><b>4.5</b> Lab: Package FRK</a></li>
-<li class="chapter" data-level="4.6" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#lab-temporal-basis-functions-with-spatiotemporal-package"><i class="fa fa-check"></i><b>4.6</b> Lab: Temporal Basis Functions with SpatioTemporal package</a></li>
+<li class="chapter" data-level="4.6" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#lab-non-gaussian-spatio-temporal-gams-with-mgvv"><i class="fa fa-check"></i><b>4.6</b> Lab: Non-Gaussian Spatio-Temporal GAMs with mgvv</a></li>
+<li class="chapter" data-level="4.7" data-path="descriptive-spatio-temporal-statistical-models.html"><a href="descriptive-spatio-temporal-statistical-models.html#non-gaussian-spatio-temporal-models-with-inla"><i class="fa fa-check"></i><b>4.7</b> Non-Gaussian Spatio-Temporal Models with INLA</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="dynamic-spatio-temporal-models.html"><a href="dynamic-spatio-temporal-models.html"><i class="fa fa-check"></i><b>5</b> Dynamic Spatio-Temporal Models</a><ul>
 <li class="chapter" data-level="5.1" data-path="dynamic-spatio-temporal-models.html"><a href="dynamic-spatio-temporal-models.html#general-dynamic-spatio-temporal-models"><i class="fa fa-check"></i><b>5.1</b> General Dynamic Spatio-Temporal Models</a><ul>
@@ -525,7 +526,7 @@ error.</em></p>
 <span id="cb12-20"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-20"></a><span class="dt">convex =</span> <span class="fl">-0.12</span>, <span class="co"># hull extension</span></span>
 <span id="cb12-21"><a href="descriptive-spatio-temporal-statistical-models.html#cb12-21"></a><span class="dt">tunit =</span> <span class="st">&quot;days&quot;</span>) <span class="co"># time unit is &quot;days&quot;</span></span></code></pre></div>
 <p>Note the cellsize argument of auto_BAUs determines the size of BAUs.</p>
-<p>We can also use hexagone BAUs using</p>
+<p>We can also use hexagone BAUs using following code.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb13-1"></a>BAUs_hex &lt;-<span class="st"> </span><span class="kw">auto_BAUs</span>(<span class="dt">manifold =</span> <span class="kw">STplane</span>(), <span class="co"># model on the plane</span></span>
 <span id="cb13-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb13-2"></a><span class="dt">type =</span> <span class="st">&quot;hex&quot;</span>, <span class="co"># hex (not &quot;grid&quot;)</span></span>
 <span id="cb13-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb13-3"></a><span class="dt">data =</span> STObj5, <span class="co"># data</span></span>
@@ -537,11 +538,13 @@ error.</em></p>
 <span id="cb13-9"><a href="descriptive-spatio-temporal-statistical-models.html#cb13-9"></a><span class="kw">plot</span>(<span class="kw">SpatialPoints</span>(STObj5),</span>
 <span id="cb13-10"><a href="descriptive-spatio-temporal-statistical-models.html#cb13-10"></a><span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># plot data points</span></span></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb14-1"></a><span class="kw">plot</span>(<span class="kw">as</span>(BAUs_hex[, <span class="dv">1</span>], <span class="st">&quot;SpatialPolygons&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb14-1"></a><span class="kw">plot</span>(<span class="kw">as</span>(BAUs_hex[, <span class="dv">1</span>], <span class="st">&quot;SpatialPolygons&quot;</span>))</span>
+<span id="cb14-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb14-2"></a><span class="kw">plot</span>(<span class="kw">SpatialPoints</span>(STObj5),</span>
+<span id="cb14-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb14-3"></a><span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># plot data points</span></span></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
 <p>Some grids are made above to include data points.<br />
 </p>
-<p>Next, we create spatio-temporal basis functions. In <span class="math inline">\(\texttt{FRK}\)</span>, basis functions are created by taking the tesnor product of spatial basis functions and temporal basis functions. That is, <span class="math inline">\(\phi_p(s)\psi_q(t); \; p=1,\cdots,r_s, q=1,\cdots,r_t\)</span>. Basis function can be either regularly placed, or irregularly placed and they are often multi-resolutional. After <span class="math inline">\(\texttt{auto_basis}\)</span>, we automatically get number of basis function, in this case, <span class="math inline">\(r_s = 94\)</span>, and bisquare apertures.<br />
+<p>Next, we create spatio-temporal basis functions. In <span class="math inline">\(\texttt{FRK}\)</span>, basis functions are created by taking the tesnor product of spatial basis functions and temporal basis functions. That is, $_p(s)_q(t); ; p=1,,r_s, $ <span class="math inline">\(q=1,\cdots,r_t\)</span>. Basis function can be either regularly placed, or irregularly placed and they are often multi-resolutional. After <span class="math inline">\(\texttt{auto_basis}\)</span>, we automatically get number of basis function, in this case, <span class="math inline">\(r_s = 94\)</span>, and bisquare apertures.<br />
 Next, we create 20 temporal basis functions so that tensor producting them results in total number of spatio-temporal basis functions is <span class="math inline">\(r_s r_t = 1880\)</span>.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb15-1"></a>G_spatial &lt;-<span class="st"> </span><span class="kw">auto_basis</span>(<span class="dt">manifold =</span> <span class="kw">plane</span>(),      <span class="co"># fns on plane</span></span>
 <span id="cb15-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb15-2"></a>                        <span class="dt">data =</span> <span class="kw">as</span>(STObj5, <span class="st">&quot;Spatial&quot;</span>), <span class="co"># project</span></span>
@@ -557,7 +560,7 @@ Next, we create 20 temporal basis functions so that tensor producting them resul
 <span id="cb15-12"><a href="descriptive-spatio-temporal-statistical-models.html#cb15-12"></a><span class="dt">scale =</span> <span class="kw">rep</span>(<span class="dv">2</span>, <span class="dv">20</span>)) <span class="co"># aperture par.</span></span>
 <span id="cb15-13"><a href="descriptive-spatio-temporal-statistical-models.html#cb15-13"></a></span>
 <span id="cb15-14"><a href="descriptive-spatio-temporal-statistical-models.html#cb15-14"></a>G &lt;-<span class="st"> </span><span class="kw">TensorP</span>(G_spatial, G_temporal) <span class="co"># take the tensor product</span></span></code></pre></div>
-<p>Note that alghouth spatio-temporal basis functions are generated from tensor product, resulting S-T covariance function is not separable.<br />
+<p>Note that although spatio-temporal basis functions are generated from tensor product, resulting S-T covariance function is not separable.<br />
 In this lab, we assume the measurement error variance is the nugget estimated when fitting the separable covariance function. (?) Finally, we fit the FRK model.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb16-1"></a>STObj5<span class="op">$</span>std =<span class="st"> </span><span class="kw">sqrt</span>(<span class="fl">0.049</span>)</span>
 <span id="cb16-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb16-2"></a>f =<span class="st"> </span>z <span class="op">~</span><span class="st"> </span>lat <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span>
@@ -575,36 +578,36 @@ In this lab, we assume the measurement error variance is the nugget estimated wh
 ## Constructing SRE model...
 ## Normalising basis function evaluations at BAU level ...
 ## Binning data ...
-## Binned data in 0.124 seconds
-## Binned data in 0.033 seconds
-## Binned data in 0.033 seconds
-## Binned data in 0.033 seconds
-## Binned data in 0.033 seconds
-## Binned data in 0.033 seconds
+## Binned data in 0.102 seconds
 ## Binned data in 0.033 seconds
 ## Binned data in 0.033 seconds
 ## Binned data in 0.033 seconds
 ## Binned data in 0.034 seconds
 ## Binned data in 0.034 seconds
+## Binned data in 0.034 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.037 seconds
+## Binned data in 0.037 seconds
 ## Binned data in 0.033 seconds
 ## Binned data in 0.033 seconds
-## Binned data in 0.034 seconds
-## Binned data in 0.034 seconds
-## Binned data in 0.035 seconds
 ## Binned data in 0.034 seconds
 ## Binned data in 0.033 seconds
 ## Binned data in 0.033 seconds
 ## Binned data in 0.034 seconds
 ## Binned data in 0.034 seconds
 ## Binned data in 0.034 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.033 seconds
+## Binned data in 0.033 seconds
 ## Binned data in 0.034 seconds
 ## Binned data in 0.033 seconds
+## Binned data in 0.034 seconds
+## Binned data in 0.032 seconds
 ## Binned data in 0.033 seconds
+## Binned data in 0.034 seconds
+## Binned data in 0.034 seconds
 ## Binned data in 0.033 seconds
-## Binned data in 0.033 seconds
-## Binned data in 0.033 seconds
-## Binned data in 0.033 seconds
-## Binned data in 0.033 seconds
+## Binned data in 0.034 seconds
 ## Fitting SRE model...
 ## 
   |                                                                            
@@ -620,13 +623,268 @@ In this lab, we assume the measurement error variance is the nugget estimated wh
 <span id="cb18-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb18-2"></a><span class="kw">stplot</span>(grid_BAUs)</span></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 </div>
-<div id="lab-temporal-basis-functions-with-spatiotemporal-package" class="section level2">
-<h2><span class="header-section-number">4.6</span> Lab: Temporal Basis Functions with SpatioTemporal package</h2>
-<p>In this lab, we fit the maximum temperature dataset using temporal basis functions. We will use the <span class="math inline">\(\texttt{SpatioTemporal}\)</span> package. We assume following model</p>
+<div id="lab-non-gaussian-spatio-temporal-gams-with-mgvv" class="section level2">
+<h2><span class="header-section-number">4.6</span> Lab: Non-Gaussian Spatio-Temporal GAMs with mgvv</h2>
+<p>In this lab, we aim to predict the expected bird counts at arbitrary spatio-temporal locations. The Carolina wren counts data will be used using GAMs and GAMMs.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb19-1"></a><span class="kw">library</span>(<span class="st">&quot;mgcv&quot;</span>)</span>
+<span id="cb19-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb19-2"></a><span class="kw">data</span>(<span class="st">&quot;MOcarolinawren_long&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;STRbook&quot;</span>)</span></code></pre></div>
+<p>To do GAMs, GAMMs, we assume following models</p>
 <p><span class="math display">\[\begin{equation}
-  Y(s;t) = x(s;t)&#39; \beta + \sum^{n_\alpha}_{i=1} \phi_i(t) \alpha_i(s) + \nu(s;t) \tag{21}
+  g(Y(s;t)) = \beta + f(s;t) + \nu(s;t) \tag{21}
 \end{equation}\]</span></p>
-<p>First, we create</p>
+<p>where
+* <span class="math inline">\(g\)</span> is link function because we assume generalized models,
+* <span class="math inline">\(\beta\)</span> is an intercept
+* <span class="math inline">\(f(s;t)\)</span> is a random smooth function of space and time,
+* <span class="math inline">\(\nu(s;t)\)</span> is a spatio-temporal white-noise error process</p>
+<p>In <strong>mgcv</strong>, it should be noted that the random smooth function <span class="math inline">\(f\)</span> is decomposed into spline basis, ie., <span class="math inline">\(\sum^{r_1}_{i=1}\)</span> <em>{1i}(s;t)</em>{1i} and <span class="math inline">\(\alpha_{1i}\)</span> are unknown random effects that need to be predicted. As done before, the spline basis are known function. The <em>thin-plate regression splines</em> are usually used, as they are easily amenable to multiple covariates. However, using this basis function over <em>both space and time</em> is not recommended. Therefore, similar to <span class="math inline">\(\texttt{FRK}\)</span> package, we use tensor product for basis function of space and time. That is,</p>
+<p><span class="math display">\[\begin{equation}
+  f(s;t) = \sum^{r_1}_{i=1} \sum^{r_2}_{j=1} \phi_{1i}(s) \phi_{2j}(t) \alpha_{ij} \equiv \boldsymbol{\phi^{&#39;}\alpha} \tag{22}
+\end{equation}\]</span></p>
+<p>The function <span class="math inline">\(\texttt{te}\)</span> forms the product from the marginals. We employ thin-plate spline basis over space(longitude, latitude) and a cubic regression spline over time through <span class="math inline">\(\texttt{tp, cr}\)</span>. We negative binomial model to adjust the overdispersion.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb20-1"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb20-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb20-2"></a>f &lt;-<span class="st"> </span>cnt <span class="op">~</span><span class="st"> </span><span class="kw">te</span>(lon, lat, t,         <span class="co"># inputs over which to smooth</span></span>
+<span id="cb20-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb20-3"></a>              <span class="dt">bs =</span> <span class="kw">c</span>(<span class="st">&quot;tp&quot;</span>, <span class="st">&quot;cr&quot;</span>),  <span class="co"># types of bases</span></span>
+<span id="cb20-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb20-4"></a>              <span class="dt">k =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">10</span>),       <span class="co"># knot count in each dimension</span></span>
+<span id="cb20-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb20-5"></a>              <span class="dt">d =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))         <span class="co"># (s,t) basis dimension</span></span>
+<span id="cb20-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb20-6"></a></span>
+<span id="cb20-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb20-7"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb20-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb20-8"></a>cnts &lt;-<span class="st"> </span><span class="kw">gam</span>(f, <span class="dt">family =</span> <span class="kw">nb</span>(<span class="dt">link =</span> <span class="st">&quot;log&quot;</span>),</span>
+<span id="cb20-9"><a href="descriptive-spatio-temporal-statistical-models.html#cb20-9"></a>             <span class="dt">data =</span> MOcarolinawren_long)</span>
+<span id="cb20-10"><a href="descriptive-spatio-temporal-statistical-models.html#cb20-10"></a></span>
+<span id="cb20-11"><a href="descriptive-spatio-temporal-statistical-models.html#cb20-11"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb20-12"><a href="descriptive-spatio-temporal-statistical-models.html#cb20-12"></a>cnts<span class="op">$</span>family<span class="op">$</span><span class="kw">getTheta</span>(<span class="dt">trans =</span> <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## [1] 5.178305</code></pre>
+<p>Note relatively small parameter <span class="math inline">\(r\)</span> estimated from the model, which means that negative binomial model is appropriate.<br />
+Next, to predict the field at unobserved locations using the hierarchical model, we create space-time grid as</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb22-1"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb22-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb22-2"></a>MOlon &lt;-<span class="st"> </span>MOcarolinawren_long<span class="op">$</span>lon</span>
+<span id="cb22-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb22-3"></a>MOlat &lt;-<span class="st"> </span>MOcarolinawren_long<span class="op">$</span>lat</span>
+<span id="cb22-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb22-4"></a></span>
+<span id="cb22-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb22-5"></a><span class="co">## Construct space-time grid</span></span>
+<span id="cb22-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb22-6"></a>grid_locs &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">lon =</span> <span class="kw">seq</span>(<span class="kw">min</span>(MOlon) <span class="op">-</span><span class="st"> </span><span class="fl">0.2</span>,</span>
+<span id="cb22-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb22-7"></a>                                   <span class="kw">max</span>(MOlon) <span class="op">+</span><span class="st"> </span><span class="fl">0.2</span>,</span>
+<span id="cb22-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb22-8"></a>                                   <span class="dt">length.out =</span> <span class="dv">80</span>),</span>
+<span id="cb22-9"><a href="descriptive-spatio-temporal-statistical-models.html#cb22-9"></a>                         <span class="dt">lat =</span> <span class="kw">seq</span>(<span class="kw">min</span>(MOlat) <span class="op">-</span><span class="st"> </span><span class="fl">0.2</span>,</span>
+<span id="cb22-10"><a href="descriptive-spatio-temporal-statistical-models.html#cb22-10"></a>                                   <span class="kw">max</span>(MOlat) <span class="op">+</span><span class="st"> </span><span class="fl">0.2</span>,</span>
+<span id="cb22-11"><a href="descriptive-spatio-temporal-statistical-models.html#cb22-11"></a>                                   <span class="dt">length.out =</span> <span class="dv">80</span>),</span>
+<span id="cb22-12"><a href="descriptive-spatio-temporal-statistical-models.html#cb22-12"></a>                         <span class="dt">t =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">max</span>(MOcarolinawren_long<span class="op">$</span>t))</span>
+<span id="cb22-13"><a href="descriptive-spatio-temporal-statistical-models.html#cb22-13"></a></span>
+<span id="cb22-14"><a href="descriptive-spatio-temporal-statistical-models.html#cb22-14"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb22-15"><a href="descriptive-spatio-temporal-statistical-models.html#cb22-15"></a>X &lt;-<span class="st"> </span><span class="kw">predict</span>(cnts, grid_locs, <span class="dt">se.fit =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p>Now we predict the bird count at prediction space-time grid. The results are shown with the standard error plot.</p>
+</div>
+<div id="non-gaussian-spatio-temporal-models-with-inla" class="section level2">
+<h2><span class="header-section-number">4.7</span> Non-Gaussian Spatio-Temporal Models with INLA</h2>
+<p>Integrated Nested Laplace Approximation (INLA) is an approximation method to get samples from marginals of posteriors instead of joint of posteriors. Its main idea is that because deriving joint posterior distribution through MCMC consumes lots of time, instead it suggests to get samples from marginal posterior distribution. More details will be found on their paper. We focus on the implementation of INLA in R on the Carolina wren counts data</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb23-1"></a><span class="kw">library</span>(<span class="st">&quot;INLA&quot;</span>)</span></code></pre></div>
+<pre><code>## Loading required package: Matrix</code></pre>
+<pre><code>## 
+## Attaching package: &#39;Matrix&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:tidyr&#39;:
+## 
+##     expand, pack, unpack</code></pre>
+<pre><code>## Loading required package: parallel</code></pre>
+<pre><code>## Loading required package: foreach</code></pre>
+<pre><code>## This is INLA_20.03.17 built 2020-06-14 16:50:48 UTC.
+## See www.r-inla.org/contact-us for how to get help.
+## To enable PARDISO sparse library; see inla.pardiso()</code></pre>
+<p>We consider the same negative binomial model similar to previous lab. This time, we write data model as matrix notation,
+<span class="math display">\[\begin{equation}
+  Z_t \mid Y_t \sim indep \; NB(Y_t, r) \tag{23}
+\end{equation}\]</span>
+and the process model as,
+<span class="math display">\[\begin{equation}
+  log Y_t = X_t \beta + \Phi_t \alpha_t \tag{24}
+\end{equation}\]</span></p>
+<ul>
+<li><span class="math inline">\(Z_t\)</span> is an <span class="math inline">\(m_t\)</span> dimensional data vector of counts at <span class="math inline">\(m_t\)</span> spatial locations</li>
+<li><span class="math inline">\(E(Z_t \mid Y_t) = Y_t\)</span>, which means <span class="math inline">\(Y_t\)</span> represents the latent spatio-temporal mean process.</li>
+<li><span class="math inline">\(\Phi_t\)</span> is an <span class="math inline">\(m_t \times n_\alpha\)</span> dimensional spatial basis functions</li>
+<li><span class="math inline">\(\alpha_t\)</span> is random coefficient which follow <span class="math inline">\(Gau(0, C_\alpha)\)</span></li>
+</ul>
+<p>In <span class="math inline">\(\texttt{FRK}\)</span> package, we use BAUs as basis function. In <span class="math inline">\(\texttt{INLA}\)</span>, we use <strong>mesh</strong>, triangulation of the domain, as basis functions. To establish this, we invoke following code.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb30-1"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb30-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb30-2"></a>coords &lt;-<span class="st"> </span><span class="kw">unique</span>(MOcarolinawren_long[<span class="kw">c</span>(<span class="st">&quot;loc.ID&quot;</span>, <span class="st">&quot;lon&quot;</span>, <span class="st">&quot;lat&quot;</span>)])</span>
+<span id="cb30-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb30-3"></a>boundary &lt;-<span class="st"> </span><span class="kw">inla.nonconvex.hull</span>(<span class="kw">as.matrix</span>(coords[, <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]))</span>
+<span id="cb30-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb30-4"></a></span>
+<span id="cb30-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb30-5"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb30-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb30-6"></a>MOmesh &lt;-<span class="st"> </span><span class="kw">inla.mesh.2d</span>(<span class="dt">boundary =</span> boundary,</span>
+<span id="cb30-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb30-7"></a>                       <span class="dt">max.edge =</span> <span class="kw">c</span>(<span class="fl">0.8</span>, <span class="fl">1.2</span>), <span class="co"># max. edge length</span></span>
+<span id="cb30-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb30-8"></a>                       <span class="dt">cutoff =</span> <span class="fl">0.1</span>)           <span class="co"># min. edge length</span></span>
+<span id="cb30-9"><a href="descriptive-spatio-temporal-statistical-models.html#cb30-9"></a></span>
+<span id="cb30-10"><a href="descriptive-spatio-temporal-statistical-models.html#cb30-10"></a><span class="kw">plot</span>(MOmesh,<span class="dt">asp=</span><span class="dv">1</span>,<span class="dt">main=</span><span class="st">&quot;&quot;</span>);</span>
+<span id="cb30-11"><a href="descriptive-spatio-temporal-statistical-models.html#cb30-11"></a><span class="kw">lines</span>(coords[<span class="kw">c</span>(<span class="st">&quot;lon&quot;</span>,<span class="st">&quot;lat&quot;</span>)],<span class="dt">col=</span><span class="st">&quot;red&quot;</span>,<span class="dt">type=</span><span class="st">&quot;p&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>When using INLA, the covariance matrix of <span class="math inline">\(\alpha\)</span> is chosen toe be separable across space and time.</p>
+<p><span class="math display">\[\begin{equation}
+  \Sigma_t(\rho) \otimes \Sigma_s (\tau, \kappa, \nu) \tag{25}
+\end{equation}\]</span></p>
+<p>where <span class="math inline">\(\rho\)</span> is AR parameter, <span class="math inline">\(\tau, \kappa, \nu\)</span> are estimated as a solution to the stochastic partial differential equation (SPDE)</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb31-1"></a>spde &lt;-<span class="st"> </span><span class="kw">inla.spde2.pcmatern</span>(<span class="dt">mesh =</span> MOmesh,</span>
+<span id="cb31-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb31-2"></a>                            <span class="dt">alpha =</span> <span class="dv">2</span>,</span>
+<span id="cb31-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb31-3"></a>                            <span class="dt">prior.range =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="fl">0.01</span>),</span>
+<span id="cb31-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb31-4"></a>                            <span class="dt">prior.sigma =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="fl">0.01</span>))</span></code></pre></div>
+<p>We make the space-time index needed for block-matrix structure in INLA. After that, we make matrix <span class="math inline">\(\Phi\)</span>.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb32-1"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb32-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb32-2"></a>n_years &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(MOcarolinawren_long<span class="op">$</span>t))</span>
+<span id="cb32-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb32-3"></a>n_spatial &lt;-<span class="st"> </span>MOmesh<span class="op">$</span>n</span>
+<span id="cb32-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb32-4"></a>s_index &lt;-<span class="st"> </span><span class="kw">inla.spde.make.index</span>(<span class="dt">name =</span> <span class="st">&quot;spatial.field&quot;</span>,</span>
+<span id="cb32-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb32-5"></a>                                <span class="dt">n.spde =</span> n_spatial,</span>
+<span id="cb32-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb32-6"></a>                                <span class="dt">n.group =</span> n_years)</span>
+<span id="cb32-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb32-7"></a></span>
+<span id="cb32-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb32-8"></a></span>
+<span id="cb32-9"><a href="descriptive-spatio-temporal-statistical-models.html#cb32-9"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb32-10"><a href="descriptive-spatio-temporal-statistical-models.html#cb32-10"></a>coords.allyear &lt;-<span class="st"> </span>MOcarolinawren_long[<span class="kw">c</span>(<span class="st">&quot;lon&quot;</span>, <span class="st">&quot;lat&quot;</span>)] <span class="op">%&gt;%</span></span>
+<span id="cb32-11"><a href="descriptive-spatio-temporal-statistical-models.html#cb32-11"></a><span class="st">                  </span><span class="kw">as.matrix</span>()</span>
+<span id="cb32-12"><a href="descriptive-spatio-temporal-statistical-models.html#cb32-12"></a>PHI &lt;-<span class="st"> </span><span class="kw">inla.spde.make.A</span>(<span class="dt">mesh =</span> MOmesh,</span>
+<span id="cb32-13"><a href="descriptive-spatio-temporal-statistical-models.html#cb32-13"></a>                        <span class="dt">loc =</span> coords.allyear,</span>
+<span id="cb32-14"><a href="descriptive-spatio-temporal-statistical-models.html#cb32-14"></a>                        <span class="dt">group =</span> MOcarolinawren_long<span class="op">$</span>t,</span>
+<span id="cb32-15"><a href="descriptive-spatio-temporal-statistical-models.html#cb32-15"></a>                        <span class="dt">n.group =</span> n_years)</span>
+<span id="cb32-16"><a href="descriptive-spatio-temporal-statistical-models.html#cb32-16"></a></span>
+<span id="cb32-17"><a href="descriptive-spatio-temporal-statistical-models.html#cb32-17"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb32-18"><a href="descriptive-spatio-temporal-statistical-models.html#cb32-18"></a><span class="kw">dim</span>(PHI)</span></code></pre></div>
+<pre><code>## [1] 1575 5439</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb34-1"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb34-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb34-2"></a><span class="kw">nrow</span>(MOcarolinawren_long)</span></code></pre></div>
+<pre><code>## [1] 1575</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb36-1"></a><span class="kw">length</span>(s_index<span class="op">$</span>spatial.field)</span></code></pre></div>
+<pre><code>## [1] 5439</code></pre>
+<p>We construct the latent Gaussian model in INLA using <em>stack</em>.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-1"></a><span class="co">## First stack: Estimation</span></span>
+<span id="cb38-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-2"></a>n_data &lt;-<span class="st"> </span><span class="kw">nrow</span>(MOcarolinawren_long)</span>
+<span id="cb38-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-3"></a>stack_est &lt;-<span class="st"> </span><span class="kw">inla.stack</span>(</span>
+<span id="cb38-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-4"></a>                 <span class="dt">data =</span> <span class="kw">list</span>(<span class="dt">cnt =</span> MOcarolinawren_long<span class="op">$</span>cnt),</span>
+<span id="cb38-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-5"></a>                 <span class="dt">A =</span> <span class="kw">list</span>(PHI, <span class="dv">1</span>),</span>
+<span id="cb38-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-6"></a>                 <span class="dt">effects =</span> <span class="kw">list</span>(s_index,</span>
+<span id="cb38-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-7"></a>                                <span class="kw">list</span>(<span class="dt">Intercept =</span> <span class="kw">rep</span>(<span class="dv">1</span>, n_data))),</span>
+<span id="cb38-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-8"></a>                 <span class="dt">tag =</span> <span class="st">&quot;est&quot;</span>)</span>
+<span id="cb38-9"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-9"></a></span>
+<span id="cb38-10"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-10"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb38-11"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-11"></a>df_pred &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">lon =</span> <span class="kw">rep</span>(MOmesh<span class="op">$</span>loc[,<span class="dv">1</span>], n_years),</span>
+<span id="cb38-12"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-12"></a>                      <span class="dt">lat =</span> <span class="kw">rep</span>(MOmesh<span class="op">$</span>loc[,<span class="dv">2</span>], n_years),</span>
+<span id="cb38-13"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-13"></a>                      <span class="dt">t =</span> <span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span>n_years, <span class="dt">each =</span> MOmesh<span class="op">$</span>n))</span>
+<span id="cb38-14"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-14"></a>n_pred &lt;-<span class="st"> </span><span class="kw">nrow</span>(df_pred)</span>
+<span id="cb38-15"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-15"></a>PHI_pred &lt;-<span class="st"> </span><span class="kw">Diagonal</span>(<span class="dt">n =</span> n_pred)</span>
+<span id="cb38-16"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-16"></a></span>
+<span id="cb38-17"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-17"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb38-18"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-18"></a><span class="co">## Second stack: Prediction</span></span>
+<span id="cb38-19"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-19"></a>stack_pred &lt;-<span class="st"> </span><span class="kw">inla.stack</span>(</span>
+<span id="cb38-20"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-20"></a>                 <span class="dt">data =</span> <span class="kw">list</span>(<span class="dt">cnt =</span> <span class="ot">NA</span>),</span>
+<span id="cb38-21"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-21"></a>                 <span class="dt">A =</span> <span class="kw">list</span>(PHI_pred, <span class="dv">1</span>),</span>
+<span id="cb38-22"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-22"></a>                 <span class="dt">effects =</span> <span class="kw">list</span>(s_index,</span>
+<span id="cb38-23"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-23"></a>                                <span class="kw">list</span>(<span class="dt">Intercept =</span> <span class="kw">rep</span>(<span class="dv">1</span>, n_pred))),</span>
+<span id="cb38-24"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-24"></a>                 <span class="dt">tag =</span> <span class="st">&quot;pred&quot;</span>)</span>
+<span id="cb38-25"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-25"></a></span>
+<span id="cb38-26"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-26"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb38-27"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-27"></a>stack &lt;-<span class="st"> </span><span class="kw">inla.stack</span>(stack_est, stack_pred)</span>
+<span id="cb38-28"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-28"></a></span>
+<span id="cb38-29"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-29"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb38-30"><a href="descriptive-spatio-temporal-statistical-models.html#cb38-30"></a><span class="kw">dim</span>(stack_est<span class="op">$</span>A)</span></code></pre></div>
+<pre><code>## [1] 1575 1702</code></pre>
+<p>Now, we are left with specifying the formula of model.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb40-1"></a><span class="co">## PC prior on rho</span></span>
+<span id="cb40-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb40-2"></a>rho_hyper &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">theta=</span><span class="kw">list</span>(<span class="dt">prior =</span> <span class="st">&#39;pccor1&#39;</span>,</span>
+<span id="cb40-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb40-3"></a>                             <span class="dt">param =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.9</span>)))</span>
+<span id="cb40-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb40-4"></a></span>
+<span id="cb40-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb40-5"></a><span class="co">## Formula</span></span>
+<span id="cb40-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb40-6"></a>formula &lt;-<span class="st"> </span>cnt <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>Intercept <span class="op">+</span></span>
+<span id="cb40-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb40-7"></a><span class="st">                 </span><span class="kw">f</span>(spatial.field,</span>
+<span id="cb40-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb40-8"></a>                   <span class="dt">model =</span> spde,</span>
+<span id="cb40-9"><a href="descriptive-spatio-temporal-statistical-models.html#cb40-9"></a>                   <span class="dt">group =</span> spatial.field.group,</span>
+<span id="cb40-10"><a href="descriptive-spatio-temporal-statistical-models.html#cb40-10"></a>                   <span class="dt">control.group =</span> <span class="kw">list</span>(<span class="dt">model =</span> <span class="st">&quot;ar1&quot;</span>,</span>
+<span id="cb40-11"><a href="descriptive-spatio-temporal-statistical-models.html#cb40-11"></a>                                        <span class="dt">hyper =</span> rho_hyper))</span></code></pre></div>
+<p>Finally let’s fit INLA model!!</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-1"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb41-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-2"></a><span class="co">## output &lt;- inla(formula,</span></span>
+<span id="cb41-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-3"></a><span class="co">##                data = inla.stack.data(stack, spde = spde),</span></span>
+<span id="cb41-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-4"></a><span class="co">##                family = &quot;nbinomial&quot;,</span></span>
+<span id="cb41-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-5"></a><span class="co">##                control.predictor = list(A = inla.stack.A(stack),</span></span>
+<span id="cb41-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-6"></a><span class="co">##                                         compute = TRUE))</span></span>
+<span id="cb41-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-7"></a><span class="co">##</span></span>
+<span id="cb41-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-8"></a><span class="co">## output2 &lt;- list(summary.fixed = output$summary.fixed,</span></span>
+<span id="cb41-9"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-9"></a><span class="co">##                 summary.hyperpar = output$summary.hyperpar,</span></span>
+<span id="cb41-10"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-10"></a><span class="co">##                 summary.fitted.values = output$summary.fitted.values,</span></span>
+<span id="cb41-11"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-11"></a><span class="co">##                 marginals.fixed = output$marginals.fixed,</span></span>
+<span id="cb41-12"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-12"></a><span class="co">##                 marginals.hyperpar = output$marginals.hyperpar,</span></span>
+<span id="cb41-13"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-13"></a><span class="co">##                 internal.marginals.hyperpar = output$internal.marginals.hyperpar,</span></span>
+<span id="cb41-14"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-14"></a><span class="co">##                 marginals.spde2.blc = output$marginals.spde2.blc,</span></span>
+<span id="cb41-15"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-15"></a><span class="co">##                 marginals.spde3.blc = output$marginals.spde3.blc,</span></span>
+<span id="cb41-16"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-16"></a><span class="co">##                 internal.marginals.hyperpar = output$internal.marginals.hyperpar)</span></span>
+<span id="cb41-17"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-17"></a><span class="co">## class(output2) &lt;- &quot;inla&quot;</span></span>
+<span id="cb41-18"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-18"></a><span class="co">## output &lt;- output2</span></span>
+<span id="cb41-19"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-19"></a></span>
+<span id="cb41-20"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-20"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb41-21"><a href="descriptive-spatio-temporal-statistical-models.html#cb41-21"></a><span class="kw">data</span>(<span class="st">&quot;INLA_output&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;STRbook&quot;</span>)</span></code></pre></div>
+<p>This book provides the trained model, so let’s use it. As mentioned before, INLA provides marginal posterior distribution for each parameters not joint posterior distribution.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb42-1"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb42-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb42-2"></a><span class="kw">par</span>(<span class="dt">mgp=</span><span class="kw">c</span>(<span class="fl">2.2</span>,<span class="fl">0.45</span>,<span class="dv">0</span>), <span class="dt">tcl=</span><span class="op">-</span><span class="fl">0.4</span>, <span class="dt">mar=</span><span class="kw">c</span>(<span class="fl">3.3</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb42-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb42-3"></a><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb42-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb42-4"></a>output.field &lt;-<span class="st"> </span><span class="kw">inla.spde2.result</span>(<span class="dt">inla =</span> output,</span>
+<span id="cb42-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb42-5"></a>                                  <span class="dt">name =</span> <span class="st">&quot;spatial.field&quot;</span>,</span>
+<span id="cb42-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb42-6"></a>                                  <span class="dt">spde =</span> spde,</span>
+<span id="cb42-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb42-7"></a>                                  <span class="dt">do.transf =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb42-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb42-8"></a><span class="kw">plot</span>(output<span class="op">$</span>marginals.fix[[<span class="dv">1</span>]],<span class="dt">type =</span><span class="st">&#39;l&#39;</span>,<span class="dt">xlab=</span><span class="kw">expression</span>(beta[<span class="dv">0</span>]),<span class="dt">ylab=</span><span class="kw">expression</span>(<span class="kw">p</span>(beta[<span class="dv">0</span>]<span class="op">*</span><span class="st">&quot;|&quot;</span><span class="op">*</span>Z)))</span>
+<span id="cb42-9"><a href="descriptive-spatio-temporal-statistical-models.html#cb42-9"></a><span class="kw">plot</span>(output<span class="op">$</span>marginals.hyperpar[[<span class="dv">4</span>]],<span class="dt">type =</span> <span class="st">&#39;l&#39;</span>,<span class="dt">xlab =</span> <span class="kw">expression</span>(rho),<span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="kw">p</span>(rho<span class="op">*</span><span class="st">&quot;|&quot;</span><span class="op">*</span>Z)))</span>
+<span id="cb42-10"><a href="descriptive-spatio-temporal-statistical-models.html#cb42-10"></a><span class="kw">plot</span>(output.field<span class="op">$</span>marginals.variance.nominal[[<span class="dv">1</span>]],<span class="dt">type =</span> <span class="st">&#39;l&#39;</span>,<span class="dt">xlab =</span> <span class="kw">expression</span>(sigma<span class="op">^</span><span class="dv">2</span>),<span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="kw">p</span>(sigma<span class="op">^</span><span class="dv">2</span><span class="op">*</span><span class="st">&quot;|&quot;</span><span class="op">*</span>Z)))</span>
+<span id="cb42-11"><a href="descriptive-spatio-temporal-statistical-models.html#cb42-11"></a><span class="kw">plot</span>(output.field<span class="op">$</span>marginals.range.nominal[[<span class="dv">1</span>]],<span class="dt">type =</span> <span class="st">&#39;l&#39;</span>,<span class="dt">xlab =</span> <span class="kw">expression</span>(l),<span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="kw">p</span>(l<span class="op">*</span><span class="st">&quot;|&quot;</span><span class="op">*</span>Z)))</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>Note the marginal posterior distribution of <span class="math inline">\(\sigma^2\)</span>. The mode is between 2 and 4 which is quite large. In other words, the spatio-temporal model we build is quite reasonable for this data. Also, the marginal distribution of <span class="math inline">\(\rho\)</span> is quite skewed to 1, which means AR(1) assumption is also reasonable to this data. Finally, we plot the spatial map filled with prediction values and standard error.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-1"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb43-2"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-2"></a>index_pred &lt;-<span class="st"> </span><span class="kw">inla.stack.index</span>(stack, <span class="st">&quot;pred&quot;</span>)<span class="op">$</span>data</span>
+<span id="cb43-3"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-3"></a>lp_mean &lt;-<span class="st"> </span>output<span class="op">$</span>summary.fitted.values<span class="op">$</span>mean[index_pred]</span>
+<span id="cb43-4"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-4"></a>lp_sd &lt;-<span class="st"> </span>output<span class="op">$</span>summary.fitted.values<span class="op">$</span>sd[index_pred]</span>
+<span id="cb43-5"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-5"></a></span>
+<span id="cb43-6"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-6"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb43-7"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-7"></a>grid_locs &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(</span>
+<span id="cb43-8"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-8"></a>                 <span class="dt">lon =</span> <span class="kw">seq</span>(<span class="kw">min</span>(MOcarolinawren_long<span class="op">$</span>lon) <span class="op">-</span><span class="st"> </span><span class="fl">0.2</span>,</span>
+<span id="cb43-9"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-9"></a>                           <span class="kw">max</span>(MOcarolinawren_long<span class="op">$</span>lon) <span class="op">+</span><span class="st"> </span><span class="fl">0.2</span>,</span>
+<span id="cb43-10"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-10"></a>                           <span class="dt">length.out =</span> <span class="dv">80</span>),</span>
+<span id="cb43-11"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-11"></a>                 <span class="dt">lat =</span> <span class="kw">seq</span>(<span class="kw">min</span>(MOcarolinawren_long<span class="op">$</span>lat) <span class="op">-</span><span class="st"> </span><span class="fl">0.2</span>,</span>
+<span id="cb43-12"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-12"></a>                           <span class="kw">max</span>(MOcarolinawren_long<span class="op">$</span>lat) <span class="op">+</span><span class="st"> </span><span class="fl">0.2</span>,</span>
+<span id="cb43-13"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-13"></a>                           <span class="dt">length.out =</span> <span class="dv">80</span>))</span>
+<span id="cb43-14"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-14"></a></span>
+<span id="cb43-15"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-15"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb43-16"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-16"></a>proj.grid &lt;-<span class="st"> </span><span class="kw">inla.mesh.projector</span>(MOmesh,</span>
+<span id="cb43-17"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-17"></a>                    <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(MOcarolinawren_long<span class="op">$</span>lon) <span class="op">-</span><span class="st"> </span><span class="fl">0.2</span>,</span>
+<span id="cb43-18"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-18"></a>                             <span class="kw">max</span>(MOcarolinawren_long<span class="op">$</span>lon) <span class="op">+</span><span class="st"> </span><span class="fl">0.2</span>),</span>
+<span id="cb43-19"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-19"></a>                    <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="kw">min</span>(MOcarolinawren_long<span class="op">$</span>lat) <span class="op">-</span><span class="st"> </span><span class="fl">0.2</span>,</span>
+<span id="cb43-20"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-20"></a>                             <span class="kw">max</span>(MOcarolinawren_long<span class="op">$</span>lat) <span class="op">+</span><span class="st"> </span><span class="fl">0.2</span>),</span>
+<span id="cb43-21"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-21"></a>                    <span class="dt">dims =</span> <span class="kw">c</span>(<span class="dv">80</span>, <span class="dv">80</span>))</span>
+<span id="cb43-22"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-22"></a></span>
+<span id="cb43-23"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-23"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb43-24"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-24"></a>pred &lt;-<span class="st"> </span>sd &lt;-<span class="st">  </span><span class="ot">NULL</span></span>
+<span id="cb43-25"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-25"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n_years) {</span>
+<span id="cb43-26"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-26"></a>    ii &lt;-<span class="st"> </span>(i<span class="dv">-1</span>)<span class="op">*</span>MOmesh<span class="op">$</span>n <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb43-27"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-27"></a>    jj &lt;-<span class="st"> </span>i<span class="op">*</span>MOmesh<span class="op">$</span>n</span>
+<span id="cb43-28"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-28"></a>    pred[[i]] &lt;-<span class="st"> </span><span class="kw">cbind</span>(grid_locs,</span>
+<span id="cb43-29"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-29"></a>                       <span class="dt">z =</span> <span class="kw">c</span>(<span class="kw">inla.mesh.project</span>(proj.grid,</span>
+<span id="cb43-30"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-30"></a>                                             lp_mean[ii<span class="op">:</span>jj])),</span>
+<span id="cb43-31"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-31"></a>                       <span class="dt">t =</span> i)</span>
+<span id="cb43-32"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-32"></a>    sd[[i]] &lt;-<span class="st"> </span><span class="kw">cbind</span>(grid_locs,</span>
+<span id="cb43-33"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-33"></a>                     <span class="dt">z =</span> <span class="kw">c</span>(<span class="kw">inla.mesh.project</span>(proj.grid,</span>
+<span id="cb43-34"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-34"></a>                                             lp_sd[ii<span class="op">:</span>jj])),</span>
+<span id="cb43-35"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-35"></a>                     <span class="dt">t =</span> i)</span>
+<span id="cb43-36"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-36"></a>}</span>
+<span id="cb43-37"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-37"></a></span>
+<span id="cb43-38"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-38"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb43-39"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-39"></a>pred &lt;-<span class="st"> </span><span class="kw">do.call</span>(<span class="st">&quot;rbind&quot;</span>, pred) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(z))</span>
+<span id="cb43-40"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-40"></a>sd &lt;-<span class="st"> </span><span class="kw">do.call</span>(<span class="st">&quot;rbind&quot;</span>, sd) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(z))</span>
+<span id="cb43-41"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-41"></a></span>
+<span id="cb43-42"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-42"></a><span class="co">## ------------------------------------------------------------------------</span></span>
+<span id="cb43-43"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-43"></a>df_tot &lt;-<span class="st"> </span><span class="kw">group_by</span>(MOcarolinawren_long,lon,lat) <span class="op">%&gt;%</span></span>
+<span id="cb43-44"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-44"></a><span class="st">          </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">tot_cnt =</span> <span class="kw">sum</span>(cnt,<span class="dt">na.rm=</span>T))</span>
+<span id="cb43-45"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-45"></a></span>
+<span id="cb43-46"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-46"></a>g1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_raster</span>(<span class="dt">data=</span>pred,<span class="kw">aes</span>(lon,lat,<span class="dt">fill=</span><span class="kw">pmin</span>(z,<span class="dv">5</span>))) <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>t,<span class="dt">nrow=</span><span class="dv">3</span>,<span class="dt">ncol=</span><span class="dv">7</span>) <span class="op">+</span></span>
+<span id="cb43-47"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-47"></a><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">data=</span><span class="kw">filter</span>(MOcarolinawren_long,<span class="op">!</span><span class="kw">is.na</span>(cnt)),<span class="kw">aes</span>(lon,lat),<span class="dt">colour=</span><span class="st">&quot;black&quot;</span>,<span class="dt">size=</span><span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb43-48"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-48"></a><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">data=</span><span class="kw">filter</span>(MOcarolinawren_long,<span class="op">!</span><span class="kw">is.na</span>(cnt)),<span class="kw">aes</span>(lon,lat,<span class="dt">colour=</span><span class="kw">log</span>(cnt)),<span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb43-49"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-49"></a><span class="st">    </span><span class="kw">scale_colour_distiller</span>(<span class="dt">palette=</span><span class="st">&quot;Spectral&quot;</span>,<span class="dt">limits=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">5</span>)) <span class="op">+</span></span>
+<span id="cb43-50"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-50"></a><span class="st">    </span><span class="kw">scale_fill_distiller</span>(<span class="dt">palette=</span><span class="st">&quot;Spectral&quot;</span>,<span class="dt">limits=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">5</span>),<span class="dt">name=</span><span class="kw">expression</span>(<span class="kw">log</span>(Y[t]))) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span>
+<span id="cb43-51"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-51"></a></span>
+<span id="cb43-52"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-52"></a>g2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_raster</span>(<span class="dt">data=</span>sd,<span class="kw">aes</span>(lon,lat,<span class="dt">fill=</span>z)) <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>t,<span class="dt">nrow=</span><span class="dv">3</span>,<span class="dt">ncol=</span><span class="dv">7</span>) <span class="op">+</span></span>
+<span id="cb43-53"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-53"></a><span class="st">    </span><span class="kw">scale_fill_distiller</span>(<span class="dt">palette=</span><span class="st">&quot;BrBG&quot;</span>,<span class="dt">limits=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">2.5</span>),<span class="dt">name=</span><span class="kw">expression</span>(s.e.)) <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>()</span>
+<span id="cb43-54"><a href="descriptive-spatio-temporal-statistical-models.html#cb43-54"></a><span class="kw">grid.arrange</span>(g1,g2)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 
 </div>
 </div>
