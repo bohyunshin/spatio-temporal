@@ -119,4 +119,4 @@ To reduce dimension in the process model, we usually consider basis functions to
   Y_t(s) = x_t(s)'\beta + \sum^{n_\alpha}_{i=1} \phi_i (s) \alpha_{i,t} + \sum^{n_\xi}_{j=1} \psi_j(s) \xi_{j,t} + \nu_t(s) \tag{11}
 \end{equation}
 
-where $\xi_{j,t}$ are typically non-dynamic or at least contain simple temporal behavior and $\alpha_{i,t}$ are dynamically evolving random effects.
+where $\xi_{j,t}$ are typically non-dynamic or at least contain simple temporal behavior and $\alpha_{i,t}$ are dynamically evolving random effect.
