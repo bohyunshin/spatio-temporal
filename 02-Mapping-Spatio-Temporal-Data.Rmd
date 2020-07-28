@@ -1,7 +1,169 @@
 # Mapping Spatio Temporal Data
 
-In this chapter, we talk about how to map spatio-temporal data in R
+```{r message=FALSE}
+library(raster)
+library(sp)
+```
+
+
+In this chapter, we talk about how to map spatio-temporal data in R.
 
 ## Some basic class regarding spatio-temporal data in R
+Before moving on, let's take a look at various spatial classes in R implemented in $\texttt{sp}$ package.
+![classes list in sp library](https://user-images.githubusercontent.com/36855000/88614160-1dca7480-d0ca-11ea-9a59-42233d9a8a5e.png)
+Roughly, there are classes regarding points, grid, lines, polygons. For point referenced data which contain latitude and longitude, the class of data will be $\texttt{SpatialPoints}$ or $\texttt{SpatialPointsDataFrame}$. For lattice data, the class will be regarding $\texttt{Polygon}$, as their basic units are areas.
 
-## Package
+### SpatialPoints
+$\texttt{SpatialPoints}$ is a class with the spatial information. We can easily create this object using $\texttt{sp}$ package.
+
+```{r}
+library(sp)
+xc = round(runif(10), 2)
+yc = round(runif(10), 2)
+xy = cbind(xc,yc)
+xy.sp = SpatialPoints(xy)
+xy.sp
+coordinates(xy.sp)
+# CRS(xy.sp)
+```
+
+Note that because we do not include CRS, the last line returns error.
+
+### SpatialPointsDataFrame
+$\texttt{SpatialPointsDataFrame}$ is a class with the spatial information and on top of that, some other attributes.
+```{r}
+z1 = data.frame(z1 = round(runif(10),2))
+xy.spdf = SpatialPointsDataFrame(xy.sp, z1)
+xy.spdf
+```
+Note the coordinates column in xy.spdf which is spatial information in xy.spdf dataset. Also, z1 column serves for other variables. Let's get the summary for xy.spdf.
+
+```{r}
+summary(xy.spdf)
+```
+$\texttt{SpatialPointsDataFrame}$ can be created directly from data.frames by specifying which columns contain the coordinates.
+
+### Polygons and SpatialPolygons
+To grasp the concept of $\texttt{Polygons}$ class in R, let's create a basic polygon.
+```{r}
+Sr1 = Polygon(cbind(c(2,4,4,1,2),c(2,3,5,4,2)))
+class(Sr1)
+Srs1 = Polygons(list(Sr1), 's1')
+class(Srs1)
+
+# returns error
+# Sp_s1 = SpatialPolygons(list(Sr1))
+```
+Individual polygon is created with $\texttt{Polygon}$ function. After creating multiple Polygons, we can concatenate them through $\texttt{Polygons}$ function. Because $\texttt{SpatialPolygons}$ class only gets the $\texttt{Polygons}$ class, even a single polygon should be converted to $\texttt{Polygons}$ class for mapping the polygon.
+
+```{r}
+Sp_s1 = SpatialPolygons(list(Srs1))
+class(Sp_s1)
+plot(Sp_s1, col='lightblue')
+```
+
+Therefore, to plot more than one polygons, we should follow the steps
+* Create individual Polygon class
+* Concatenate the created Polygon to make Polygons class
+* Make SpatialPolygons class through Polygons class
+* Plot SpatialPolygons class
+
+```{r}
+# individual polygons
+Sr1 = Polygon(cbind(c(2,4,4,1,2),c(2,3,5,4,2)))
+Sr2 = Polygon(cbind(c(5,4,2,5),c(2,3,2,2)))
+Sr3 = Polygon(cbind(c(4,4,5,10,4),c(5,3,2,5,5)))
+Sr4 = Polygon(cbind(c(5,6,6,5,5),c(4,4,3,3,4)), hole = TRUE) # polygon with holes
+
+# concatenated polygons
+Srs1 = Polygons(list(Sr1), "s1")
+Srs2 = Polygons(list(Sr2), "s2")
+Srs3 = Polygons(list(Sr3, Sr4), "s3/4")
+SpP_all = SpatialPolygons(list(Srs1,Srs2,Srs3), 1:3)
+plot(SpP_all, col = 1:3, pbg="white")
+
+SpP_12 = SpatialPolygons(list(Srs1, Srs2), 1:2)
+SpP_13 = SpatialPolygons(list(Srs1, Srs3), 1:2)
+plot(SpP_12, col=1:2)
+plot(SpP_13, col=1:2)
+```
+Note that when we concatenate with function $\texttt{Polygons}$, it becomes one Polygon, so we cannot separte the two individual polygons, i.e.,
+
+```{r}
+Srs4 = Polygons(list(Sr1, Sr2), 's1/2')
+SpP_12 = SpatialPolygons(list(Srs4))
+plot(SpP_12, col=1:2)
+```
+
+That is, we can separate two polygons Srs1, Srs2 by specifying color argument. However, by binning two polygons to one polygon through $\texttt{Polygons}$ function, we cannot separate them by color any more.
+
+## Mapping data in R
+```{r message=FALSE}
+library(raster)
+library(ggplot2)
+library(rgeos)
+library(viridis)
+```
+
+
+Before coloring on the map, it is required that we need **raster** on which we plot. For example, we can get the usa raster.
+
+```{r}
+usa <- getData('GADM', country='usa', level=2)
+# ggplot() + geom_polygon(data=usa, aes(x=long, y=lat, group=group), fill='white', color='black')
+class(usa)
+```
+
+Note that the class of usa is $\texttt{SpatialPolygonsDataFrame}$. For korea raster, thanks to the link [here](http://www.gisdeveloper.co.kr/?p=2332), we can get raster for larger unit, smaller unit.
+
+```{r}
+shp_dir = '/Users/shinbo/Desktop/Statistics/etc/coordinates/SIG_201703/TL_SCCO_SIG.shp'
+sigungu <- shapefile(shp_dir, encoding='euc-kr')
+ggplot() + geom_polygon(data=sigungu, aes(x=long, y=lat, group=group), fill='white', color='black')
+head(sigungu)
+```
+Note the SIG_CD and SIG_ENG_NM. Each name of SIG has its own number. This number should correspond to each region, on which we want to plot some values. We plot the result of 19th President Vote in korea.
+
+```{r}
+data_dir = '/Users/shinbo/Desktop/Statistics/etc/data/result.csv'
+voting = read.csv(data_dir, fileEncoding='euc-kr')
+head(voting)
+```
+
+We get the voting result for each of sidogun and candidate. Now, let's map the supporting rate of President Moon to see where he got the highest rate. We use $\texttt{fortify}$ function to make $\texttt{SpatialPolygonDataFrame}$ to $\texttt{data.frame}$.
+
+```{r warning=FALSE} 
+#gIsValid(sigungu)
+#sigungu = gBuffer(sigungu, byid = TRUE, width = 0)
+#gIsValid(sigungu)
+
+sigungu = fortify(sigungu, region='SIG_CD')
+sigungu = merge(sigungu, voting, by='id')
+
+p = ggplot() + geom_polygon(data=sigungu, aes(x=long, y=lat, group=group, fill=moon))
+p  + scale_fill_gradient(low='white', high='#004ea2') + theme_void() + guides(fill=F)
+```
+
+Let's try different color using viridis package.
+
+```{r}
+p + scale_fill_viridis(direction=-1) + theme_void() + guides(fill=F)
+```
+
+Now, we only look at moon's support rate in seoul. First, select Gu's in seoul by filtering
+
+```{r}
+library(extrafont)
+theme_update(text=element_text(family="HUJingo340"))
+seoul = sigungu[sigungu$id <= 11740,]
+gu_dir = '/Users/shinbo/Desktop/Statistics/etc/data/seoul_coordinates.csv'
+gu_text = read.csv(gu_dir, fileEncoding = 'euc-kr')
+
+p = ggplot() + geom_polygon(data=seoul, aes(x=long, y=lat, group=group, fill=moon))
+p  + scale_fill_gradient(low='white', high='#004ea2') + theme_void() + labs(fill = "support rate of Moon") + 
+  geom_text(data = gu_text,
+            aes(x = 경도,
+                y = 위도,
+                label = 시군구명_영문))
+```
+

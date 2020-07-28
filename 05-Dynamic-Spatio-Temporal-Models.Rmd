@@ -1,6 +1,6 @@
 # Dynamic Spatio-Temporal Models
-This chapter talks about dynamic approach to spatio-temporal data, whereas we talked about descriptive approach in the last chapter. In descriptive approach, we fit mean and covariance function for the true process. This makes it more difficult to analyze spatio-temporal data because specifying the covariance function is not a easy thing to do. This chapter focuses on more realistic approach. Acually, we can witness some spatio-temporal dynamics, e.g., dynamically varying weather or people's log data which accumulates everyday, everytime whenever you use smart phones or surfing internet. \
-This chapter mainly focuses on the **linear dynamic spatio-temporal models (DSTMs)** in the univariate context. Although it is reasonable and realistic to consider precesses to be continuous in time, we focus on the more practical case where time has been discretized. Continuous time models such as stochastic differential equations are beyond our scope, so please refer to the papers if you're interested in tem.
+This chapter talks about dynamic approach to spatio-temporal data, whereas we talked about descriptive approach in the last chapter. In descriptive approach, we fit mean and covariance function for the true process. This makes it more difficult to analyze spatio-temporal data because specifying the covariance function is not a easy thing to do. This chapter focuses on more realistic approach. Acually, we can witness some spatio-temporal dynamics, e.g., dynamically varying weather or people's log data which accumulates everyday, everytime whenever you use smart phones or surf the internet. \
+This chapter mainly focuses on the **linear dynamic spatio-temporal models (DSTMs)** in the univariate context. Although it is reasonable and realistic to consider processes to be continuous in time, we focus on the more practical case where time has been discretized. Continuous time models such as stochastic differential equations are beyond our scope, so please refer to the papers if you're interested in them.
 
 ## General Dynamic Spatio-Temporal Models
 We consider the hierarchical modeling perspective for DSTM, which means we should specify *data model* and *process model* inside the data model. Also, process model specifies the dynamic evolution of the spatio-temporal process, similar to what we did before. This section gives a general overview of hierarchical modeling in the context of a DSTM. \
@@ -31,7 +31,7 @@ If we assume Markov assumption on (2), the joint distribution would be simplifie
   [Y_0, Y_1, \cdots, Y_T \mid \theta_{p,t}] = \prod^T_{t=1}[Y_t \mid Y_{t-1}, \theta_{p,t}] [Y_0 \mid \theta_{p,0}] \tag{4}
 \end{equation}
 
-(4) is the second key assumption, with first key assumption in specified in (2). The *first-order-Markov* assumption that is usually made for DSTMs holds when $Y_t(\cdot)$ follows a dynamic model of the form,
+Equation (4) above is the second key assumption, with first key assumption in specified in (2). The *first-order-Markov* assumption that is usually made for DSTMs holds when $Y_t(\cdot)$ follows a dynamic model of the form,
 
 \begin{equation}
   Y_t(\cdot) = \mathcal{M}(Y_{t-1}, \theta_{p,t}, \eta_t), \; t=1,2,\cdots \tag{5}
@@ -50,7 +50,7 @@ where
 Note that the parameters in Bayesian Hierarchical Models (BHM) we specify just before. In descriptive spatio-temporal modeling, the parameters consist of the $\beta$ in fixed effect and the parameters in the covariance function for the spatio-temporal random effect. However, in dynamic models, we do not specify covariance function any more, which is cumbersome to do so in descriptive modeling. Instead, we have parameters as $\theta_{d,t}, \theta_{p,t}$, where subscript $d, p$ denote data and process model respectively. With this parameterization, we reduce the parameter space efficiently which will be discussed later. However, for many cases, it would be sufficient to model with Empirical Hierarchical Model (EHM), so be cautious to select the proper models.
 
 ## Latent Linear Gaussian DSTMs
-We consider the simplest DSTM where the assumed first makrov process model in (2) have additive **Gaussian error distributions* and the evolution operator $\mathcal{M}$ is assumed to be linear. Suppose we are interested in the latent process $Y_t(s_i), \; i=1, \cdots, n$ and we have data at locations $r_{jt}\; j=1, \cdots, m_t$. That is, based on the $r_{jt}$ data at space, time index with $j,t$ we want to predict values on $n$ locations. 
+We consider the simplest DSTM where the assumed first makrov process model in (2) have additive **Gaussian error distributions** and the evolution operator $\mathcal{M}$ is assumed to be linear. Suppose we are interested in the latent process $Y_t(s_i), \; i=1, \cdots, n$ and we have data at locations $r_{jt}\; j=1, \cdots, m_t$. That is, based on the $r_{jt}$ data at space, time index with $j,t$ we want to predict values on $n$ locations. 
 
 ### Linear Data Model with Additive Gaussian Error
 At time point $t$, suppose we have $m_t$ dimensional data vector, $Z_t = (Z_t(r_{1t}), \cdots, Z_t(r_{m_tt}))'$ and we want to infer on $n$ dimensional latent process vector, $Y_t \equiv ( Y_t(s_1), \cdots, Y_t(s_n)  )'$. For the $j$th observation at time $t$, the linear data model with additive Gaussian error is written as
@@ -86,7 +86,7 @@ For given present time and location, linear markovian spatio-temporal process mo
   Y_t(s) = \int_{D_s} m(s,x; \theta_p)Y_{t-1}(x)dx + \eta_t(s) \tag{8}
 \end{equation}
 
-![Illustration of a linear DSTM](https://user-images.githubusercontent.com/36855000/88033712-a4d39600-cb7a-11ea-8c48-fdda619ebd90.png)
+![Illustration of a linear DSTM](https://user-images.githubusercontent.com/36855000/88606787-8f012c00-d0b8-11ea-9841-f9fc82ac3681.png)
 
 Note that the process in current time, i.e, $Y_t(s)$ is influenced by other spatial points in previous time, i.e., $Y_{t-1}(\cdot)$. In reality, we do not know every spatial point so we cannot do the integral. Therefore, the first-order IDE evolution process model in (8) is expressed as the stochastic difference equation,
 
